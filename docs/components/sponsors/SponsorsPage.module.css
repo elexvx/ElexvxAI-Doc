@@ -1,0 +1,121 @@
+.page {
+  padding: 48px 0 0;
+}
+
+.header {
+  margin: 0 auto 32px;
+  max-width: 1100px;
+  padding: 0 24px;
+}
+
+.kicker {
+  color: var(--sponsor-muted);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 32px;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  color: var(--sponsor-muted);
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin: 0 auto 48px;
+  max-width: 1100px;
+  padding: 0 24px;
+}
+
+.card {
+  background: var(--sponsor-card-bg);
+  border: 1px solid var(--sponsor-card-border);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 14px 30px var(--sponsor-card-shadow);
+  transform: translateY(-2px);
+}
+
+.cover {
+  background: linear-gradient(135deg, rgba(33, 38, 45, 0.92), rgba(9, 65, 77, 0.92));
+  color: #f4f7f9;
+  padding: 28px 24px 80px;
+  position: relative;
+}
+
+.cover::after {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  content: '';
+  height: 120px;
+  position: absolute;
+  right: -40px;
+  top: -30px;
+  width: 200px;
+}
+
+.coverTitle {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.coverTagline {
+  font-size: 13px;
+  margin: 0;
+  max-width: 210px;
+  opacity: 0.85;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 24px 24px;
+}
+
+.content h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.content p {
+  color: var(--sponsor-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.link {
+  align-self: flex-start;
+  border: 1px solid var(--sponsor-card-border);
+  border-radius: 999px;
+  color: inherit;
+  font-size: 13px;
+  padding: 8px 14px;
+  text-decoration: none;
+}
+
+:global(:root) {
+  --sponsor-card-bg: #ffffff;
+  --sponsor-card-border: #e7e7e7;
+  --sponsor-card-shadow: rgba(0, 0, 0, 0.08);
+  --sponsor-muted: #6c6c6c;
+}
+
+:global([data-theme='dark']) {
+  --sponsor-card-bg: #111316;
+  --sponsor-card-border: #1d2127;
+  --sponsor-card-shadow: rgba(0, 0, 0, 0.4);
+  --sponsor-muted: #a1a1a1;
+}
