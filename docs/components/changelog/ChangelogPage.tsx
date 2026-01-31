@@ -1,5 +1,5 @@
 import React from 'react';
-import { changelog } from '../../data/changelog';
+import { changelog } from '../../../theme/data/changelog';
 import Footer from '../footer/Footer';
 import styles from './ChangelogPage.module.css';
 

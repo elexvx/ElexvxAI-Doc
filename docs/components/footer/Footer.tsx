@@ -1,5 +1,5 @@
 import React from 'react';
-import { footerData } from '../../data/footer';
+import { footerData } from '../../../theme/data/footer';
 import styles from './Footer.module.css';
 
 const Footer = () => {

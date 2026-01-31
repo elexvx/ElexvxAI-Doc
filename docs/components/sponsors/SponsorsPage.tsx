@@ -1,5 +1,5 @@
 import React from 'react';
-import { sponsors } from '../../data/sponsors';
+import { sponsors } from '../../../theme/data/sponsors';
 import Footer from '../footer/Footer';
 import styles from './SponsorsPage.module.css';
 

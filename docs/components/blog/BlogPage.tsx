@@ -1,5 +1,5 @@
 import React from 'react';
-import { blogPosts } from '../../data/blogPosts';
+import { blogPosts } from '../../../theme/data/blogPosts';
 import Footer from '../footer/Footer';
 import styles from './BlogPage.module.css';
 
