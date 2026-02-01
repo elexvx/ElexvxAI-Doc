@@ -14,6 +14,13 @@ export default defineConfig({
     dark: '/favicon.svg',
   },
   themeConfig: {
+    nav: [
+      { text: '首页', link: '/' },
+      { text: '文档', link: '/Scaffolding-System/' },
+      { text: '博客', link: '/blog/' },
+      { text: '更新日志', link: '/changelog/' },
+      { text: '赞助商', link: '/sponsors/' },
+    ],
     socialLinks: [
       {
         icon: 'github',
