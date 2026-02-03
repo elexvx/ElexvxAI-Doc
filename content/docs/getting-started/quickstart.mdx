@@ -18,7 +18,7 @@ icon: Rocket
 
 ## 第一个 AI 聊天应用
 
-让我们创建一个简单的 AI 聊天应用，体验 ElexvxAI Lab 的强大功能。
+让我们创建一个简单的 AI 聊天应用。
 
 ### Step 1: 创建新项目
 
@@ -31,7 +31,7 @@ cd chat-app
 
 创建 `src/chat.js` 文件：
 
-```javascript title="src/chat.js"
+```javascript
 import { ElexvxAI } from '@elexvxai/lab';
 
 // 初始化客户端
@@ -40,93 +40,23 @@ const client = new ElexvxAI({
 });
 
 async function chat(message) {
-  try {
-    const response = await client.chat.completions.create({
-      model: 'gpt-4',
-      messages: [
-        {
-          role: 'user',
-          content: message,
-        },
-      ],
-      temperature: 0.7,
-      max_tokens: 500,
-    });
+  const response = await client.chat.completions.create({
+    model: 'gpt-4',
+    messages: [{ role: 'user', content: message }],
+    temperature: 0.7,
+    max_tokens: 500,
+  });
 
-    return response.choices[0].message.content;
-  } catch (error) {
-    console.error('错误:', error);
-    throw error;
-  }
+  return response.choices[0].message.content;
 }
 
 export { chat };
 ```
 
-<Callout type="tip">
-`temperature` 参数控制回答的随机性。较低的值（如 0.2）使输出更加确定，较高的值（如 0.8）使输出更有创造性。
-</Callout>
-
-### Step 3: 创建主程序
-
-创建 `src/index.js` 文件：
-
-```javascript title="src/index.js"
-import { chat } from './chat.js';
-import readline from 'readline';
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-console.log('🤖 ElexvxAI 聊天机器人');
-console.log('输入 "exit" 退出\n');
-
-function promptUser() {
-  rl.question('你: ', async (input) => {
-    if (input.toLowerCase() === 'exit') {
-      console.log('再见！👋');
-      rl.close();
-      return;
-    }
-
-    if (!input.trim()) {
-      promptUser();
-      return;
-    }
-
-    try {
-      const response = await chat(input);
-      console.log(`\nAI: ${response}\n`);
-    } catch (error) {
-      console.error('发生错误:', error.message);
-    }
-
-    promptUser();
-  });
-}
-
-promptUser();
-```
-
-### Step 4: 运行应用
+### Step 3: 运行应用
 
 ```bash
 node src/index.js
-```
-
-现在您可以开始与 AI 对话了！
-
-```bash title="示例对话"
-🤖 ElexvxAI 聊天机器人
-输入 "exit" 退出
-
-你: 你好！
-AI: 你好！我是 ElexvxAI 助手，很高兴为您服务。有什么我可以帮助您的吗？
-
-你: 什么是机器学习？
-AI: 机器学习是人工智能的一个分支，它使计算机系统能够通过经验自动改进...
 ```
 
 ## 核心概念
@@ -136,21 +66,19 @@ AI: 机器学习是人工智能的一个分支，它使计算机系统能够通�
 ```javascript
 const client = new ElexvxAI({
   apiKey: process.env.ELEXVX_API_KEY,
-  baseURL: 'https://api.elexvxai.com', // 可选
-  timeout: 30000, // 可选，默认 30 秒
+  baseURL: 'https://api.elexvxai.com',
+  timeout: 30000,
 });
 ```
 
 ### 2. 模型选择
 
-ElexvxAI Lab 支持多种模型：
+支持多种模型：
 
-| 模型 | 描述 | 适用场景 |
-|------|------|----------|
-| `gpt-4` | 最强大的模型 | 复杂任务、需要深度推理 |
-| `gpt-3.5-turbo` | 快速且经济 | 日常对话、简单任务 |
-| `claude-3` | Anthropic Claude | 长文本处理 |
-| `llama-2` | 开源模型 | 本地部署 |
+- `gpt-4` - 最强大的模型，适合复杂任务
+- `gpt-3.5-turbo` - 快速且经济，适合日常对话
+- `claude-3` - 擅长长文本处理
+- `llama-2` - 开源模型，支持本地部署
 
 ### 3. 消息格式
 
@@ -161,32 +89,7 @@ const messages = [
   { role: 'system', content: '你是一个有帮助的助手' },
   { role: 'user', content: '用户的问题' },
   { role: 'assistant', content: 'AI 的回答' },
-  { role: 'user', content: '后续问题' },
 ];
-```
-
-<Callout type="info">
-**角色说明**：
-- `system`: 设置 AI 的行为和个性
-- `user`: 用户输入
-- `assistant`: AI 回答
-</Callout>
-
-### 4. 流式响应
-
-对于较长的回答，使用流式响应获得更好的用户体验：
-
-```javascript
-const stream = await client.chat.completions.create({
-  model: 'gpt-4',
-  messages: [{ role: 'user', content: '讲一个故事' }],
-  stream: true,
-});
-
-for await (const chunk of stream) {
-  const content = chunk.choices[0]?.delta?.content || '';
-  process.stdout.write(content);
-}
 ```
 
 ## 实用示例
@@ -198,17 +101,10 @@ async function summarize(text) {
   const response = await client.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [
-      {
-        role: 'system',
-        content: '请将以下文本总结为 3-5 句话',
-      },
-      {
-        role: 'user',
-        content: text,
-      },
+      { role: 'system', content: '请将以下文本总结为 3-5 句话' },
+      { role: 'user', content: text },
     ],
   });
-
   return response.choices[0].message.content;
 }
 ```
@@ -220,47 +116,17 @@ async function analyzeSentiment(text) {
   const response = await client.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [
-      {
-        role: 'system',
-        content: '分析文本的情感倾向，回答"正面"、"负面"或"中性"',
-      },
-      {
-        role: 'user',
-        content: text,
-      },
+      { role: 'system', content: '分析文本的情感倾向' },
+      { role: 'user', content: text },
     ],
     temperature: 0,
   });
-
-  return response.choices[0].message.content;
-}
-```
-
-### 代码生成
-
-```javascript
-async function generateCode(description) {
-  const response = await client.chat.completions.create({
-    model: 'gpt-4',
-    messages: [
-      {
-        role: 'system',
-        content: '你是一个专业的程序员，请根据描述生成代码',
-      },
-      {
-        role: 'user',
-        content: description,
-      },
-    ],
-  });
-
   return response.choices[0].message.content;
 }
 ```
 
 ## 最佳实践
 
-<Steps>
 ### 错误处理
 
 始终使用 try-catch 处理 API 调用：
@@ -291,48 +157,6 @@ const response = await client.chat.completions.create({
 });
 ```
 
-### 优化性能
-
-缓存常见请求的结果：
-
-```javascript
-const cache = new Map();
-
-async function cachedChat(message) {
-  if (cache.has(message)) {
-    return cache.get(message);
-  }
-  
-  const response = await chat(message);
-  cache.set(message, response);
-  return response;
-}
-```
-</Steps>
-
 ## 下一步
 
-恭喜！您已经完成了快速入门教程。接下来您可以：
-
-<Cards>
-  <Card
-    title="探索高级功能"
-    description="了解更多高级特性和用例"
-    href="/docs/guides"
-    icon="BookOpen"
-  />
-  <Card
-    title="API 参考"
-    description="查看完整的 API 文档"
-    href="/docs/api-reference"
-    icon="Code"
-  />
-  <Card
-    title="示例项目"
-    description="浏览更多示例代码"
-    href="/docs/examples"
-    icon="FileCode"
-  />
-</Cards>
-
-遇到问题？查看我们的 [FAQ](/docs/getting-started/faq) 或加入 [Discord 社区](https://discord.gg/elexvxai)！
+恭喜！您已经完成了快速入门教程。遇到问题？查看我们的 [FAQ](/docs/getting-started/faq) 或加入社区！

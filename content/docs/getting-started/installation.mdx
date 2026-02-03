@@ -21,10 +21,7 @@ icon: Package
 
 ### 软件要求
 
-- **操作系统**: 
-  - Windows 10/11
-  - macOS 12.0 或更高版本
-  - Linux (Ubuntu 20.04+, CentOS 8+)
+- **操作系统**: Windows 10/11, macOS 12.0+, Linux (Ubuntu 20.04+)
 - **Node.js**: 18.0 或更高版本
 - **Python**: 3.9 或更高版本
 - **Git**: 任意最新版本
@@ -33,68 +30,28 @@ icon: Package
 
 ### 1. 安装 Node.js
 
-<Tabs items={['Windows', 'macOS', 'Linux']}>
-  <Tab value="Windows">
-    从 [Node.js 官网](https://nodejs.org/) 下载并安装 LTS 版本。
-    
-    ```bash title="验证安装"
-    node --version
-    npm --version
-    ```
-  </Tab>
-  
-  <Tab value="macOS">
-    使用 Homebrew 安装：
-    
-    ```bash
-    brew install node
-    ```
-    
-    验证安装：
-    ```bash
-    node --version
-    npm --version
-    ```
-  </Tab>
-  
-  <Tab value="Linux">
-    使用包管理器安装：
-    
-    ```bash
-    # Ubuntu/Debian
-    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-    
-    # CentOS/RHEL
-    curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
-    sudo yum install -y nodejs
-    ```
-    
-    验证安装：
-    ```bash
-    node --version
-    npm --version
-    ```
-  </Tab>
-</Tabs>
+从 [Node.js 官网](https://nodejs.org/) 下载并安装 LTS 版本。
+
+验证安装：
+
+```bash
+node --version
+npm --version
+```
 
 ### 2. 安装 Python
 
-<Callout type="warn">
-确保安装 Python 3.9 或更高版本，旧版本可能无法正常工作。
-</Callout>
+确保安装 Python 3.9 或更高版本，访问 [Python 官网](https://www.python.org/downloads/)。
 
-```bash title="检查 Python 版本"
+检查 Python 版本：
+
+```bash
 python --version
-# 或
-python3 --version
 ```
-
-如果需要安装 Python，请访问 [Python 官网](https://www.python.org/downloads/)。
 
 ### 3. 安装 ElexvxAI Lab CLI
 
-使用 npm 全局安装我们的 CLI 工具：
+使用 npm 全局安装 CLI 工具：
 
 ```bash
 npm install -g @elexvxai/lab-cli
@@ -108,7 +65,7 @@ elexvx-lab --version
 
 ### 4. 初始化项目
 
-创建一个新的项目目录并初始化：
+创建新项目：
 
 ```bash
 mkdir my-ai-project
@@ -116,29 +73,7 @@ cd my-ai-project
 elexvx-lab init
 ```
 
-CLI 会引导您完成配置：
-
-```bash title="示例输出"
-? 项目名称: my-ai-project
-? 选择模板: 
-  ❯ 基础模板
-    AI 聊天应用
-    图像处理
-    数据分析
-? 是否安装依赖? Yes
-
-✨ 项目创建成功！
-```
-
-### 5. 安装依赖
-
-如果在初始化时没有安装依赖，手动安装：
-
-```bash
-npm install
-```
-
-### 6. 配置环境变量
+### 5. 配置环境变量
 
 复制示例配置文件：
 
@@ -148,7 +83,7 @@ cp .env.example .env
 
 编辑 `.env` 文件，添加您的配置：
 
-```env title=".env"
+```env
 # API 配置
 ELEXVX_API_KEY=your_api_key_here
 ELEXVX_API_URL=https://api.elexvxai.com
@@ -156,14 +91,9 @@ ELEXVX_API_URL=https://api.elexvxai.com
 # 模型配置
 DEFAULT_MODEL=gpt-4
 MAX_TOKENS=2048
-
-# 其他配置
-LOG_LEVEL=info
 ```
 
-<Callout type="info">
-您可以从 [开发者控制台](https://console.elexvxai.com) 获取 API 密钥。
-</Callout>
+> **提示**: 您可以从 [开发者控制台](https://console.elexvxai.com) 获取 API 密钥。
 
 ## 验证安装
 
@@ -173,57 +103,7 @@ LOG_LEVEL=info
 npm run dev
 ```
 
-您应该看到类似的输出：
-
-```bash title="成功启动"
-✓ ElexvxAI Lab 开发服务器已启动
-➜ Local:   http://localhost:3000
-➜ Network: http://192.168.1.100:3000
-```
-
 访问 `http://localhost:3000` 查看您的应用！
-
-## 常见安装问题
-
-<Accordion title="npm install 报错：权限不足">
-  在 Linux/macOS 上，您可能需要使用 `sudo`：
-  
-  ```bash
-  sudo npm install -g @elexvxai/lab-cli
-  ```
-  
-  或者配置 npm 使用用户目录：
-  
-  ```bash
-  npm config set prefix ~/.npm-global
-  export PATH=~/.npm-global/bin:$PATH
-  ```
-</Accordion>
-
-<Accordion title="Python 版本过低">
-  使用 pyenv 管理多个 Python 版本：
-  
-  ```bash
-  # 安装 pyenv
-  curl https://pyenv.run | bash
-  
-  # 安装 Python 3.11
-  pyenv install 3.11.0
-  pyenv global 3.11.0
-  ```
-</Accordion>
-
-<Accordion title="端口 3000 已被占用">
-  修改 `package.json` 中的启动命令：
-  
-  ```json
-  {
-    "scripts": {
-      "dev": "elexvx-lab dev --port 3001"
-    }
-  }
-  ```
-</Accordion>
 
 ## 下一步
 
