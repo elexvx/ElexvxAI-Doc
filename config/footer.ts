@@ -26,7 +26,7 @@ export const footerConfig: FooterConfig = {
       links: [
         { label: '文档总览', href: '/docs' },
         { label: '案例文档', href: '/docs/cases' },
-        { label: '博客文章', href: '/docs/blog' },
+        { label: '博客文章', href: '/blog' },
       ],
     },
     {

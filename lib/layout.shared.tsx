@@ -22,7 +22,7 @@ export function baseOptions(): BaseLayoutProps {
       },
       {
         text: '博客',
-        url: '/docs/blog',
+        url: '/blog',
         active: 'nested-url',
       },
       {

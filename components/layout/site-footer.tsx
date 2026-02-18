@@ -3,7 +3,7 @@ import { footerConfig } from '@/config/footer';
 
 export function SiteFooter() {
   return (
-    <footer className="mt-20 border-t border-white/10 bg-slate-950/80 px-6 py-12 text-slate-200 backdrop-blur-xl">
+    <footer className="border-t border-white/10 bg-slate-950/80 px-6 py-12 text-slate-200 backdrop-blur-xl">
       <div className="mx-auto grid w-full max-w-6xl gap-10 md:grid-cols-[1.2fr_2fr]">
         <div className="space-y-4">
           <p className="text-sm font-semibold tracking-[0.22em] text-cyan-300">
