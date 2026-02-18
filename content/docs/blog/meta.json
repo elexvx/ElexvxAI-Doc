@@ -1,0 +1,9 @@
+{
+  "title": "博客文章",
+  "icon": "NotebookPen",
+  "pages": [
+    "index",
+    "ai-docs-ops",
+    "rag-governance"
+  ]
+}
