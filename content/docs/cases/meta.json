@@ -1,0 +1,9 @@
+{
+  "title": "案例文档",
+  "icon": "FlaskConical",
+  "pages": [
+    "index",
+    "intelligent-support",
+    "predictive-maintenance"
+  ]
+}
