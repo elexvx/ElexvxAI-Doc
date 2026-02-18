@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { HomeConfig } from '@/config/home';
 import { homeSignalIcons } from '@/config/home';
+import { siteLayout } from '@/config/site';
 
 export function HomeTemplate({ config }: { config: HomeConfig }) {
   const SparklesIcon = homeSignalIcons.sparkles;
@@ -11,7 +12,7 @@ export function HomeTemplate({ config }: { config: HomeConfig }) {
     <div className="relative overflow-hidden bg-slate-950 text-slate-100">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(34,211,238,0.2),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.18),transparent_30%),radial-gradient(circle_at_90%_80%,rgba(129,140,248,0.2),transparent_40%)]" />
 
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 pb-20 pt-16">
+      <div className={`relative mx-auto flex w-full ${siteLayout.containerClass} flex-col gap-16 px-6 pb-20 pt-16`}>
         <section className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl shadow-cyan-900/20 backdrop-blur-xl md:p-12">
           <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/40 bg-cyan-500/10 px-4 py-1 text-xs font-semibold tracking-[0.18em] text-cyan-200">
             <SparklesIcon className="h-3.5 w-3.5" />

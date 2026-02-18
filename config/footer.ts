@@ -10,7 +10,13 @@ export type FooterConfig = {
     description: string;
   };
   linkGroups: FooterLinkGroup[];
-  complianceText: string;
+  copyright: {
+    license: string;
+    siteStatus: string;
+    company: string;
+    icp: string;
+    year: string;
+  };
 };
 
 export const footerConfig: FooterConfig = {
@@ -22,21 +28,28 @@ export const footerConfig: FooterConfig = {
   },
   linkGroups: [
     {
-      title: '文档入口',
+      title: '站点导航',
       links: [
-        { label: '文档总览', href: '/docs' },
-        { label: '案例文档', href: '/docs/cases' },
-        { label: '博客文章', href: '/blog' },
+        { label: '首页', href: '/' },
+        { label: '博客', href: '/blog' },
+        { label: '更新日志', href: '/changelog' },
+        { label: '赞助商', href: '/sponsors' },
       ],
     },
     {
-      title: '研发能力',
+      title: '文档入口',
       links: [
+        { label: '文档总览', href: '/docs' },
         { label: '快速开始', href: '/docs/getting-started' },
-        { label: '部署规范', href: '/docs/getting-started/installation' },
-        { label: '常见问题', href: '/docs/getting-started/faq' },
+        { label: '案例文档', href: '/docs/cases' },
       ],
     },
   ],
-  complianceText: '© 2026 ElexvxAI Lab · All Rights Reserved',
+  copyright: {
+    license: 'CC BY-NC-ND 4.0',
+    siteStatus: '正常',
+    company: '羿娅通道（南京）科技发展有限公司',
+    icp: '苏ICP备2025160017号',
+    year: '2026',
+  },
 };
