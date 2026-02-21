@@ -27,7 +27,7 @@
     --docs-font-mono: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
 
     /* Layout Dimensions */
-    --docs-header-height: 64px;
+    --docs-header-height: var(--site-nav-height, 84px);
     --docs-sidebar-width: 280px;
     --docs-toc-width: 240px;
 
@@ -76,19 +76,6 @@ body.docs-body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-/* Docs-specific overrides to align navbar with the sidebar layout */
-.docs-layout .navbar {
-    /* Remove border-bottom from the global navbar - use docs border color */
-    border-bottom-color: var(--docs-border-color);
-    background-color: var(--docs-bg-surface, var(--md-sys-color-surface));
-}
-
-.docs-layout .navbar-container {
-    max-width: 1600px;
-    padding-left: 24px;
-    padding-right: 24px;
 }
 
 .docs-main-container {
