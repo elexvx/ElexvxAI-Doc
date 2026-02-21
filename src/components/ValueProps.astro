@@ -1,0 +1,93 @@
+---
+// src/components/ValueProps.astro
+
+const props = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" height="36" width="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`,
+    title: "Evolving to Agent-First",
+    description: "Introducing a new agent-first API experience. This innovative approach enables models to operate seamlessly across all surfaces, including your browser, so they can tackle more complex and long-running tasks.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" height="36" width="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>`,
+    title: "A More Natural Abstraction",
+    description: "Gain a complete understanding of agentic operations at the task level, supported by the essential artifacts and verification outcomes, fostering confidence in the model's actions.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" height="36" width="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/><circle cx="19" cy="4" r="1.5" fill="currentColor" stroke="none"/><circle cx="5" cy="6" r="1" fill="currentColor" stroke="none"/></svg>`,
+    title: "Guidance to Go from 90% to 100%",
+    description: "Intuitively provide feedback across every surface and artifact to steer the model to your desired outcomes.",
+  },
+];
+---
+
+<section class="value-props section">
+  <div class="container">
+    <div class="vp-grid">
+      {props.map((item) => (
+        <div class="vp-card">
+          <div class="vp-icon" set:html={item.icon} />
+          <h3 class="vp-title">{item.title}</h3>
+          <p class="vp-desc">{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .value-props {
+    padding-top: 72px;
+    padding-bottom: 72px;
+    border-top: 1px solid var(--md-sys-color-surface-dim);
+    border-bottom: 1px solid var(--md-sys-color-surface-dim);
+    background-color: var(--md-sys-color-surface);
+  }
+
+  .vp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px 64px;
+  }
+
+  .vp-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .vp-icon {
+    color: var(--md-sys-color-on-surface);
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .vp-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface);
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .vp-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--md-sys-color-on-surface-variant);
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .vp-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .vp-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

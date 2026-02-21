@@ -1,0 +1,51 @@
+---
+// src/layouts/DocsLayout.astro
+import '../styles/docs.css';
+import Navbar from '../components/Navbar.astro';
+import DocsSidebar from '../components/DocsSidebar.astro';
+import DocsTOC from '../components/DocsTOC.astro';
+import ThemeToggleScript from '../components/ThemeToggleScript.astro';
+
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+	title: string;
+  headings?: MarkdownHeading[];
+}
+
+const { title, headings } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+	</head>
+	<body class="docs-body">
+    <div class="docs-layout">
+      <!-- Top Navigation specifically for Docs -->
+      <Navbar showSearch={true} isDocs={true} />
+
+      <div class="docs-main-container">
+        <!-- Left Navigation -->
+        <DocsSidebar />
+
+        <!-- Main Content Slot -->
+        <main class="docs-content-area">
+          <slot />
+        </main>
+
+        <!-- Right Navigation (On this page) -->
+        <DocsTOC headings={headings} />
+      </div>
+    </div>
+    <ThemeToggleScript />
+	</body>
+</html>

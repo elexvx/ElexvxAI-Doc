@@ -1,0 +1,281 @@
+/* 
+ * Material Design 3 Tokens - Docs Tech Blue Theme
+ * Supports Light & Dark modes via the .dark root class.
+ */
+:root {
+    /* Core Colors - Light Mode */
+    --docs-bg-base: #fdfdff;
+    --docs-bg-surface: #f3f7fd;
+    --docs-bg-surface-elevated: #ffffff;
+
+    --docs-text-primary: #171e29;
+    --docs-text-secondary: #424a54;
+    --docs-text-tertiary: #747d88;
+
+    --docs-accent-primary: #1a73e8;
+    --docs-accent-subtle: rgba(26, 115, 232, 0.1);
+    --docs-accent-hover: rgba(26, 115, 232, 0.15);
+
+    --docs-border-color: #e1eaf5;
+
+    /* Specific Component Colors */
+    --docs-code-bg: #f3f7fd;
+    --docs-callout-bg: rgba(26, 115, 232, 0.05);
+
+    /* Typography */
+    --docs-font-sans: 'Inter', 'Google Sans', 'Roboto', sans-serif;
+    --docs-font-mono: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
+
+    /* Layout Dimensions */
+    --docs-header-height: 64px;
+    --docs-sidebar-width: 280px;
+    --docs-toc-width: 240px;
+
+    /* Shapes */
+    --docs-radius-sm: 6px;
+    --docs-radius-md: 8px;
+    --docs-radius-lg: 12px;
+    --docs-radius-full: 9999px;
+}
+
+:root.dark {
+    /* Core Colors - Dark Mode */
+    --docs-bg-base: #0b0b0d;
+    --docs-bg-surface: #141416;
+    --docs-bg-surface-elevated: #1a1a1d;
+
+    --docs-text-primary: #ffffff;
+    --docs-text-secondary: #a1a1aa;
+    --docs-text-tertiary: #71717a;
+
+    --docs-accent-primary: #818cf8;
+    --docs-accent-subtle: rgba(129, 140, 248, 0.15);
+    --docs-accent-hover: rgba(129, 140, 248, 0.25);
+
+    --docs-border-color: #27272a;
+
+    /* Specific Component Colors */
+    --docs-code-bg: #1e1e24;
+    --docs-callout-bg: rgba(255, 255, 255, 0.03);
+}
+
+/* Base Body Styles for Docs */
+body.docs-body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--docs-bg-base);
+    color: var(--docs-text-primary);
+    font-family: var(--docs-font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+}
+
+/* Layout Utilities */
+.docs-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Docs-specific overrides to align navbar with the sidebar layout */
+.docs-layout .navbar {
+    /* Remove border-bottom from the global navbar - use docs border color */
+    border-bottom-color: var(--docs-border-color);
+    background-color: var(--docs-bg-surface, var(--md-sys-color-surface));
+}
+
+.docs-layout .navbar-container {
+    max-width: 1600px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.docs-main-container {
+    display: flex;
+    flex: 1;
+    max-width: 1600px;
+    /* Constrain max width for ultra-wide screens */
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Content Area specifically */
+.docs-content-area {
+    flex: 1;
+    min-width: 0;
+    /* Prevents flex flex-grow overflow */
+    padding: 48px 64px;
+    max-width: 900px;
+    margin: 0 auto;
+    /* Center within the available space */
+}
+
+/* Typography Elements within Markdown/Content */
+.docs-content-area h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.docs-content-area h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--docs-border-color);
+}
+
+.docs-content-area p {
+    color: var(--docs-text-secondary);
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Code Blocks */
+.docs-code-block {
+    background-color: var(--docs-code-bg);
+    border-radius: var(--docs-radius-md);
+    border: 1px solid var(--docs-border-color);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.docs-code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid var(--docs-border-color);
+    font-family: var(--docs-font-mono);
+    font-size: 12px;
+    color: var(--docs-text-secondary);
+}
+
+.docs-code-pre {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: var(--docs-font-mono);
+    font-size: 14px;
+    color: #e4e4e7;
+}
+
+/* Callouts / Admonitions */
+.docs-callout {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background-color: var(--docs-callout-bg);
+    border-radius: var(--docs-radius-lg);
+    border: 1px solid var(--docs-border-color);
+    margin-bottom: 24px;
+}
+
+.docs-callout-icon {
+    color: var(--docs-accent-primary);
+    flex-shrink: 0;
+}
+
+.docs-callout-title {
+    font-weight: 600;
+    color: var(--docs-text-primary);
+    margin-bottom: 4px;
+}
+
+.docs-callout-text {
+    color: var(--docs-text-secondary);
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Tables */
+.docs-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 32px;
+    border: 1px solid var(--docs-border-color);
+    border-radius: var(--docs-radius-lg);
+}
+
+.docs-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.docs-table th {
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 16px;
+    font-weight: 600;
+    color: var(--docs-text-primary);
+    border-bottom: 1px solid var(--docs-border-color);
+}
+
+.docs-table td {
+    padding: 16px;
+    color: var(--docs-text-secondary);
+    border-bottom: 1px solid var(--docs-border-color);
+}
+
+.docs-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Badges specifically for Docs */
+.docs-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: var(--docs-radius-md);
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 8px;
+}
+
+.docs-badge-primary {
+    background-color: var(--docs-accent-primary);
+    color: var(--docs-bg-base);
+}
+
+.docs-badge-surface {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--docs-text-secondary);
+}
+
+/* Breadcrumbs */
+.docs-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--docs-text-secondary);
+    margin-bottom: 32px;
+}
+
+.docs-breadcrumb-separator {
+    color: var(--docs-text-tertiary);
+}
+
+.docs-breadcrumb-item.active {
+    color: var(--docs-text-primary);
+    font-weight: 500;
+}
+
+/* Responsive adjustments for Docs Layout */
+@media (max-width: 992px) {
+
+    .docs-sidebar,
+    .docs-toc {
+        display: none;
+        /* Hide sidebars completely on small screens */
+    }
+
+    .docs-content-area {
+        padding: 32px 24px;
+        max-width: 100%;
+    }
+}

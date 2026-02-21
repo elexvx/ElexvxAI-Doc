@@ -1,0 +1,236 @@
+---
+// src/components/Hero.astro
+---
+
+<section class="hero-section section">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <div class="badge hero-badge">AI Innovation Lab</div>
+      
+      <h1 class="display-large hero-title">
+        Advancing Intelligence for <br/> <span class="text-primary">Industrial Innovation</span>
+      </h1>
+      
+      <p class="body-large hero-desc">
+        Empowering enterprise solutions through cutting-edge artificial intelligence, 
+        rigorous research, and scalable open-source technologies.
+      </p>
+      
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-filled hero-btn">Our Projects</a>
+        <a href="/docs" class="btn btn-outlined hero-btn">View Docs</a>
+      </div>
+      
+      <div class="hero-attributes">
+        <div class="attribute-item">
+          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+          <span class="attribute-text">Open Source</span>
+        </div>
+        <div class="attribute-item">
+          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+          <span class="attribute-text">Enterprise Ready</span>
+        </div>
+        <div class="attribute-item">
+          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+          <span class="attribute-text">Research Backed</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-image-placeholder">
+          <div class="gradient-bg"></div>
+          <div class="geometric-shapes">
+             <div class="circle c1"></div>
+             <div class="circle c2"></div>
+             <div class="line l1"></div>
+             <div class="line l2"></div>
+          </div>
+        </div>
+        
+        <div class="floating-card metric-card">
+          <div class="metric-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M116-248v-289h114v289H116Zm250 0v-464h114v464H366Zm250 0v-200h114v200H616Z"/></svg>
+          </div>
+          <div class="metric-data">
+            <div class="metric-value">99.8%</div>
+            <div class="metric-label">Model Accuracy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    overflow: hidden;
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    margin-bottom: 24px;
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border: none;
+    font-size: var(--md-sys-typescale-label-large-font-size);
+    padding: 6px 16px;
+  }
+
+  .hero-title {
+    margin-bottom: 24px;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .hero-desc {
+    margin-bottom: 40px;
+    max-width: 540px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .hero-btn {
+    height: 48px;
+    padding: 0 32px;
+  }
+
+  .hero-attributes {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .attribute-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .check-icon {
+    color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-corner-full);
+    padding: 2px;
+  }
+
+  .attribute-text {
+    font-size: var(--md-sys-typescale-label-large-font-size);
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  /* Right column visual */
+  .hero-visual {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3.5;
+  }
+
+  .hero-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    overflow: hidden;
+    box-shadow: var(--md-sys-elevation-3);
+  }
+
+  .gradient-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, #e3f2fd 0%, #e6f7ff 100%);
+  }
+
+  .geometric-shapes {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.8;
+  }
+
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--md-sys-color-primary);
+    opacity: 0.1;
+  }
+
+  .c1 { width: 300px; height: 300px; top: 10%; right: 10%; }
+  .c2 { width: 150px; height: 150px; bottom: 20%; left: 15%; background-color: var(--md-sys-color-secondary); }
+  
+  .line {
+    position: absolute;
+    background-color: rgba(26, 115, 232, 0.2);
+  }
+
+  .l1 { width: 60%; height: 2px; top: 40%; left: 20%; transform: rotate(-15deg); }
+  .l2 { width: 40%; height: 2px; bottom: 40%; right: 10%; transform: rotate(25deg); }
+
+  .floating-card {
+    position: absolute;
+    bottom: -24px;
+    left: -24px;
+    background-color: var(--md-sys-color-surface-container-high);
+    border-radius: var(--md-sys-shape-corner-large);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--md-sys-elevation-2);
+    z-index: 2;
+  }
+
+  .metric-icon {
+    width: 48px;
+    height: 48px;
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-primary);
+    border-radius: var(--md-sys-shape-corner-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .metric-value {
+    font-size: var(--md-sys-typescale-headline-large-font-size);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: 4px;
+  }
+
+  .metric-label {
+    font-size: var(--md-sys-typescale-label-medium-font-size);
+    color: var(--md-sys-color-on-surface-variant);
+    font-weight: 500;
+  }
+
+  @media (max-width: 992px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-badge { margin: 0 auto 24px; display: inline-flex; }
+    .hero-desc { margin: 0 auto 40px; }
+    .hero-actions { justify-content: center; }
+    .hero-attributes { justify-content: center; }
+    .floating-card { left: 24px; bottom: 24px; }
+  }
+</style>
