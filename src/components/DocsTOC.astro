@@ -1,21 +1,10 @@
 ---
-// src/components/DocsTOC.astro
 import type { MarkdownHeading } from 'astro';
-
-interface Props {
-  headings?: MarkdownHeading[];
-}
-
-const { headings = [] } = Astro.props;
-
-// Group h3s under their preceding h2
+const { headings = [], docsContent } = Astro.props as { headings?: MarkdownHeading[]; docsContent: any };
 const toc: { heading: MarkdownHeading; subheadings: MarkdownHeading[] }[] = [];
-headings.forEach(heading => {
-  if (heading.depth === 2) {
-    toc.push({ heading, subheadings: [] });
-  } else if (heading.depth === 3 && toc.length > 0) {
-    toc[toc.length - 1].subheadings.push(heading);
-  }
+headings.forEach((heading) => {
+  if (heading.depth === 2) toc.push({ heading, subheadings: [] });
+  else if (heading.depth === 3 && toc.length > 0) toc[toc.length - 1].subheadings.push(heading);
 });
 ---
 
@@ -23,152 +12,23 @@ headings.forEach(heading => {
   <div class="toc-sticky-container">
     {toc.length > 0 && (
       <div class="toc-section">
-        <h4 class="toc-heading">On this page</h4>
+        <h4 class="toc-heading">{docsContent.tocTitle}</h4>
         <ul class="toc-list">
-          {toc.map(item => (
+          {toc.map((item) => (
             <li>
               <a href={`#${item.heading.slug}`} class="toc-link">{item.heading.text}</a>
-              {item.subheadings.length > 0 && (
-                <ul class="toc-sublist">
-                  {item.subheadings.map(sub => (
-                    <li><a href={`#${sub.slug}`} class="toc-link">{sub.text}</a></li>
-                  ))}
-                </ul>
-              )}
+              <ul class="toc-sublist">
+                {item.subheadings.map((sub) => <li><a href={`#${sub.slug}`} class="toc-link">{sub.text}</a></li>)}
+              </ul>
             </li>
           ))}
         </ul>
       </div>
     )}
-
-    <div class="toc-section toc-community">
-      <h4 class="toc-heading">Community</h4>
-      <ul class="community-list">
-        <li>
-          <a href="#" class="community-link">
-            <svg class="comm-icon" xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="18" fill="currentColor"><path d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
-            Discussions
-          </a>
-        </li>
-        <li>
-          <a href="#" class="community-link">
-            <svg class="comm-icon" xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="18" fill="currentColor"><path d="m422-232 207-243H493l31-253-206 242h135l-31 254ZM240-120v-100H160q-33 0-56.5-23.5T80-300v-480q0-33 23.5-56.5T160-860h640q33 0 56.5 23.5T880-780v480q0 33-23.5 56.5T800-220h-80v100L580-220H240l-80 100Zm-80-180h454l86 86v-86h100v-480H160v480Zm0 0v-480 480Z"/></svg>
-            Report an issue
-          </a>
-        </li>
-        <li>
-          <a href="#" class="community-link">
-            <svg class="comm-icon" xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="18" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
-            Edit this page
-          </a>
-        </li>
-      </ul>
-    </div>
+    <div class="toc-section"><h4 class="toc-heading">{docsContent.communityTitle}</h4><ul class="community-list">{docsContent.community.map((item: string) => <li>{item}</li>)}</ul></div>
   </div>
 </aside>
 
 <style>
-  .docs-toc {
-    width: var(--docs-toc-width);
-    flex-shrink: 0;
-    padding: 0 24px;
-    height: calc(100vh - var(--docs-header-height));
-    position: sticky;
-    top: var(--docs-header-height);
-    overflow-y: auto;
-    font-size: 14px;
-  }
-
-  .toc-sticky-container {
-    padding: 40px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .toc-heading {
-    margin: 0 0 16px 0;
-    font-weight: 600;
-    color: var(--docs-text-primary);
-    font-size: 14px;
-  }
-
-  .toc-list, .toc-sublist, .community-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .toc-sublist {
-    margin-left: 16px;
-    margin-top: 4px;
-    border-left: 1px solid var(--docs-border-color);
-  }
-
-  .toc-link {
-    display: block;
-    padding: 6px 16px;
-    color: var(--docs-text-secondary);
-    text-decoration: none;
-    transition: color 0.2s;
-    border-radius: var(--docs-radius-sm);
-    margin-bottom: 2px;
-  }
-
-  .toc-sublist .toc-link {
-    padding: 4px 16px 4px 12px;
-    border-left: 2px solid transparent; /* Ready for active state */
-    margin-left: -1px; /* Align with border */
-    border-radius: 0 var(--docs-radius-sm) var(--docs-radius-sm) 0;
-  }
-
-  .toc-link:hover {
-    color: var(--docs-text-primary);
-  }
-
-  .toc-link.active {
-    color: var(--docs-text-primary);
-    background-color: var(--docs-accent-subtle);
-  }
-
-  .toc-sublist .toc-link.active {
-    background-color: transparent;
-    color: var(--docs-accent-primary);
-    border-left-color: var(--docs-accent-primary);
-  }
-
-  .community-list {
-    gap: 8px;
-  }
-
-  .community-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--docs-text-secondary);
-    text-decoration: none;
-    transition: color 0.2s;
-    padding: 4px 0;
-  }
-
-  .comm-icon {
-    opacity: 0.8;
-  }
-
-  .community-link:hover {
-    color: var(--docs-text-primary);
-  }
-
-  .community-link:hover .comm-icon {
-    color: var(--docs-accent-primary);
-    opacity: 1;
-  }
-
-  @media (max-width: 1200px) {
-    .docs-toc {
-      display: none; /* Hide TOC on medium/small screens per traditional docs design */
-    }
-  }
+.docs-toc{width:220px;padding:20px 10px;position:sticky;top:var(--docs-header-height);height:calc(100vh - var(--docs-header-height));overflow:auto}.toc-list,.toc-sublist,.community-list{list-style:none;padding:0}.toc-link{text-decoration:none;color:var(--docs-text-secondary);display:block;padding:4px 0}@media (max-width:1200px){.docs-toc{display:none}}
 </style>

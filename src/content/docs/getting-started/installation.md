@@ -1,31 +1,27 @@
 ---
-title: "Installation"
-description: "How to install ElexvxAI"
-category: "Getting Started"
+title: 安装指南
+description: 使用最少步骤完成本地开发环境搭建。
+category: 快速开始
 order: 2
+version: v1.0
+status: 推荐
 ---
 
-Get started with ElexvxAI by installing it on your system.
+## 环境准备
 
-## Prerequisites
+- Node.js 18+
+- npm 9+
 
-Before installing, ensure your environment meets the following requirements:
-- **Python**: version 3.8 or higher.
-- **CUDA Toolkit**: 11.8+ (for GPU support).
-
-## Using pip
-
-The easiest way to install ElexvxAI is via pip:
+## 安装依赖
 
 ```bash
-pip install elexvxai
+npm install
 ```
 
-## Verifying the Installation
+## 本地启动
 
-Open a Python interactive shell and import the library to verify it's working properly:
-
-```python
-import elexvx
-print(elexvx.__version__)
+```bash
+npm run dev
 ```
+
+启动后访问 `http://localhost:4321`。

@@ -1,534 +1,75 @@
 ---
-const pathname = new URL(Astro.request.url).pathname;
+interface NavLink {
+  label: string;
+  href: string;
+}
 
-const isHome = pathname === '/';
-const isBlog = pathname.startsWith('/blog');
-const isDocs = pathname.startsWith('/docs');
+interface NavContent {
+  brand: string;
+  ariaLabel: string;
+  menuLabel: string;
+  links: NavLink[];
+  cta: NavLink;
+}
+
+const { content } = Astro.props as { content: NavContent };
+const pathname = Astro.url.pathname;
 ---
 
 <nav class="navbar" data-navbar>
   <div class="navbar-shell">
-    <a href="/" class="brand-link" aria-label="ElexvxAI home">
-      <svg class="brand-mark" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="navGradient" x1="5" y1="23" x2="23" y2="6" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#1A73E8" />
-            <stop offset="0.45" stop-color="#4FC3F7" />
-            <stop offset="0.7" stop-color="#FFD54F" />
-            <stop offset="1" stop-color="#EF5350" />
-          </linearGradient>
-        </defs>
-        <path d="M5 22C7 16 9.5 8 14 8C18.5 8 21 16 23 22" stroke="url(#navGradient)" stroke-width="3.6" stroke-linecap="round" />
-      </svg>
-      <span class="brand-text">ElexvxAI Lab</span>
-    </a>
+    <a href="/" class="brand-link" aria-label={content.ariaLabel}>{content.brand}</a>
 
-    <button class="mobile-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-mobile-trigger>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
+    <button class="mobile-menu-toggle" type="button" aria-label={content.menuLabel} aria-expanded="false" data-mobile-trigger>
+      ☰
     </button>
 
-    <div class="navbar-center" aria-label="Primary navigation">
-      <a href="/" class:list={["navbar-link", { active: isHome }]}>Product</a>
-
-      <button
-        type="button"
-        class="navbar-link nav-menu-trigger"
-        data-menu-trigger
-        aria-expanded="false"
-        aria-controls="usecases-menu"
-      >
-        Use Cases
-        <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <a href="/docs/getting-started/installation" class="navbar-link">Pricing</a>
-      <a href="/blog" class:list={["navbar-link", { active: isBlog }]}>Blog</a>
-      <a href="/docs/getting-started/introduction" class:list={["navbar-link", "with-chevron", { active: isDocs }]}>Resources
-        <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
+    <div class="navbar-center" aria-label="主导航">
+      {content.links.map((link) => (
+        <a href={link.href} class:list={["navbar-link", { active: pathname === link.href || pathname.startsWith(`${link.href}/`) && link.href !== '/' }]}>
+          {link.label}
+        </a>
+      ))}
     </div>
 
-    <a href="/docs/getting-started/introduction" class="download-btn">
-      Download
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 4v10m0 0 4-4m-4 4-4-4M4 19h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </div>
-
-  <div class="usecases-panel" id="usecases-menu" data-menu-panel hidden>
-    <div class="usecases-inner">
-      <div class="usecases-feature">
-        <h2>Built for developers in the agent-first era</h2>
-        <p>Explore how ElexvxAI helps your team ship production AI faster.</p>
-        <a href="/docs/getting-started/introduction" class="overview-btn">See overview</a>
-      </div>
-
-      <div class="usecases-list" role="menu">
-        <a href="/docs/getting-started/introduction" class="usecase-link" role="menuitem">
-          <span class="usecase-icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <circle cx="6" cy="12" r="2"></circle>
-              <circle cx="12" cy="6" r="2"></circle>
-              <circle cx="18" cy="12" r="2"></circle>
-              <circle cx="12" cy="18" r="2"></circle>
-            </svg>
-          </span>
-          <span>Professional</span>
-          <span class="usecase-arrow" aria-hidden="true">›</span>
-        </a>
-
-        <a href="/blog" class="usecase-link" role="menuitem">
-          <span class="usecase-icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <rect x="4" y="5" width="16" height="14" rx="2"></rect>
-              <path d="M10 11.5h4"></path>
-              <path d="M12 9.5v4"></path>
-            </svg>
-          </span>
-          <span>Frontend</span>
-          <span class="usecase-arrow" aria-hidden="true">›</span>
-        </a>
-
-        <a href="/docs/core-concepts/neural-networks" class="usecase-link" role="menuitem">
-          <span class="usecase-icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="m12 4 8 4-8 4-8-4 8-4Z"></path>
-              <path d="m4 12 8 4 8-4"></path>
-              <path d="m4 16 8 4 8-4"></path>
-            </svg>
-          </span>
-          <span>Fullstack</span>
-          <span class="usecase-arrow" aria-hidden="true">›</span>
-        </a>
-      </div>
-    </div>
+    <a href={content.cta.href} class="download-btn">{content.cta.label}</a>
   </div>
 
   <div class="mobile-panel" data-mobile-panel hidden>
-    <a href="/" class="mobile-link">Product</a>
-    <a href="/docs/getting-started/introduction" class="mobile-link">Use Cases</a>
-    <a href="/docs/getting-started/installation" class="mobile-link">Pricing</a>
-    <a href="/blog" class="mobile-link">Blog</a>
-    <a href="/docs/getting-started/introduction" class="mobile-link">Resources</a>
-    <a href="/docs/getting-started/introduction" class="mobile-download">Download</a>
+    {content.links.map((link) => (
+      <a href={link.href} class="mobile-link">{link.label}</a>
+    ))}
+    <a href={content.cta.href} class="mobile-download">{content.cta.label}</a>
   </div>
 </nav>
 
 <script is:inline>
   document.querySelectorAll('[data-navbar]').forEach((root) => {
-    const trigger = root.querySelector('[data-menu-trigger]');
-    const panel = root.querySelector('[data-menu-panel]');
     const mobileTrigger = root.querySelector('[data-mobile-trigger]');
     const mobilePanel = root.querySelector('[data-mobile-panel]');
 
-    const closeMenu = () => {
-      if (!trigger || !panel) return;
-      root.classList.remove('menu-open');
-      trigger.setAttribute('aria-expanded', 'false');
-      panel.setAttribute('hidden', '');
-    };
-
-    const openMenu = () => {
-      if (!trigger || !panel) return;
-      root.classList.add('menu-open');
-      trigger.setAttribute('aria-expanded', 'true');
-      panel.removeAttribute('hidden');
-    };
-
-    const closeMobile = () => {
-      if (!mobileTrigger || !mobilePanel) return;
-      root.classList.remove('mobile-open');
-      mobileTrigger.setAttribute('aria-expanded', 'false');
-      mobilePanel.setAttribute('hidden', '');
-    };
-
-    if (trigger) {
-      trigger.addEventListener('click', (event) => {
-        event.stopPropagation();
-        if (root.classList.contains('menu-open')) {
-          closeMenu();
-          return;
-        }
-        closeMobile();
-        openMenu();
-      });
-    }
-
-    if (mobileTrigger && mobilePanel) {
-      mobileTrigger.addEventListener('click', (event) => {
-        event.stopPropagation();
-        if (root.classList.contains('mobile-open')) {
-          closeMobile();
-          return;
-        }
-        closeMenu();
-        root.classList.add('mobile-open');
-        mobileTrigger.setAttribute('aria-expanded', 'true');
-        mobilePanel.removeAttribute('hidden');
-      });
-    }
-
-    root.querySelectorAll('.usecase-link, .mobile-link, .mobile-download').forEach((link) => {
-      link.addEventListener('click', () => {
-        closeMenu();
-        closeMobile();
-      });
-    });
-
-    document.addEventListener('click', (event) => {
-      if (!root.contains(event.target)) {
-        closeMenu();
-        closeMobile();
-      }
-    });
-
-    root.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        closeMenu();
-        closeMobile();
-      }
-    });
-
-    root.addEventListener('mouseleave', () => {
-      if (window.innerWidth > 900) {
-        closeMenu();
-      }
+    mobileTrigger?.addEventListener('click', () => {
+      const expanded = mobileTrigger.getAttribute('aria-expanded') === 'true';
+      mobileTrigger.setAttribute('aria-expanded', String(!expanded));
+      if (mobilePanel) mobilePanel.hidden = expanded;
     });
   });
 </script>
 
 <style>
-  :global(:root) {
-    --site-nav-height: 84px;
-  }
-
-  .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 120;
-    background: #f3f4f6;
-    border-bottom: 1px solid #e4e7ed;
-  }
-
-  .navbar-shell {
-    max-width: 1700px;
-    margin: 0 auto;
-    min-height: var(--site-nav-height);
-    padding: 0 28px;
-    display: flex;
-    align-items: center;
-    gap: 28px;
-  }
-
-  .brand-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: #171a20;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .brand-mark {
-    width: 22px;
-    height: 22px;
-    flex-shrink: 0;
-  }
-
-  .brand-text {
-    font-family: 'Google Sans', 'Roboto', sans-serif;
-    font-size: clamp(15px, 1.15vw, 20px);
-    line-height: 1;
-    letter-spacing: -0.04em;
-    font-weight: 500;
-  }
-
-  .navbar-center {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-left: 20px;
-  }
-
-  .navbar-link {
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: #30343c;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    height: 46px;
-    padding: 0 16px;
-    border-radius: 9999px;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
-    font-size: clamp(14px, 1.05vw, 18px);
-    line-height: 1;
-    cursor: pointer;
-    transition: background-color 0.18s ease, color 0.18s ease;
-    white-space: nowrap;
-  }
-
-  .navbar-link .chevron {
-    width: 14px;
-    height: 14px;
-  }
-
-  .navbar-link:hover,
-  .navbar-link.active,
-  .menu-open .nav-menu-trigger {
-    background: #e7e9ee;
-    color: #13161c;
-  }
-
-  .menu-open .nav-menu-trigger .chevron {
-    transform: rotate(180deg);
-  }
-
-  .download-btn {
-    margin-left: auto;
-    height: 56px;
-    min-width: 168px;
-    border-radius: 9999px;
-    background: #0d1017;
-    color: #f8f9fb;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
-    font-size: clamp(14px, 1.05vw, 18px);
-    letter-spacing: -0.01em;
-    transition: opacity 0.2s ease;
-    white-space: nowrap;
-  }
-
-  .download-btn:hover {
-    opacity: 0.9;
-  }
-
-  .download-btn svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  .usecases-panel {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    background: #f3f4f6;
-    border-top: 1px solid #e9ebf0;
-    border-bottom: 1px solid #e2e6ed;
-    border-radius: 0 0 28px 28px;
-    box-shadow: 0 20px 35px rgba(18, 21, 31, 0.08);
-  }
-
-  .usecases-inner {
-    max-width: 1700px;
-    margin: 0 auto;
-    padding: 34px 28px 42px;
-    display: grid;
-    grid-template-columns: minmax(320px, 1.1fr) minmax(280px, 0.9fr);
-    gap: 56px;
-    align-items: start;
-  }
-
-  .usecases-feature h2 {
-    margin: 0;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
-    font-size: clamp(27px, 2.2vw, 38px);
-    line-height: 1.12;
-    color: #13161c;
-    letter-spacing: -0.02em;
-    max-width: 560px;
-  }
-
-  .usecases-feature p {
-    margin: 18px 0 24px;
-    color: #4a4f57;
-    font-size: clamp(16px, 1.25vw, 21px);
-    line-height: 1.45;
-  }
-
-  .overview-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50px;
-    padding: 0 28px;
-    border-radius: 9999px;
-    text-decoration: none;
-    background: #e9ebf0;
-    color: #13161c;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
-    font-size: clamp(15px, 1.15vw, 18px);
-    transition: background-color 0.2s ease;
-  }
-
-  .overview-btn:hover {
-    background: #dde1e9;
-  }
-
-  .usecases-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 280px;
-  }
-
-  .usecase-link {
-    display: grid;
-    grid-template-columns: 28px 1fr auto;
-    align-items: center;
-    gap: 14px;
-    min-height: 58px;
-    padding: 0 10px;
-    border-radius: 14px;
-    text-decoration: none;
-    color: #1a1f27;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
-    font-size: clamp(16px, 1.18vw, 19px);
-    letter-spacing: -0.01em;
-    transition: background-color 0.18s ease;
-  }
-
-  .usecase-link:hover {
-    background: #e7e9ee;
-  }
-
-  .usecase-icon {
-    width: 28px;
-    height: 28px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #2d3139;
-  }
-
-  .usecase-icon svg {
-    width: 22px;
-    height: 22px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .usecase-arrow {
-    font-size: clamp(18px, 1.2vw, 22px);
-    color: #424852;
-  }
-
-  .mobile-menu-toggle {
-    display: none;
-    width: 42px;
-    height: 42px;
-    border: none;
-    border-radius: 10px;
-    background: #e7e9ee;
-    color: #1d2128;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin-left: auto;
-  }
-
-  .mobile-menu-toggle svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .mobile-panel {
-    border-top: 1px solid #e1e4ea;
-    padding: 14px 18px 18px;
-    background: #f3f4f6;
-    display: none;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .mobile-open .mobile-panel {
-    display: flex;
-  }
-
-  .mobile-link,
-  .mobile-download {
-    text-decoration: none;
-    color: #171b22;
-    min-height: 44px;
-    border-radius: 12px;
-    display: inline-flex;
-    align-items: center;
-    padding: 0 14px;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
-    font-size: 16px;
-  }
-
-  .mobile-link:hover {
-    background: #e7e9ee;
-  }
-
-  .mobile-download {
-    justify-content: center;
-    margin-top: 4px;
-    background: #0d1017;
-    color: #f8f9fb;
-  }
-
-  [hidden] {
-    display: none !important;
-  }
-
-  @media (max-width: 1300px) {
-    .navbar-shell {
-      padding: 0 20px;
-      gap: 18px;
-    }
-
-    .brand-text {
-      font-size: clamp(15px, 1.35vw, 18px);
-    }
-
-    .navbar-link,
-    .download-btn {
-      font-size: clamp(14px, 1.25vw, 16px);
-    }
-  }
-
+  .navbar { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(8px); background: color-mix(in srgb, var(--md-sys-color-background) 86%, transparent); border-bottom: 1px solid var(--md-sys-color-outline-variant); }
+  .navbar-shell { max-width: var(--max-width-desktop); margin: 0 auto; padding: 14px var(--padding-horizontal); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand-link { color: var(--md-sys-color-on-surface); text-decoration: none; font-weight: 700; }
+  .navbar-center { display: flex; gap: 8px; }
+  .navbar-link { text-decoration: none; color: var(--md-sys-color-on-surface-variant); padding: 8px 12px; border-radius: var(--md-sys-shape-corner-full); }
+  .navbar-link.active, .navbar-link:hover { background: var(--md-sys-color-surface-container); color: var(--md-sys-color-on-surface); }
+  .download-btn, .mobile-download { text-decoration:none; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); padding: 8px 14px; border-radius: var(--md-sys-shape-corner-full); }
+  .mobile-menu-toggle { display:none; border:none; background:transparent; color:var(--md-sys-color-on-surface); font-size:20px; }
+  .mobile-panel { display:none; padding: 0 var(--padding-horizontal) 16px; }
+  .mobile-link { display:block; padding:8px 0; color:var(--md-sys-color-on-surface-variant); text-decoration:none; }
   @media (max-width: 900px) {
-    :global(:root) {
-      --site-nav-height: 72px;
-    }
-
-    .navbar-shell {
-      min-height: var(--site-nav-height);
-      gap: 14px;
-    }
-
-    .brand-text {
-      font-size: 18px;
-    }
-
-    .navbar-center,
-    .download-btn,
-    .usecases-panel {
-      display: none;
-    }
-
-    .mobile-menu-toggle {
-      display: inline-flex;
-    }
+    .navbar-center, .download-btn { display:none; }
+    .mobile-menu-toggle { display:block; }
+    .mobile-panel { display:block; }
   }
 </style>

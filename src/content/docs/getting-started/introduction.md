@@ -1,18 +1,22 @@
 ---
-title: "Introduction"
-description: "Introduction to ElexvxAI"
-category: "Getting Started"
+title: 平台简介
+description: 快速了解 ElexvxAI 文档站点结构与核心能力。
+category: 快速开始
 order: 1
+version: v1.0
+status: 稳定
 ---
 
-Learn about ElexvxAI, the state-of-the-art framework for neural network optimization and edge deployment.
+## 我们提供什么
 
-## What is ElexvxAI?
+ElexvxAI 聚焦企业级智能应用落地，涵盖模型接入、知识增强、评测体系与部署治理。
 
-ElexvxAI provides a suite of tools designed to maximize inference speed without sacrificing model accuracy. It supports dynamic quantization, pruning, and knowledge distillation directly integrated into your existing ML pipelines.
+## 适用场景
 
-## Key Features
+- 构建企业知识问答
+- 打造智能客服与助手
+- 建设统一模型中台
 
-- **Blazing Fast**: Engineered from the ground up to reduce latency.
-- **Hardware Agnostic**: Run on NVIDIA, AMD, or CPU backends.
-- **Developer Friendly**: Simple APIs to integrate complex operations easily.
+## 下一步
+
+请继续阅读安装指南，完成本地环境初始化。

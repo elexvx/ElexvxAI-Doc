@@ -1,0 +1,23 @@
+navbar:
+  brand: ElexvxAI 实验室
+  ariaLabel: ElexvxAI 首页
+  menuLabel: 打开菜单
+  links:
+    - label: 首页
+      href: /
+    - label: 文档
+      href: /docs/getting-started/introduction
+    - label: 博客
+      href: /blog
+  cta:
+    label: 开始使用
+    href: /docs/getting-started/introduction
+docs:
+  breadcrumbRoot: 文档
+  tocTitle: 本页导航
+  communityTitle: 社区
+  community:
+    - 讨论交流
+    - 反馈问题
+    - 编辑本页
+  categoryOrder: [快速开始, 核心概念, 参考资料]

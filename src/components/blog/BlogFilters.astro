@@ -1,0 +1,7 @@
+---
+const { filters } = Astro.props;
+---
+<section class="filters">
+  {filters.map((f: string, i: number) => <button class:list={["pill", {active: i===0}]}>{f}</button>)}
+</section>
+<style>.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}.pill{border:1px solid var(--md-sys-color-outline-variant);background:transparent;padding:8px 12px;border-radius:999px}.pill.active{background:var(--md-sys-color-primary-container)}</style>
