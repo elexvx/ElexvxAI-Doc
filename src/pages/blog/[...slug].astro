@@ -3,203 +3,32 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+import { loadYaml } from '../../lib/loadYaml';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
-  return blogEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  return blogEntries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const content = await loadYaml<any>('blog.yaml');
 ---
 
-<Layout title={`${entry.data.title} | ElexvxAI Lab Blog`}>
-  <Navbar />
-  
-  <main class="blog-post-page">
-    <article class="container bp-container">
-      <div class="bp-header">
-        <div class="bp-meta">
-          <span class="bp-category">{entry.data.category}</span>
-          <span>&bull;</span>
-          <span>{entry.data.date}</span>
-          <span>&bull;</span>
-          <span>{entry.data.readTime}</span>
-        </div>
-        <h1 class="bp-title">{entry.data.title}</h1>
-      </div>
-      
-      <div class="bp-hero-image">
-        <img src={entry.data.image} alt={entry.data.title} />
-      </div>
-
-      <div class="bp-content markdown-content">
-        <Content />
-      </div>
-
-      <div class="bp-author">
-        <div class="author-avatar">{entry.data.author.charAt(0)}</div>
-        <div class="author-details">
-          <div class="author-name">{entry.data.author}</div>
-          <div class="author-role">ElexvxAI Lab Researcher</div>
-        </div>
-      </div>
+<Layout title={`${entry.data.title} | ElexvxAI 博客`}>
+  <Navbar content={content.navbar} />
+  <main class="section">
+    <article class="container post">
+      <h1>{entry.data.title}</h1>
+      <p class="meta">{entry.data.category} · {entry.data.date} · {entry.data.readTime}</p>
+      <img class="hero" src={entry.data.image} alt={entry.data.title} />
+      <div class="markdown-content"><Content /></div>
+      <p class="author">{entry.data.author} · {content.post.authorRole}</p>
     </article>
   </main>
-
-  <Footer />
+  <Footer content={content.footer} />
 </Layout>
 
 <style>
-  .blog-post-page {
-    padding: 64px 24px;
-    background-color: var(--md-sys-color-background);
-    min-height: calc(100vh - 72px);
-  }
-
-  .bp-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .bp-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-
-  .bp-meta {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: var(--md-sys-typescale-label-large-font-size);
-    margin-bottom: 24px;
-  }
-
-  .bp-category {
-    color: var(--md-sys-color-primary);
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .bp-title {
-    font-size: 48px;
-    line-height: 1.2;
-    color: var(--md-sys-color-on-surface);
-    font-weight: 700;
-  }
-
-  .bp-hero-image {
-    width: 100%;
-    height: 400px;
-    border-radius: var(--md-sys-shape-corner-extra-large);
-    overflow: hidden;
-    margin-bottom: 48px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  }
-
-  .bp-hero-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .bp-content {
-    color: var(--md-sys-color-on-surface);
-    font-size: 18px;
-    line-height: 1.8;
-  }
-
-  .bp-author {
-    margin-top: 64px;
-    padding: 32px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    border-radius: var(--md-sys-shape-corner-large);
-    background-color: var(--md-sys-color-surface-container);
-    border: 1px solid var(--md-sys-color-outline-variant);
-  }
-
-  .author-avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background-color: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 24px;
-  }
-
-  .author-name {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--md-sys-color-on-surface);
-    margin-bottom: 4px;
-  }
-
-  .author-role {
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: 14px;
-  }
-
-  /* Basic Markdown Formatting inside bp-content */
-  .markdown-content h1, .markdown-content h2, .markdown-content h3 {
-    color: var(--md-sys-color-on-surface);
-    margin-top: 48px;
-    margin-bottom: 24px;
-    font-weight: 700;
-  }
-  .markdown-content h2 { font-size: 32px; }
-  .markdown-content h3 { font-size: 24px; }
-  .markdown-content p { margin-bottom: 24px; }
-  .markdown-content ul, .markdown-content ol { margin-bottom: 24px; padding-left: 24px; }
-  .markdown-content li { margin-bottom: 12px; }
-  .markdown-content pre {
-    background: #111116;
-    padding: 24px;
-    border-radius: 12px;
-    overflow-x: auto;
-    margin-block: 32px;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .markdown-content code {
-    font-family: var(--docs-font-mono, 'JetBrains Mono', monospace);
-    font-size: 14px;
-    background: var(--md-sys-color-surface-container-highest);
-    padding: 4px 8px;
-    border-radius: 4px;
-    color: var(--md-sys-color-on-surface);
-  }
-  .markdown-content pre code {
-    background: transparent;
-    padding: 0;
-    color: #e5e7eb;
-  }
-  .markdown-content blockquote {
-    margin: 32px 0;
-    padding: 24px;
-    border-left: 4px solid var(--md-sys-color-primary);
-    background: var(--md-sys-color-surface-container-high);
-    border-radius: 0 8px 8px 0;
-    font-style: italic;
-    color: var(--md-sys-color-on-surface-variant);
-  }
-  
-  @media (max-width: 768px) {
-    .bp-title {
-      font-size: 36px;
-    }
-    .bp-hero-image {
-      height: 250px;
-    }
-  }
+  .post{max-width:800px}.meta,.author{color:var(--md-sys-color-on-surface-variant)}.hero{width:100%;border-radius:12px;margin:20px 0}
 </style>

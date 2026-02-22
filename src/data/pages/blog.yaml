@@ -1,0 +1,36 @@
+navbar:
+  brand: ElexvxAI 实验室
+  ariaLabel: ElexvxAI 首页
+  menuLabel: 打开菜单
+  links:
+    - label: 首页
+      href: /
+    - label: 文档
+      href: /docs/getting-started/introduction
+    - label: 博客
+      href: /blog
+  cta:
+    label: 开始使用
+    href: /docs/getting-started/introduction
+blog:
+  title: 技术博客
+  subtitle: 聚焦智能体、模型工程与企业实践，持续发布一线经验与方法论。
+  sectionTitle: 最新文章
+  filters:
+    - 全部
+    - 工程实践
+    - 模型研究
+    - 应用案例
+post:
+  authorRole: ElexvxAI 研究工程师
+footer:
+  brand: ElexvxAI 实验室
+  desc: 持续分享 AI 工程方法与实战经验，帮助团队提升交付效率与质量。
+  columns:
+    - title: 研究
+      links: [论文成果, 模型仓库, 数据集, AI 伦理]
+    - title: 资源
+      links: [产品文档, 开源项目, API 文档, 技术博客]
+    - title: 公司
+      links: [关于我们, 招贤纳士, 合作伙伴, 联系方式]
+  copyright: 保留所有权利。

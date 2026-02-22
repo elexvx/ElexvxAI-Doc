@@ -1,154 +1,43 @@
 ---
-// src/components/Footer.astro
+interface FooterColumn {
+  title: string;
+  links: string[];
+}
+
+interface FooterContent {
+  brand: string;
+  desc: string;
+  columns: FooterColumn[];
+  copyright: string;
+}
+
+const { content } = Astro.props as { content: FooterContent };
 ---
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="logo-text">ElexvxAI Lab</div>
-        <p class="body-large footer-desc">
-          Advancing Intelligence for Industrial Innovation. Our mission is to bridge the gap between academic research and scalable enterprise AI solutions.
-        </p>
-      </div>
-
-      <div class="footer-links-grid">
-        <div class="footer-links-col">
-          <h4 class="title-large footer-heading">Research</h4>
-          <ul class="footer-list">
-            <li><a href="#">Publications</a></li>
-            <li><a href="#">Models</a></li>
-            <li><a href="#">Datasets</a></li>
-            <li><a href="#">Ethics</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-links-col">
-          <h4 class="title-large footer-heading">Resources</h4>
-          <ul class="footer-list">
-            <li><a href="#">Documentation</a></li>
-            <li><a href="#">Open Source</a></li>
-            <li><a href="#">API Reference</a></li>
-            <li><a href="#">Blog</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-links-col">
-          <h4 class="title-large footer-heading">Company</h4>
-          <ul class="footer-list">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Partners</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </div>
-      </div>
+  <div class="container footer-grid">
+    <div>
+      <h3>{content.brand}</h3>
+      <p>{content.desc}</p>
     </div>
-
-    <div class="footer-bottom">
-      <div class="footer-copy">
-        &copy; {new Date().getFullYear()} ElexvxAI Lab. All rights reserved.
+    {content.columns.map((column) => (
+      <div>
+        <h4>{column.title}</h4>
+        <ul>
+          {column.links.map((link) => <li>{link}</li>)}
+        </ul>
       </div>
-      <div class="footer-social">
-        <a href="#" class="icon-btn" aria-label="Twitter">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-        </a>
-        <a href="#" class="icon-btn" aria-label="LinkedIn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-        </a>
-        <a href="#" class="icon-btn" aria-label="GitHub">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-        </a>
-      </div>
-    </div>
+    ))}
   </div>
+  <div class="container footer-bottom">© {new Date().getFullYear()} {content.brand}，{content.copyright}</div>
 </footer>
 
 <style>
-  .footer {
-    background-color: var(--md-sys-color-surface-container-low);
-    color: var(--md-sys-color-on-surface);
-    padding-top: 80px;
-    padding-bottom: 24px;
-    border-top: 1px solid var(--md-sys-color-surface-dim);
-  }
-
-  .footer-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 64px;
-    margin-bottom: 64px;
-  }
-
-  .footer-brand {
-    max-width: 400px;
-  }
-
-  .logo-text {
-    font-size: var(--md-sys-typescale-title-large-font-size);
-    font-weight: 700;
-    margin-bottom: 16px;
-    color: var(--md-sys-color-primary);
-  }
-
-  .footer-desc {
-    color: var(--md-sys-color-on-surface-variant);
-  }
-
-  .footer-links-grid {
-    display: flex;
-    gap: 80px;
-  }
-
-  .footer-heading {
-    margin-bottom: 24px;
-    font-weight: 500;
-  }
-
-  .footer-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .footer-list a {
-    text-decoration: none;
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: var(--md-sys-typescale-body-large-font-size);
-    transition: color 0.2s ease;
-  }
-
-  .footer-list a:hover {
-    color: var(--md-sys-color-primary);
-  }
-
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 24px;
-    border-top: 1px solid var(--md-sys-color-outline-variant);
-  }
-
-  .footer-copy {
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: var(--md-sys-typescale-label-large-font-size);
-  }
-
-  .footer-social {
-    display: flex;
-    gap: 8px;
-  }
-
-  @media (max-width: 992px) {
-    .footer-top { flex-direction: column; gap: 48px; }
-    .footer-links-grid { flex-wrap: wrap; gap: 48px; }
-  }
-
-  @media (max-width: 576px) {
-    .footer-bottom { flex-direction: column; gap: 24px; text-align: center; }
-  }
+  .footer { margin-top: 48px; border-top: 1px solid var(--md-sys-color-outline-variant); padding: 40px 0 20px; background: var(--md-sys-color-surface-container-low); }
+  .footer-grid { display:grid; grid-template-columns: 2fr repeat(3,1fr); gap: 20px; }
+  ul { list-style:none; padding:0; margin:10px 0 0; }
+  li { color: var(--md-sys-color-on-surface-variant); margin: 8px 0; }
+  .footer-bottom { margin-top: 20px; color: var(--md-sys-color-on-surface-variant); }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; } }
 </style>

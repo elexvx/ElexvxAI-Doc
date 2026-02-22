@@ -1,0 +1,67 @@
+navbar:
+  brand: ElexvxAI 实验室
+  ariaLabel: ElexvxAI 首页
+  menuLabel: 打开菜单
+  links:
+    - label: 首页
+      href: /
+    - label: 文档
+      href: /docs/getting-started/introduction
+    - label: 博客
+      href: /blog
+  cta:
+    label: 开始使用
+    href: /docs/getting-started/introduction
+hero:
+  badge: AI 创新实验室
+  title: 面向产业创新的智能能力平台
+  highlight: 让企业级 AI 从概念快速落地
+  description: 通过先进模型、可靠工程体系与开放协作生态，帮助团队构建可扩展、可维护、可评估的智能应用。
+  actions:
+    primary: 查看项目
+    secondary: 阅读文档
+  attributes:
+    - 开源优先
+    - 企业可用
+    - 研究驱动
+  metricLabel: 模型稳定性
+valueProps:
+  sectionTitle: 核心价值
+  sectionDesc: 围绕“研发、交付、治理”三条主线，提供完整的 AI 工程化能力。
+  items:
+    - title: 统一研发流程
+      desc: 从数据准备到模型上线，采用一致的开发规范和自动化流水线。
+    - title: 高可用部署
+      desc: 支持多环境发布、灰度验证与弹性伸缩，保障生产稳定。
+    - title: 安全与合规
+      desc: 提供审计、权限和敏感数据防护能力，满足企业治理要求。
+features:
+  sectionTitle: 产品能力模块
+  items:
+    - title: 模型服务网关
+      desc: 统一管理模型路由、限流、监控与调用日志。
+    - title: Prompt 与评测中心
+      desc: 提供版本管理、A/B 对比和自动回归评测，持续提升效果。
+    - title: 知识增强引擎
+      desc: 集成向量检索与文档处理，支持高质量知识问答。
+stats:
+  items:
+    - label: 服务可用性
+      value: '99.9%'
+    - label: 平均响应
+      value: '<120ms'
+    - label: 交付项目
+      value: '80+'
+    - label: 企业客户
+      value: '50+'
+footer:
+  brand: ElexvxAI 实验室
+  desc: 连接前沿研究与产业落地，构建可靠、可持续、可演进的企业 AI 能力。
+  columns:
+    - title: 研究
+      links: [论文成果, 模型仓库, 数据集, AI 伦理]
+    - title: 资源
+      links: [产品文档, 开源项目, API 文档, 技术博客]
+    - title: 公司
+      links: [关于我们, 招贤纳士, 合作伙伴, 联系方式]
+  copyright: 保留所有权利。

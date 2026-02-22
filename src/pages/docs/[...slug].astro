@@ -1,128 +1,28 @@
 ---
 import { getCollection } from 'astro:content';
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import { loadYaml } from '../../lib/loadYaml';
 
 export async function getStaticPaths() {
   const docsEntries = await getCollection('docs');
-  return docsEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  return docsEntries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
 }
 
 const { entry } = Astro.props;
-
-if (!entry) {
-  return Astro.redirect('/docs/getting-started/introduction');
-}
-
-const { Content, headings } = await entry.render();
+if (!entry) return Astro.redirect('/docs/getting-started/introduction');
+const { Content } = await entry.render();
+const content = await loadYaml<any>('docs.yaml');
 ---
 
-<DocsLayout title={`${entry.data.title} - ElexvxAI Docs`} headings={headings}>
-  
+<DocsLayout title={`${entry.data.title} - ElexvxAI 文档`}>
   <div class="docs-breadcrumbs">
-    <span>Docs</span>
+    <span>{content.docs.breadcrumbRoot}</span>
     <span class="docs-breadcrumb-separator">/</span>
     <span>{entry.data.category}</span>
     <span class="docs-breadcrumb-separator">/</span>
     <span class="active">{entry.data.title}</span>
   </div>
-
-  { (entry.data.version || entry.data.status) && (
-    <div class="page-meta" style="margin-bottom: 24px;">
-      {entry.data.version && <span class="docs-badge docs-badge-primary">{entry.data.version}</span>}
-      {entry.data.status && <span class="docs-badge docs-badge-surface">{entry.data.status}</span>}
-    </div>
-  )}
-
   <h1>{entry.data.title}</h1>
-
-  {entry.data.description && (
-    <p class="docs-intro-p">
-      {entry.data.description}
-    </p>
-  )}
-
-  <div class="markdown-content">
-    <Content />
-  </div>
-
+  {entry.data.description && <p class="docs-intro-p">{entry.data.description}</p>}
+  <div class="markdown-content"><Content /></div>
 </DocsLayout>
-
-<style is:global>
-  .docs-intro-p {
-    font-size: 18px; 
-    color: var(--docs-text-secondary); 
-    margin-bottom: 40px; 
-    line-height: 1.6; 
-    max-width: 800px;
-  }
-  .markdown-content h2 {
-    margin-top: 48px;
-    margin-bottom: 24px;
-    font-size: 24px;
-    font-weight: 600;
-  }
-  .markdown-content h3 {
-    margin-top: 32px;
-    margin-bottom: 16px;
-    font-size: 20px;
-    font-weight: 500;
-  }
-  .markdown-content p {
-    line-height: 1.6;
-    margin-bottom: 20px;
-    color: var(--docs-text-secondary);
-  }
-  .markdown-content code {
-    background: rgba(255,255,255,0.1); 
-    padding: 2px 6px; 
-    border-radius: 4px; 
-    font-family: var(--docs-font-mono); 
-    font-size: 13px;
-  }
-  .markdown-content pre {
-    background: #111116;
-    padding: 16px;
-    border-radius: var(--docs-radius-md);
-    border: 1px solid var(--docs-border-color);
-    overflow-x: auto;
-    margin-bottom: 24px;
-  }
-  .markdown-content pre code {
-    background: transparent;
-    padding: 0;
-  }
-  .markdown-content blockquote {
-    margin: 24px 0;
-    padding: 16px 20px;
-    background: rgba(94, 153, 255, 0.1);
-    border: 1px solid rgba(94, 153, 255, 0.2);
-    border-radius: var(--docs-radius-md);
-    color: var(--docs-text-primary);
-  }
-  .markdown-content ul {
-    margin-bottom: 24px;
-    padding-left: 20px;
-    color: var(--docs-text-secondary);
-  }
-  .markdown-content li {
-    margin-bottom: 8px;
-    line-height: 1.6;
-  }
-  .markdown-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 24px;
-  }
-  .markdown-content th, .markdown-content td {
-    padding: 12px 16px;
-    text-align: left;
-    border-bottom: 1px solid var(--docs-border-color);
-  }
-  .markdown-content th {
-    font-weight: 500;
-    color: var(--docs-text-primary);
-  }
-</style>
