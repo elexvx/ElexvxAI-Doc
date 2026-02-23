@@ -1,0 +1,49 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import DocLayout from '../../../../layouts/DocLayout.astro';
+import { buildSidebar, isSupportedLang, parseDocId } from '../../../../lib/docs';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('docs');
+  const pages = entries.filter((e) => !e.id.endsWith('/index'));
+
+  return pages.flatMap((entry) => {
+    const p = parseDocId(entry.id);
+    const slug = p.rest.join('/');
+    if (!slug) return [];
+    return [
+      {
+        params: { lang: p.lang, version: p.version, slug },
+        props: { id: entry.id },
+      },
+    ];
+  });
+}
+
+const { id } = Astro.props;
+const entry = await getEntry('docs', id);
+if (!entry) throw new Error(`Missing entry: ${id}`);
+
+const { Content, headings } = await render(entry);
+const p = parseDocId(id);
+
+if (!isSupportedLang(p.lang)) {
+  throw new Error(`Unsupported lang: ${p.lang}`);
+}
+
+const slug = p.slug;
+const entries = await getCollection('docs');
+const sidebarGroups = buildSidebar(entries, { lang: p.lang, version: p.version });
+---
+
+<DocLayout
+  lang={p.lang}
+  version={p.version}
+  slug={slug}
+  title={entry.data.title}
+  description={entry.data.description}
+  sidebarGroups={sidebarGroups}
+  headings={headings}
+>
+  <Content />
+</DocLayout>

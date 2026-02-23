@@ -1,0 +1,66 @@
+---
+type Heading = { depth: number; slug: string; text: string };
+
+type Props = {
+  headings: Heading[];
+  title: string;
+};
+
+const { headings, title } = Astro.props;
+const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+<aside class="toc">
+  <div class="tocTitle">{title}</div>
+  <ul class="tocList">
+    {items.map((h) => (
+      <li class:list={['tocItem', h.depth === 3 && 'd3']}>
+        <a href={`#${h.slug}`}>{h.text}</a>
+      </li>
+    ))}
+  </ul>
+</aside>
+
+<style>
+  .toc {
+    position: sticky;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+    overflow: auto;
+    padding: 1rem 0.75rem 1.5rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .tocTitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding: 0.25rem 0.25rem 0.5rem;
+  }
+
+  .tocList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tocItem {
+    padding: 0.15rem 0;
+    opacity: 1;
+    transition: all 0.2s ease;
+  }
+
+  .tocItem.d3 {
+    padding-left: 1rem;
+  }
+
+  .tocItem a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+  }
+
+  .tocItem a:hover {
+    color: var(--primary);
+  }
+</style>

@@ -1,0 +1,61 @@
+<section class="stats-section">
+  <div class="container">
+    <div class="stat-item">
+      <div class="stat-value">50+</div>
+      <div class="stat-label">Research Papers</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">10k+</div>
+      <div class="stat-label">GitHub Stars</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">20+</div>
+      <div class="stat-label">Industry Partners</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">4</div>
+      <div class="stat-label">Global Labs</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-section {
+    padding: 6rem 1.5rem;
+    background-color: var(--md-sys-color-surface-container); /* Slightly different bg */
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .stat-value {
+    font-family: var(--md-sys-typescale-display-font);
+    font-size: 3rem;
+    font-weight: 400; /* M3 Display Large/Medium */
+    color: var(--md-sys-color-primary);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--md-sys-typescale-body-font);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    letter-spacing: 0.5px;
+  }
+</style>

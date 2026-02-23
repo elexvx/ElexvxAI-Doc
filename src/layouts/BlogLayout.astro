@@ -1,0 +1,117 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Toc from '../components/Toc.astro';
+import type { Lang } from '../config/site';
+
+type Heading = { depth: number; slug: string; text: string };
+
+type Props = {
+  lang: Lang;
+  title: string;
+  description?: string;
+  slug?: string;
+  headings: Heading[];
+  pubDate: Date;
+  tags?: string[];
+};
+
+const { lang, title, description, slug, headings, pubDate, tags } = Astro.props;
+---
+
+<BaseLayout lang={lang} title={`${title} · Blog`} description={description}>
+  <Header lang={lang} kind="blog" slug={slug} />
+  <div class="wrap">
+    <main class="content" data-pagefind-body>
+      <span class="pf" data-pagefind-filter="Type">Blog</span>
+      <span class="pf" data-pagefind-filter="Language">{lang}</span>
+      <article class="article">
+        <header class="meta">
+          <h1 data-pagefind-meta="title">{title}</h1>
+          <div class="row">
+            <time datetime={pubDate.toISOString()}>{pubDate.toISOString().slice(0, 10)}</time>
+            {tags?.length ? (
+              <div class="tags">
+                {tags.map((t) => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+            ) : null}
+          </div>
+          {description ? <p class="desc">{description}</p> : null}
+        </header>
+        <slot />
+      </article>
+    </main>
+    <Toc headings={headings} title={lang === 'zh' ? '本页目录' : 'On this page'} />
+  </div>
+</BaseLayout>
+
+<style>
+  .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content {
+    padding: 1.75rem 1.25rem 3.5rem;
+    min-height: calc(100vh - 4rem);
+  }
+
+  .article {
+    max-width: 820px;
+  }
+
+  .meta h1 {
+    margin: 0;
+  }
+
+  .row {
+    margin-top: 0.55rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    padding: 0.15rem 0.45rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--card), transparent 10%);
+  }
+
+  .desc {
+    color: var(--muted);
+    margin-top: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .pf {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1100px) {
+    .wrap {
+      grid-template-columns: 1fr;
+    }
+    :global(.toc) {
+      display: none;
+    }
+  }
+</style>

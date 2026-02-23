@@ -1,0 +1,332 @@
+---
+import { getDocUrl } from '../../lib/docs';
+import { SITE } from '../../config/site';
+
+const zh = getDocUrl({ lang: 'zh', version: SITE.defaultVersion });
+---
+
+<section class="hero-section">
+  <div class="container">
+    <div class="content">
+      <div class="tag">
+        <span class="dot"></span>
+        AI Innovation Lab
+      </div>
+      <h1 class="headline">
+        Advancing Intelligence for
+        <span class="highlight">Industrial Innovation</span>
+      </h1>
+      <p class="subhead">
+        Bridging the gap between theoretical AI research and real-world industrial application. Building the next generation of intelligent systems.
+      </p>
+      
+      <div class="actions">
+        <a href={zh} class="btn-filled">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/>
+          </svg>
+          Our Projects
+        </a>
+        <a href={zh} class="btn-outlined">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+          </svg>
+          View Docs
+        </a>
+      </div>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <svg class="check-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+          <span>Open Source</span>
+        </div>
+        <div class="feature-item">
+          <svg class="check-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+          <span>Enterprise Ready</span>
+        </div>
+        <div class="feature-item">
+          <svg class="check-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+          <span>Research Backed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="visual">
+      <div class="card-visual">
+        <div class="network-grid">
+          <!-- Abstract grid visualization using CSS -->
+          <div class="grid-line horizontal"></div>
+          <div class="grid-line horizontal"></div>
+          <div class="grid-line horizontal"></div>
+          <div class="grid-line vertical"></div>
+          <div class="grid-line vertical"></div>
+          <div class="grid-line vertical"></div>
+          <div class="node n1"></div>
+          <div class="node n2"></div>
+          <div class="node n3"></div>
+          <div class="node n4"></div>
+          <div class="connection c1"></div>
+          <div class="connection c2"></div>
+        </div>
+        
+        <div class="stat-float">
+          <div class="icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+            </svg>
+          </div>
+          <div class="stat-text">
+            <div class="stat-label">MODEL PERFORMANCE</div>
+            <div class="stat-value">99.8% Accuracy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding: 4rem 1.5rem;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .container {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    
+    .visual {
+      order: -1;
+    }
+  }
+
+  /* Left Content */
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    width: fit-content;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    background-color: currentColor;
+    border-radius: 50%;
+  }
+
+  .headline {
+    font-family: var(--md-sys-typescale-display-font);
+    font-size: 3.5rem;
+    line-height: 1.1;
+    font-weight: 400; /* M3 uses lighter weights for large type */
+    margin: 0;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .highlight {
+    color: var(--md-sys-color-primary);
+    display: block;
+    font-weight: 500;
+  }
+
+  .subhead {
+    font-family: var(--md-sys-typescale-body-font);
+    font-size: 1.125rem;
+    line-height: 1.5;
+    color: var(--md-sys-color-on-surface-variant);
+    max-width: 600px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-filled {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: box-shadow 0.2s;
+  }
+  
+  .btn-filled:hover {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3), 0 1px 3px 1px rgba(0,0,0,0.15);
+    text-decoration: none;
+  }
+
+  .btn-outlined {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--md-sys-color-outline);
+    color: var(--md-sys-color-primary);
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+
+  .btn-outlined:hover {
+    background-color: var(--md-sys-color-surface-variant);
+    text-decoration: none;
+  }
+
+  .features-list {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .check-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--md-sys-color-primary);
+    background: var(--md-sys-color-primary-container);
+    border-radius: 50%;
+    padding: 2px;
+  }
+
+  /* Right Visual */
+  .visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-visual {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #EADDFF 0%, #D0BCFF 100%);
+    border-radius: 24px;
+    overflow: hidden; /* Hide overflow from network grid if needed, but let float card pop out */
+    overflow: visible; /* Let the float card show */
+    box-shadow: 0 4px 8px 3px rgba(0,0,0,0.15);
+  }
+  
+  .network-grid {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 24px;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+  }
+
+  /* Abstract network simulation */
+  .node {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px white;
+  }
+  .n1 { top: 30%; left: 30%; }
+  .n2 { top: 20%; left: 60%; }
+  .n3 { top: 60%; left: 70%; }
+  .n4 { top: 70%; left: 40%; }
+  
+  .connection {
+    position: absolute;
+    background: rgba(255,255,255,0.4);
+    height: 1px;
+    transform-origin: left center;
+  }
+  .c1 { top: 30%; left: 30%; width: 34%; transform: rotate(-15deg); }
+  
+  .stat-float {
+    position: absolute;
+    bottom: -24px; /* Floating out */
+    left: 24px;
+    right: 24px;
+    background: var(--md-sys-color-surface);
+    border-radius: 16px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .icon-circle {
+    width: 40px;
+    height: 40px;
+    background: #FFD8E4; /* Pinkish container */
+    color: #31111D;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+
+  .stat-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .stat-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+  }
+</style>

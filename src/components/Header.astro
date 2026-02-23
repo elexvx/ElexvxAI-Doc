@@ -1,0 +1,179 @@
+---
+import { SITE, type Lang } from '../config/site';
+import { t } from '../i18n/ui';
+import { getDocUrl } from '../lib/docs';
+import { getBlogUrl } from '../lib/blog';
+
+type Props = {
+  lang: Lang;
+  version?: string;
+  slug?: string;
+  kind?: 'docs' | 'blog' | 'search';
+};
+
+const { lang, version, slug, kind = 'docs' } = Astro.props;
+const otherLang = lang === 'zh' ? 'en' : 'zh';
+
+const docsVersion = version ?? SITE.defaultVersion;
+
+const currentHref =
+  kind === 'blog'
+    ? getBlogUrl({ lang, slug })
+    : kind === 'search'
+      ? `/${lang}/search/`
+      : getDocUrl({ lang, version: docsVersion, slug });
+
+const otherLangHref =
+  kind === 'blog'
+    ? getBlogUrl({ lang: otherLang, slug })
+    : kind === 'search'
+      ? `/${otherLang}/search/`
+      : getDocUrl({ lang: otherLang, version: docsVersion, slug });
+
+const brandHref =
+  kind === 'blog'
+    ? getBlogUrl({ lang })
+    : kind === 'search'
+      ? getDocUrl({ lang, version: docsVersion })
+      : getDocUrl({ lang, version: docsVersion });
+---
+
+<header class="hdr">
+  <div class="brand">
+    <a class="logo" href={brandHref}>{SITE.title}</a>
+  </div>
+  <nav class="nav">
+    <a class="navLink" href={getDocUrl({ lang, version: docsVersion })}>{t(lang, 'docs')}</a>
+    <a class="navLink" href={getBlogUrl({ lang })}>{t(lang, 'blog')}</a>
+    <a class="navLink" href={`/${lang}/search/`}>{t(lang, 'search')}</a>
+  </nav>
+  <div class="controls">
+    {kind === 'docs' ? (
+      <div class="select">
+        <span class="label">{t(lang, 'version')}</span>
+        <select aria-label={t(lang, 'version')} onchange="location.href = this.value">
+          {SITE.versions.map((v) => (
+            <option value={getDocUrl({ lang, version: v, slug })} selected={v === docsVersion}>
+              {v}
+            </option>
+          ))}
+        </select>
+      </div>
+    ) : null}
+    <div class="select">
+      <span class="label">{t(lang, 'language')}</span>
+      <select
+        aria-label={t(lang, 'language')}
+        onchange="location.href = this.value"
+      >
+        <option value={currentHref} selected>
+          {lang.toUpperCase()}
+        </option>
+        <option value={otherLangHref}>{otherLang.toUpperCase()}</option>
+      </select>
+    </div>
+    <button class="btn" type="button" id="themeToggle" aria-label="Toggle theme">
+      Theme
+    </button>
+  </div>
+</header>
+
+<script is:inline>
+  const btn = document.getElementById('themeToggle');
+  btn?.addEventListener('click', () => {
+    const key = 'theme';
+    const cur = document.documentElement.dataset.theme || 'light';
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem(key, next);
+  });
+</script>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1.5rem;
+    background: color-mix(in srgb, var(--bg), transparent 20%);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 12rem;
+  }
+
+  .logo {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    font-size: 1.2rem;
+    color: var(--fg);
+  }
+
+  .nav {
+    display: flex;
+    gap: 1rem;
+    flex: 1;
+  }
+
+  .navLink {
+    color: var(--fg);
+    opacity: 0.85;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .select {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 0.7rem;
+    background: color-mix(in srgb, var(--card), transparent 10%);
+    box-shadow: 0 8px 24px var(--shadow);
+  }
+
+  .label {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  select {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--fg);
+    font-size: 0.9rem;
+    padding-right: 0.75rem;
+    cursor: pointer;
+  }
+
+  .btn {
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--card), transparent 10%);
+    color: var(--fg);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.7rem;
+    cursor: pointer;
+    box-shadow: 0 8px 24px var(--shadow);
+  }
+
+  @media (max-width: 900px) {
+    .nav {
+      display: none;
+    }
+  }
+</style>
