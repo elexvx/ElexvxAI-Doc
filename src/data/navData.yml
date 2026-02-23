@@ -1,0 +1,13 @@
+logo: "ElexvxAI"
+links:
+  - label: "Home"
+    path: "/"
+  - label: "Docs"
+    path: "/docs"
+  - label: "Blog"
+    path: "/blog"
+language:
+  - code: "en"
+    label: "English"
+  - code: "zh"
+    label: "中文"

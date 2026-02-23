@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HomeHero from "../components/HomeHero";
+import FeatureSection from "../components/FeatureSection";
+import StatsSection from "../components/StatsSection";
+import homeData from "../data/homeData.yml";
+---
+
+<Layout title="ElexvxAI - Documentation Site">
+	<HomeHero data={homeData.hero} client:load />
+	<FeatureSection data={homeData.features} client:load />
+	<StatsSection data={homeData.stats} client:load />
+</Layout>

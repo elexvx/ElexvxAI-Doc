@@ -1,0 +1,79 @@
+---
+import Layout from "./Layout.astro";
+import DocsSidebar from "../components/DocsSidebar";
+import DocsToc from "../components/DocsToc";
+import { getCollection } from "astro:content";
+
+interface Props {
+    title: string;
+    currentPath: string;
+}
+
+const { title, currentPath } = Astro.props;
+
+// Fetch all docs and build sidebar dynamically
+const allDocs = await getCollection("docs");
+
+// Sort by 'order' field in frontmatter, then by title
+const sortedDocs = allDocs.sort((a, b) => {
+    const orderA = a.data.order ?? 99;
+    const orderB = b.data.order ?? 99;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.data.title.localeCompare(b.data.title);
+});
+
+// Group docs by their 'section' frontmatter field
+const sectionMap = new Map<string, typeof sortedDocs>();
+for (const doc of sortedDocs) {
+    const section = doc.data.section ?? "Other";
+    if (!sectionMap.has(section)) sectionMap.set(section, []);
+    sectionMap.get(section)!.push(doc);
+}
+
+// Define icon mapping rules based on title keywords
+function getIcon(title: string): string {
+    const t = title.toLowerCase();
+    if (t.includes("introduction") || t.includes("overview"))
+        return "HomeOutlined";
+    if (t.includes("install")) return "Download";
+    if (t.includes("quick") || t.includes("start"))
+        return "RocketLaunchOutlined";
+    if (t.includes("architec") || t.includes("layer")) return "LayersOutlined";
+    if (t.includes("neural") || t.includes("network") || t.includes("model"))
+        return "PsychologyOutlined";
+    if (t.includes("pipeline") || t.includes("data")) return "SchemaOutlined";
+    if (t.includes("api") || t.includes("python")) return "CodeOutlined";
+    if (t.includes("cli") || t.includes("command")) return "TerminalOutlined";
+    return "HomeOutlined";
+}
+
+// Build the sidebar data structure
+const sidebarData = Array.from(sectionMap.entries()).map(([section, docs]) => ({
+    title: section,
+    items: docs.map((doc) => ({
+        label: doc.data.title,
+        path: `/docs/${doc.id}`,
+        icon: getIcon(doc.data.title),
+    })),
+}));
+---
+
+<Layout title={title} hideFooter={true}>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+        <DocsSidebar data={sidebarData} currentPath={currentPath} client:load />
+
+        <main
+            style={{
+                flexGrow: 1,
+                padding: "32px 48px",
+                maxWidth: "960px",
+                margin: "0 auto",
+                width: "100%",
+            }}
+        >
+            <slot />
+        </main>
+
+        <DocsToc client:load />
+    </div>
+</Layout>

@@ -1,0 +1,204 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { render } from "astro:content";
+import { getAllBlogPosts } from "../../lib/blog";
+
+export async function getStaticPaths() {
+    const posts = await getAllBlogPosts();
+    return posts.map((post) => ({
+        params: { slug: post.slug },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post.entry);
+---
+
+<Layout title={`${post.title} - ElexvxAI Lab`}>
+    <div
+        style={{
+            maxWidth: "800px",
+            margin: "0 auto",
+            padding: "48px 24px 96px",
+        }}
+    >
+        <!-- Hero Image -->
+        {
+            post.image && (
+                <img
+                    src={post.image}
+                    alt={post.title}
+                    style={{
+                        width: "100%",
+                        height: "320px",
+                        objectFit: "cover",
+                        borderRadius: "16px",
+                        marginBottom: "40px",
+                    }}
+                />
+            )
+        }
+
+        <!-- Tags -->
+        <div
+            style={{
+                display: "flex",
+                gap: "8px",
+                marginBottom: "16px",
+                flexWrap: "wrap",
+            }}
+        >
+            {
+                post.tags.map((tag: string) => (
+                    <span
+                        style={{
+                            background: "rgba(25, 118, 210, 0.12)",
+                            color: "#1976d2",
+                            padding: "4px 12px",
+                            borderRadius: "99px",
+                            fontSize: "0.8rem",
+                            fontWeight: 600,
+                        }}
+                    >
+                        {tag}
+                    </span>
+                ))
+            }
+        </div>
+
+        <!-- Meta -->
+        <p
+            style={{
+                color: "#6b7280",
+                fontSize: "0.9rem",
+                marginBottom: "32px",
+            }}
+        >
+            {post.author} · {
+                post.date.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                })
+            }
+        </p>
+
+        <!-- Markdown Content -->
+        <article class="prose">
+            <Content />
+        </article>
+    </div>
+</Layout>
+
+<style>
+    .prose :global(h1) {
+        font-size: 2.4rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 12px;
+        letter-spacing: -0.02em;
+    }
+    .prose :global(h2) {
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-top: 48px;
+        margin-bottom: 16px;
+    }
+    .prose :global(h3) {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-top: 32px;
+        margin-bottom: 12px;
+    }
+    .prose :global(p) {
+        line-height: 1.75;
+        color: var(--text-secondary, #5f6973);
+        margin-bottom: 16px;
+    }
+    .prose :global(code) {
+        background: rgba(0, 0, 0, 0.06);
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-size: 0.875em;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+            monospace;
+    }
+    .prose :global(pre) {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 20px 24px;
+        border-radius: 12px;
+        overflow-x: auto;
+        margin: 24px 0;
+        font-size: 0.875rem;
+        line-height: 1.7;
+    }
+    .prose :global(pre code) {
+        background: none;
+        padding: 0;
+        color: inherit;
+    }
+    .prose :global(table) {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 24px 0;
+        font-size: 0.9rem;
+    }
+    .prose :global(th) {
+        text-align: left;
+        padding: 10px 16px;
+        background: rgba(0, 0, 0, 0.04);
+        font-weight: 600;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    }
+    .prose :global(td) {
+        padding: 10px 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .prose :global(blockquote) {
+        border-left: 4px solid #1976d2;
+        background: rgba(25, 118, 210, 0.06);
+        padding: 12px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 24px 0;
+        color: #374151;
+    }
+    .prose :global(ul),
+    .prose :global(ol) {
+        padding-left: 24px;
+        margin-bottom: 16px;
+    }
+    .prose :global(li) {
+        margin-bottom: 8px;
+        line-height: 1.7;
+        color: var(--text-secondary, #5f6973);
+    }
+
+    /* Dark mode support */
+    :global(html.dark) .prose :global(p),
+    :global(html.dark) .prose :global(li),
+    :global(html[data-theme="dark"]) .prose :global(p),
+    :global(html[data-theme="dark"]) .prose :global(li) {
+        color: #aab4be;
+    }
+    :global(html.dark) .prose :global(code),
+    :global(html[data-theme="dark"]) .prose :global(code) {
+        background: rgba(255, 255, 255, 0.1);
+        color: #e2e8f0;
+    }
+    :global(html.dark) .prose :global(th),
+    :global(html[data-theme="dark"]) .prose :global(th) {
+        background: rgba(255, 255, 255, 0.05);
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+    :global(html.dark) .prose :global(td),
+    :global(html[data-theme="dark"]) .prose :global(td) {
+        border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+    :global(html.dark) .prose :global(blockquote),
+    :global(html[data-theme="dark"]) .prose :global(blockquote) {
+        background: rgba(25, 118, 210, 0.12);
+        color: #aab4be;
+    }
+</style>
