@@ -2,6 +2,11 @@
 title: Notes on Local Search
 description: Why Pagefind, how we filter Docs/Blog, and what to expect for Chinese.
 pubDate: 2026-02-23
+image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
+author: "Sarah Wu"
+authorImg: "https://i.pravatar.cc/150?u=b"
+readTime: "8 min read"
+category: "Research"
 tags: [search, pagefind, performance]
 ---
 

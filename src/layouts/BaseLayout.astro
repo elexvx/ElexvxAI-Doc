@@ -5,6 +5,8 @@ type Props = {
   description?: string;
 };
 
+import { ClientRouter } from "astro:transitions";
+
 const { lang, title, description } = Astro.props;
 ---
 
@@ -17,12 +19,19 @@ const { lang, title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     {description ? <meta name="description" content={description} /> : null}
+    <ClientRouter />
     <script is:inline>
-      const key = 'theme';
-      const saved = localStorage.getItem(key);
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = saved ?? (prefersDark ? 'dark' : 'light');
-      document.documentElement.dataset.theme = theme;
+      function setTheme() {
+        const key = "theme";
+        const saved = localStorage.getItem(key);
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const theme = saved ?? (prefersDark ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+      }
+      setTheme();
+      document.addEventListener("astro:after-swap", setTheme);
     </script>
   </head>
   <body>
@@ -43,10 +52,19 @@ const { lang, title, description } = Astro.props;
     --code-bg: #161b22;
     --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     color-scheme: dark;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      sans-serif;
   }
 
-  :root[data-theme='light'] {
+  :root[data-theme="light"] {
     --bg: #ffffff;
     --fg: #24292f;
     --muted: #57606a;
@@ -63,8 +81,10 @@ const { lang, title, description } = Astro.props;
   html {
     scroll-behavior: smooth;
   }
-  
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
@@ -87,20 +107,37 @@ const { lang, title, description } = Astro.props;
     text-underline-offset: 4px;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin-top: 2rem;
     margin-bottom: 1rem;
     line-height: 1.25;
     font-weight: 600;
   }
 
-  h1 { font-size: 2.25rem; }
-  h2 { font-size: 1.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; }
-  h3 { font-size: 1.5rem; }
-  h4 { font-size: 1.25rem; }
+  h1 {
+    font-size: 2.25rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.3rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
 
   code {
-    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-family:
+      ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+      "Liberation Mono", monospace;
     background: var(--code-bg);
     padding: 0.2em 0.4em;
     border-radius: 0.3em;
@@ -144,7 +181,7 @@ const { lang, title, description } = Astro.props;
     padding: 0.75rem;
     vertical-align: top;
   }
-  
+
   th {
     background: var(--card);
     font-weight: 600;
@@ -159,7 +196,7 @@ const { lang, title, description } = Astro.props;
     border-radius: 0.5rem;
     color: var(--fg);
   }
-  
+
   blockquote p {
     margin: 0;
   }

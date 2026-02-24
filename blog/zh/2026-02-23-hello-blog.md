@@ -2,6 +2,11 @@
 title: 我们为什么要把 Blog 独立出来
 description: 文档与博客的边界、写作节奏与内容复用方式。
 pubDate: 2026-02-23
+image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800"
+author: "Dr. Alex Chen"
+authorImg: "https://i.pravatar.cc/150?u=a"
+readTime: "5 min read"
+category: "Engineering"
 tags: [blog, docs, architecture]
 ---
 
