@@ -1,0 +1,79 @@
+---
+import type { Lang } from "../config/site";
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+const action = `/${lang}/search/`;
+const placeholder = lang === "zh" ? "搜索文档…" : "Search docs…";
+---
+
+<div class="searchWrap">
+  <form class="search" method="get" action={action}>
+    <input
+      class="searchInput"
+      type="search"
+      name="q"
+      placeholder={placeholder}
+      autocomplete="off"
+    />
+    <span class="searchKey" aria-hidden="true">⌘K</span>
+  </form>
+</div>
+
+<style>
+  .searchWrap {
+    padding: 0.25rem 0.5rem 0.75rem;
+  }
+
+  .search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--panel-2), transparent 0%);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .search:focus-within {
+    border-color: color-mix(in srgb, var(--accent), transparent 40%);
+    box-shadow: var(--ring);
+  }
+
+  .searchInput {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--fg);
+    padding: 0 3.1rem 0 1rem;
+    font-size: 0.95rem;
+    outline: none;
+  }
+
+  .searchInput::placeholder {
+    color: var(--muted-2);
+  }
+
+  .searchKey {
+    position: absolute;
+    right: 0.4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: var(--muted-2);
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--border-2);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--panel), transparent 0%);
+  }
+  @media (max-width: 900px) {
+    .searchWrap {
+      display: none;
+    }
+  }
+</style>

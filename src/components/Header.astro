@@ -39,6 +39,13 @@ const brandHref =
 ---
 
 <header class="hdr" transition:persist="header">
+  <button class="menuBtn" id="menuToggle" aria-label="Toggle menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" x2="20" y1="12" y2="12"/>
+      <line x1="4" x2="20" y1="6" y2="6"/>
+      <line x1="4" x2="20" y1="18" y2="18"/>
+    </svg>
+  </button>
   <div class="brand">
     <a class="logo" href={brandHref}>{SITE.title}</a>
   </div>
@@ -94,12 +101,18 @@ const brandHref =
     const btn = document.getElementById("themeToggle");
     if (btn && !btn.hasAttribute("data-theme-listener")) {
       btn.setAttribute("data-theme-listener", "true");
+      const syncThemeLabel = () => {
+        const cur = document.documentElement.dataset.theme || "dark";
+        btn.textContent = cur === "dark" ? "Dark" : "Light";
+      };
+      syncThemeLabel();
       btn.addEventListener("click", () => {
         const key = "theme";
-        const cur = document.documentElement.dataset.theme || "light";
+        const cur = document.documentElement.dataset.theme || "dark";
         const next = cur === "dark" ? "light" : "dark";
         document.documentElement.dataset.theme = next;
         localStorage.setItem(key, next);
+        syncThemeLabel();
       });
     }
 
@@ -170,10 +183,11 @@ const brandHref =
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 0.85rem 1.5rem;
-    background: color-mix(in srgb, var(--bg), transparent 20%);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(12px);
+    height: var(--header-h);
+    padding: 0 20px;
+    background: color-mix(in srgb, var(--bg), transparent 35%);
+    border-bottom: 1px solid var(--border-2);
+    backdrop-filter: blur(14px);
   }
 
   .brand {
@@ -198,7 +212,12 @@ const brandHref =
 
   .navLink {
     color: var(--fg);
-    opacity: 0.85;
+    opacity: 0.78;
+  }
+
+  .navLink:hover {
+    opacity: 1;
+    text-decoration: none;
   }
 
   .controls {
@@ -212,10 +231,10 @@ const brandHref =
     align-items: center;
     gap: 0.4rem;
     padding: 0.35rem 0.5rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-2);
     border-radius: 0.7rem;
-    background: color-mix(in srgb, var(--card), transparent 10%);
-    box-shadow: 0 8px 24px var(--shadow);
+    background: color-mix(in srgb, var(--panel-2), transparent 0%);
+    box-shadow: var(--shadow-sm);
   }
 
   .label {
@@ -234,18 +253,57 @@ const brandHref =
   }
 
   .btn {
-    border: 1px solid var(--border);
-    background: color-mix(in srgb, var(--card), transparent 10%);
+    border: 1px solid var(--border-2);
+    background: color-mix(in srgb, var(--panel-2), transparent 0%);
     color: var(--fg);
     padding: 0.5rem 0.75rem;
     border-radius: 0.7rem;
     cursor: pointer;
-    box-shadow: 0 8px 24px var(--shadow);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .menuBtn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-2);
+    background: color-mix(in srgb, var(--panel-2), transparent 0%);
+    color: var(--fg);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    padding: 0;
   }
 
   @media (max-width: 900px) {
     .nav {
       display: none;
+    }
+    .menuBtn {
+      display: flex;
+    }
+    .brand {
+      min-width: auto;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hdr {
+      padding: 0 12px;
+    }
+    .select {
+      padding: 0.25rem 0.4rem;
+    }
+    .label {
+      display: none;
+    }
+    select {
+      font-size: 0.85rem;
+    }
+    .btn {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.85rem;
     }
   }
 </style>
