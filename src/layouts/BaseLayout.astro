@@ -5,7 +5,6 @@ type Props = {
   description?: string;
 };
 
-import { ClientRouter } from "astro:transitions";
 import "../styles/fonts.css";
 import "../styles/tokens.css";
 import "../styles/base.css";
@@ -23,20 +22,22 @@ const { lang, title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     {description ? <meta name="description" content={description} /> : null}
-    <ClientRouter />
     <script is:inline>
-      function setTheme() {
+      (() => {
         const key = "theme";
-        const saved = localStorage.getItem(key);
-        const theme = saved === "light" || saved === "dark" ? saved : "light";
+        let theme = "light";
+        try {
+          const saved = localStorage.getItem(key);
+          if (saved === "light" || saved === "dark") {
+            theme = saved;
+          }
+        } catch {
+          // Ignore storage access failures and keep default theme.
+        }
         document.documentElement.dataset.theme = theme;
-      }
-      setTheme();
-      if (!document.documentElement.hasAttribute("data-theme-swap-bound")) {
-        document.documentElement.setAttribute("data-theme-swap-bound", "true");
-        document.addEventListener("astro:after-swap", setTheme);
-      }
+      })();
     </script>
+    <slot name="head-extra" />
   </head>
   <body>
     <slot />
