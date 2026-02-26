@@ -14,7 +14,7 @@ import "../styles/layout.css";
 const { lang, title, description } = Astro.props;
 ---
 
-<html lang={lang} data-theme="dark">
+<html lang={lang} data-theme="light">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/logo/favicon.svg" />
@@ -28,11 +28,14 @@ const { lang, title, description } = Astro.props;
       function setTheme() {
         const key = "theme";
         const saved = localStorage.getItem(key);
-        const theme = saved === "light" || saved === "dark" ? saved : "dark";
+        const theme = saved === "light" || saved === "dark" ? saved : "light";
         document.documentElement.dataset.theme = theme;
       }
       setTheme();
-      document.addEventListener("astro:after-swap", setTheme);
+      if (!document.documentElement.hasAttribute("data-theme-swap-bound")) {
+        document.documentElement.setAttribute("data-theme-swap-bound", "true");
+        document.addEventListener("astro:after-swap", setTheme);
+      }
     </script>
   </head>
   <body>

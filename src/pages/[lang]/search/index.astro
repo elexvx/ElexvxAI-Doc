@@ -28,27 +28,40 @@ const version = SITE.defaultVersion;
   <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
   <script src="/pagefind/pagefind-ui.js" is:inline></script>
   <script is:inline>
-    window.addEventListener('DOMContentLoaded', () => {
+    function initPagefindSearch() {
+      const root = document.querySelector('#search');
+      if (!(root instanceof HTMLElement)) return;
+      if (root.hasAttribute('data-pagefind-ready')) return;
       if (!window.PagefindUI) return;
       new window.PagefindUI({
         element: '#search',
         showSubResults: true,
         openFilters: ['Type', 'Version', 'Language'],
       });
-    });
+      root.setAttribute('data-pagefind-ready', 'true');
+    }
+
+    if (!document.documentElement.hasAttribute('data-pagefind-bound')) {
+      document.documentElement.setAttribute('data-pagefind-bound', 'true');
+      document.addEventListener('astro:page-load', initPagefindSearch);
+    }
+    initPagefindSearch();
   </script>
 </BaseLayout>
 
 <script is:inline>
-  window.addEventListener('keydown', (e) => {
-    const isMac = navigator.platform.toLowerCase().includes('mac');
-    const hotkey = isMac ? e.metaKey : e.ctrlKey;
-    if (hotkey && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      const input = document.querySelector('#search input');
-      if (input instanceof HTMLInputElement) input.focus();
-    }
-  });
+  if (!document.documentElement.hasAttribute('data-search-hotkey-bound')) {
+    document.documentElement.setAttribute('data-search-hotkey-bound', 'true');
+    window.addEventListener('keydown', (e) => {
+      const isMac = navigator.platform.toLowerCase().includes('mac');
+      const hotkey = isMac ? e.metaKey : e.ctrlKey;
+      if (hotkey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const input = document.querySelector('#search input');
+        if (input instanceof HTMLInputElement) input.focus();
+      }
+    });
+  }
 </script>
 
 <style>

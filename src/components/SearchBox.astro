@@ -8,7 +8,7 @@ type Props = {
 
 const { lang } = Astro.props;
 const action = `/${lang}/search/`;
-const placeholder = lang === "zh" ? "搜索文档…" : "Search docs…";
+const placeholder = lang === "zh" ? "搜索" : "Search";
 ---
 
 <div class="searchWrap">
@@ -21,25 +21,27 @@ const placeholder = lang === "zh" ? "搜索文档…" : "Search docs…";
       placeholder={placeholder}
       autocomplete="off"
     />
-    <span class="searchKey" aria-hidden="true">⌘K</span>
+    <span class="searchKeys" aria-hidden="true">
+      <span class="searchKey">⌘</span>
+      <span class="searchKey">K</span>
+    </span>
   </form>
 </div>
 
 <style>
   .searchWrap {
-    padding: 0.25rem 0.5rem 0.75rem;
+    padding: 0.25rem 0.35rem 1.05rem;
   }
 
   .search {
     position: relative;
     display: flex;
     align-items: center;
-    height: 40px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--panel-2), transparent 0%);
+    height: 46px;
+    border-radius: 12px;
+    background: var(--panel);
     border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
-    padding-left: 0.75rem;
+    padding-left: 0.8rem;
   }
 
   .searchIcon {
@@ -62,8 +64,8 @@ const placeholder = lang === "zh" ? "搜索文档…" : "Search docs…";
     border: 0;
     background: transparent;
     color: var(--fg);
-    padding: 0 3.1rem 0 0.5rem;
-    font-size: 0.95rem;
+    padding: 0 3.35rem 0 0.58rem;
+    font-size: 1.04rem;
     outline: none;
   }
 
@@ -71,21 +73,23 @@ const placeholder = lang === "zh" ? "搜索文档…" : "Search docs…";
     color: var(--muted-2);
   }
 
-  .searchKey {
+  .searchKeys {
     position: absolute;
-    right: 0.4rem;
+    right: 0.42rem;
     top: 50%;
+    display: inline-flex;
+    gap: 0.3rem;
+    align-items: center;
     transform: translateY(-50%);
-    font-size: 0.75rem;
-    color: var(--muted-2);
-    padding: 0.2rem 0.5rem;
-    border: 1px solid var(--border-2);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--panel), transparent 0%);
   }
-  @media (max-width: 900px) {
-    .searchWrap {
-      display: none;
-    }
+
+  .searchKey {
+    font-size: 0.84rem;
+    line-height: 1;
+    color: var(--muted-2);
+    padding: 0.3rem 0.46rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--panel-2);
   }
 </style>

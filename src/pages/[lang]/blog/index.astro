@@ -133,11 +133,14 @@ const formatDate = (date: Date) => {
 </BaseLayout>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  function initBlogFilters() {
     const filters = document.querySelectorAll(".filter-btn");
     const cards = document.querySelectorAll(".blog-card-item");
 
     filters.forEach((btn) => {
+      if (btn.hasAttribute("data-filter-bound")) return;
+      btn.setAttribute("data-filter-bound", "true");
+
       btn.addEventListener("click", () => {
         // Update active state
         filters.forEach((f) => f.classList.remove("active"));
@@ -159,7 +162,13 @@ const formatDate = (date: Date) => {
         });
       });
     });
-  });
+  }
+
+  if (!document.documentElement.hasAttribute("data-blog-filter-bound")) {
+    document.documentElement.setAttribute("data-blog-filter-bound", "true");
+    document.addEventListener("astro:page-load", initBlogFilters);
+  }
+  initBlogFilters();
 </script>
 
 <style>

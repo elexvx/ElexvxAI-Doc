@@ -129,6 +129,12 @@ const navGroups = [
     sync();
   }
 
-  document.addEventListener("astro:page-load", initFooterAccordion);
+  if (!document.documentElement.hasAttribute("data-footer-page-load-bound")) {
+    document.documentElement.setAttribute(
+      "data-footer-page-load-bound",
+      "true",
+    );
+    document.addEventListener("astro:page-load", initFooterAccordion);
+  }
   initFooterAccordion();
 </script>

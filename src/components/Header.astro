@@ -78,7 +78,7 @@ const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
         <Moon class="moon" size={20} stroke-width={1.5} />
       </button>
 
-      <a class="icon-btn rss-btn" href="/rss.xml" aria-label="RSS">
+      <a class="icon-btn rss-btn" href="/sitemap-index.xml" aria-label="Sitemap">
         <Rss size={20} stroke-width={1.5} />
       </a>
 
@@ -144,7 +144,7 @@ const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
       <a class="drawer-link" data-drawer-link href={getBlogUrl({ lang })}>
         {t(lang, "blog")}
       </a>
-      <a class="drawer-link" data-drawer-link href="/rss.xml">{t(lang, "rss")}</a>
+      <a class="drawer-link" data-drawer-link href="/sitemap-index.xml">Sitemap</a>
       <button
         class="drawer-link drawer-theme"
         type="button"
@@ -272,7 +272,10 @@ const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
     setDrawerOpen(false);
   }
 
-  document.addEventListener("astro:page-load", initHeader);
+  if (!document.documentElement.hasAttribute("data-header-page-load-bound")) {
+    document.documentElement.setAttribute("data-header-page-load-bound", "true");
+    document.addEventListener("astro:page-load", initHeader);
+  }
   initHeader();
 </script>
 

@@ -55,12 +55,63 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 
 <script>
   function setupToc() {
+    const tocSidebar = document.getElementById("tocSidebar");
+    const overlay = document.getElementById("tocOverlay");
+    const tocToggle = document.getElementById("tocToggle");
+    const closeBtn = document.getElementById("tocClose");
+
+    if (!tocSidebar || !overlay) return;
+
+    const openToc = () => {
+      const currentToc = document.getElementById("tocSidebar");
+      const currentOverlay = document.getElementById("tocOverlay");
+      if (!currentToc || !currentOverlay) return;
+      currentToc.classList.add("open");
+      currentOverlay.classList.add("open");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeToc = () => {
+      const currentToc = document.getElementById("tocSidebar");
+      const currentOverlay = document.getElementById("tocOverlay");
+      if (!currentToc || !currentOverlay) return;
+      currentToc.classList.remove("open");
+      currentOverlay.classList.remove("open");
+      document.body.style.overflow = "";
+    };
+
+    if (tocToggle && !tocToggle.hasAttribute("data-toc-listener")) {
+      tocToggle.setAttribute("data-toc-listener", "true");
+      tocToggle.addEventListener("click", openToc);
+    }
+    if (closeBtn && !closeBtn.hasAttribute("data-toc-listener")) {
+      closeBtn.setAttribute("data-toc-listener", "true");
+      closeBtn.addEventListener("click", closeToc);
+    }
+    if (!overlay.hasAttribute("data-toc-listener")) {
+      overlay.setAttribute("data-toc-listener", "true");
+      overlay.addEventListener("click", closeToc);
+    }
+
+    const links = tocSidebar.querySelectorAll(".tocItem a");
+    links.forEach((link) => {
+      if (!link.hasAttribute("data-toc-listener")) {
+        link.setAttribute("data-toc-listener", "true");
+        link.addEventListener("click", () => {
+          if (window.innerWidth <= 1024) closeToc();
+        });
+      }
+    });
+
     const headings = Array.from(
       document.querySelectorAll(
         ".article-content h2, .article-content h3, article h2, article h3",
       ),
     ) as HTMLElement[];
-    const tocItems = Array.from(document.querySelectorAll(".tocItem"));
+    const tocItems = Array.from(tocSidebar.querySelectorAll(".tocItem"));
+
+    const state = window as Window & { __tocObserver?: IntersectionObserver };
+    state.__tocObserver?.disconnect();
 
     if (headings.length === 0 || tocItems.length === 0) return;
 
@@ -82,45 +133,20 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     );
 
     headings.forEach((h) => observer.observe(h));
-
-    // Mobile Drawer Logic
-    const tocSidebar = document.getElementById("tocSidebar");
-    const overlay = document.getElementById("tocOverlay");
-    const tocToggle = document.getElementById("tocToggle");
-    const closeBtn = document.getElementById("tocClose");
-
-    const openToc = () => {
-      tocSidebar?.classList.add("open");
-      overlay?.classList.add("open");
-      document.body.style.overflow = "hidden";
-    };
-
-    const closeToc = () => {
-      tocSidebar?.classList.remove("open");
-      overlay?.classList.remove("open");
-      document.body.style.overflow = "";
-    };
-
-    tocToggle?.addEventListener("click", openToc);
-    closeBtn?.addEventListener("click", closeToc);
-    overlay?.addEventListener("click", closeToc);
-
-    const links = document.querySelectorAll(".tocItem a");
-    links.forEach((link) => {
-      link.addEventListener("click", () => {
-        if (window.innerWidth <= 1024) closeToc();
-      });
-    });
+    state.__tocObserver = observer;
   }
 
-  document.addEventListener("astro:page-load", setupToc);
+  if (!document.documentElement.hasAttribute("data-toc-page-load-bound")) {
+    document.documentElement.setAttribute("data-toc-page-load-bound", "true");
+    document.addEventListener("astro:page-load", setupToc);
+  }
   setupToc();
 </script>
 
 <style>
   .mobileTitle {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--fg);
   }
 
@@ -128,13 +154,13 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border: none;
     background: transparent;
     color: var(--muted);
     cursor: pointer;
-    border-radius: 0.5rem;
+    border-radius: 10px;
   }
 
   .closeBtn:hover {
@@ -143,100 +169,63 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
   }
 
   .tocTitle {
-    font-size: 0.75rem;
-    font-weight: 600; /* slightly lighter than 650 for a cleaner look */
-    color: var(--fg); /* Darker heading for product feel */
-    padding: 0 0 1rem 0; /* Align with track */
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: 1.1rem;
+    font-weight: 520;
+    color: var(--fg);
+    padding: 0.1rem 0 0.8rem 0.95rem;
+    margin-bottom: 0.2rem;
+    border-left: 2px solid color-mix(in srgb, var(--fg), transparent 15%);
+    letter-spacing: -0.01em;
   }
 
   .doc-toc-list {
     list-style: none;
-    padding: 0;
+    padding: 0 0 0 0.95rem;
     margin: 0 0 2rem;
-    position: relative;
-    /* Fixing scrolling bug for short article */
-    max-height: calc(100vh - var(--header-h) - 48px);
+    max-height: calc(100vh - 190px);
     overflow-y: auto;
     padding-bottom: 24px;
     scrollbar-width: thin;
   }
 
-  /* Add continuous vertical track line */
-  .doc-toc-list::before {
-    content: "";
-    position: absolute;
-    top: 6px;
-    bottom: 0;
-    left: 0;
-    width: 1px;
-    background-color: var(--border-2); /* Light track line */
-    z-index: 0;
-  }
-
   .tocItem {
-    position: relative;
-    padding: 0.35rem 0 0.35rem 1.2rem;
-    margin-bottom: 2px;
-    z-index: 1; /* keep above track */
-  }
-
-  /* Dot on the track */
-  .tocItem::before {
-    content: "";
-    position: absolute;
-    left: -2px; /* Center on the 1px line */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: transparent;
-    transition: background-color 0.2s ease;
-  }
-
-  .tocItem.active::before {
-    background-color: var(--accent); /* Highlight dot */
-  }
-
-  .tocItem.active {
-    /* No border-left anymore, relying on dot and text color */
+    padding: 0.32rem 0;
+    margin-bottom: 0.08rem;
   }
 
   .tocItem.active a {
     color: var(--fg);
-    font-weight: 600; /* Stronger active state */
+    font-weight: 540;
   }
 
   .tocItem.d3 {
-    padding-left: 1.75rem;
+    padding-left: 0.8rem;
   }
 
   .tocItem a {
-    color: var(--muted-2); /* Lighter default color */
+    color: var(--muted-2);
     text-decoration: none;
-    font-size: 0.85rem;
-    line-height: 1.4;
+    font-size: 1.03rem;
+    line-height: 1.35;
     transition: color 0.2s ease;
     display: block;
   }
 
   .tocItem a:hover {
-    color: var(--muted);
+    color: var(--fg);
   }
 
   .railLinks {
     margin-top: auto;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    padding: 0.75rem 0 0;
-    border-top: 1px solid var(--border-2); /* Divider above links */
+    gap: 0.72rem;
+    padding: 0.95rem 0 0;
+    border-top: 1px solid var(--border);
   }
 
   .railLink {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: var(--muted);
     padding: 0.25rem 0;
     display: flex;
@@ -248,5 +237,11 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 
   .railLink:hover {
     color: var(--fg);
+  }
+
+  @media (max-width: 1200px) {
+    .doc-toc-list {
+      max-height: calc(100vh - 185px);
+    }
   }
 </style>

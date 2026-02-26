@@ -338,5 +338,8 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
   // 支持首次加载
   initTypewriter();
   // 支持 Astro View Transitions
-  document.addEventListener("astro:page-load", initTypewriter);
+  if (!document.documentElement.hasAttribute("data-hero-page-load-bound")) {
+    document.documentElement.setAttribute("data-hero-page-load-bound", "true");
+    document.addEventListener("astro:page-load", initTypewriter);
+  }
 </script>
