@@ -1,9 +1,9 @@
 ---
-import { LifeBuoy, Users, Sparkles, Rss } from '@lucide/astro';
+import { LifeBuoy, Users, Sparkles, Rss } from "@lucide/astro";
 ---
 
 <div class="help-section">
-  <div class="help-container">
+  <div class="help-container container">
     <a href="#" class="help-card">
       <div class="icon-wrapper">
         <LifeBuoy size={24} stroke-width={1.5} />
@@ -46,8 +46,6 @@ import { LifeBuoy, Users, Sparkles, Rss } from '@lucide/astro';
   }
 
   .help-container {
-    max-width: 1200px;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
@@ -61,7 +59,6 @@ import { LifeBuoy, Users, Sparkles, Rss } from '@lucide/astro';
     text-decoration: none;
     color: inherit;
   }
-
 
   .icon-wrapper {
     margin-bottom: 1rem;

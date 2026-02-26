@@ -22,7 +22,7 @@ const { lang, title, description, slug, headings, pubDate, tags } = Astro.props;
 
 <BaseLayout lang={lang} title={`${title} · Blog`} description={description}>
   <Header lang={lang} kind="blog" slug={slug} />
-  <div class="wrap">
+  <div class="wrap container">
     <main class="content" data-pagefind-body>
       <span class="pf" data-pagefind-filter="Type">Blog</span>
       <span class="pf" data-pagefind-filter="Language">{lang}</span>
@@ -60,17 +60,11 @@ const { lang, title, description, slug, headings, pubDate, tags } = Astro.props;
   .wrap {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 260px;
-    max-width: 1200px;
-    margin: 0 auto;
   }
 
   .content {
     padding: 1.75rem 1.25rem 3.5rem;
     min-height: calc(100vh - 4rem);
-  }
-
-  .article {
-    max-width: 820px;
   }
 
   .meta h1 {

@@ -1,10 +1,21 @@
 :root {
   background: var(--bg);
   color: var(--fg);
+  --page-pad: clamp(16px, 3vw, 72px);
+  --page-pad-dense: clamp(12px, 2.2vw, 56px);
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+.container {
+  width: calc(100% - (var(--page-pad) * 2));
+  margin-inline: auto;
+}
+
+.container.dense {
+  width: calc(100% - (var(--page-pad-dense) * 2));
 }
 
 *,

@@ -52,7 +52,7 @@ if (breadcrumbs.length === 0) {
   description={description}
 >
   <Header lang={lang} version={version} slug={slug} />
-  <div class="wrap">
+  <div class="wrap container">
     <Sidebar groups={sidebarGroups} currentPath={path} lang={lang} />
     <main class="content" data-pagefind-body>
       <span class="pf" data-pagefind-filter="Type">Docs</span>
@@ -177,13 +177,11 @@ if (breadcrumbs.length === 0) {
   .wrap {
     display: grid;
     grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--rail-w);
-    max-width: 1480px;
-    margin: 0 auto;
-    padding: 0 20px;
   }
 
   .content {
-    padding: 2rem 3rem 4rem;
+    padding-block: 2rem 4rem;
+    padding-inline: clamp(16px, 2vw, 48px);
     min-height: calc(100vh - var(--header-h));
   }
 
@@ -205,10 +203,6 @@ if (breadcrumbs.length === 0) {
   .crumb.active {
     color: var(--fg);
     font-weight: 500;
-  }
-
-  .article {
-    max-width: var(--content-max);
   }
 
   .article h1 {

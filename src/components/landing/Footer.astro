@@ -1,27 +1,25 @@
 ---
 import { FlaskConical } from "@lucide/astro";
-import AntigravityTitle from "./AntigravityTitle.astro";
 import "../../styles/footer.css";
 
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer">
-  <div class="footer-content">
-    <div class="top-section">
-      <div class="slogan-col">
-        <h2 class="slogan">探索智能边界</h2>
+<footer class="site-footer">
+  <div class="footer-container container">
+    <div class="footer-top">
+      <div class="footer-tagline">
+        <h2>探索智能边界</h2>
       </div>
-
-      <div class="links-wrapper">
-        <ul class="link-list">
+      <div class="footer-nav">
+        <ul class="nav-column">
           <li><a href="#">发表论文</a></li>
           <li><a href="#">开源项目</a></li>
           <li><a href="#">开放数据</a></li>
           <li><a href="#">模型代码</a></li>
           <li><a href="#">研究成果</a></li>
         </ul>
-        <ul class="link-list">
+        <ul class="nav-column">
           <li><a href="#">技术文档</a></li>
           <li><a href="#">API 参考</a></li>
           <li><a href="#">开发者社区</a></li>
@@ -30,18 +28,16 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <div class="middle-section">
-      <AntigravityTitle />
+    <div class="footer-middle">
+      <h1 class="footer-wordmark">ElexvxAI Lab</h1>
     </div>
 
-    <div class="bottom-section">
-      <div class="brand">
-        <div class="logo">
-          <FlaskConical size={20} stroke-width={2} />
-          <span class="brand-name">ElexvxAI Lab</span>
-        </div>
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <FlaskConical size={20} stroke-width={2} class="brand-icon" />
+        <span class="brand-text">ElexvxAI Lab</span>
       </div>
-      <div class="bottom-links">
+      <div class="footer-meta-links">
         <a href="#">关于我们</a>
         <a href="#">加入我们</a>
         <a href="#">隐私政策</a>

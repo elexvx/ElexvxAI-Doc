@@ -40,7 +40,7 @@ const brandHref =
 ---
 
 <header class="hdr" transition:persist="header">
-  <div class="inner">
+  <div class="inner container">
     <!-- Logo -->
     <a class="logo" href="/">
       <img src="/logo/favicon.svg" alt="ElexvxAI Logo" class="logo-img" />
@@ -149,14 +149,10 @@ const brandHref =
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    padding: 0 1rem;
-    margin: 0 auto;
-    max-width: 100%;
   }
 
   @media (min-width: 1025px) {
     .inner {
-      padding: 0 2rem;
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       gap: 1.5rem;

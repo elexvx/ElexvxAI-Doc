@@ -10,7 +10,7 @@ import {
   parseBlogId,
   sortBlog,
 } from "../../../lib/blog";
-import { ArrowRight } from '@lucide/astro';
+import { ArrowRight } from "@lucide/astro";
 import Footer from "../../../components/landing/Footer.astro";
 
 export function getStaticPaths() {
@@ -41,38 +41,59 @@ const formatDate = (date: Date) => {
 
 <BaseLayout lang={lang} title={`${t(lang, "blog")} · ${SITE.title}`}>
   <Header lang={lang} kind="blog" />
-  <main class="wrap">
-    
-    {featuredPost && (
-      <section class="featured-section">
-        <div class="featured-content">
-          <span class="featured-label">Featured</span>
-          <h1 class="featured-title">
-            <a href={getBlogUrl({ lang, slug: parseBlogId(featuredPost.id).slug })}>
-              {featuredPost.data.title}
+  <main class="wrap container">
+    {
+      featuredPost && (
+        <section class="featured-section">
+          <div class="featured-content">
+            <span class="featured-label">Featured</span>
+            <h1 class="featured-title">
+              <a
+                href={getBlogUrl({
+                  lang,
+                  slug: parseBlogId(featuredPost.id).slug,
+                })}
+              >
+                {featuredPost.data.title}
+              </a>
+            </h1>
+            <div class="featured-meta">
+              <span class="meta-date">
+                {formatDate(featuredPost.data.pubDate)}
+              </span>
+              <span class="meta-cat">
+                {featuredPost.data.category || "Product"}
+              </span>
+            </div>
+            <a
+              href={getBlogUrl({
+                lang,
+                slug: parseBlogId(featuredPost.id).slug,
+              })}
+              class="read-btn"
+            >
+              Read blog
             </a>
-          </h1>
-          <div class="featured-meta">
-            <span class="meta-date">{formatDate(featuredPost.data.pubDate)}</span>
-            <span class="meta-cat">{featuredPost.data.category || "Product"}</span>
           </div>
-          <a href={getBlogUrl({ lang, slug: parseBlogId(featuredPost.id).slug })} class="read-btn">
-            Read blog
-          </a>
-        </div>
-        <div class="featured-media">
-          {featuredPost.data.image && (
-            <img src={featuredPost.data.image} alt={featuredPost.data.title} class="featured-img" />
-          )}
-        </div>
-      </section>
-    )}
+          <div class="featured-media">
+            {featuredPost.data.image && (
+              <img
+                src={featuredPost.data.image}
+                alt={featuredPost.data.title}
+                class="featured-img"
+              />
+            )}
+          </div>
+        </section>
+      )
+    }
 
     <div class="filter-section">
       <div class="filter-tabs" id="blog-filters">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="Product">Product</button>
-        <button class="filter-btn" data-filter="Engineering">Engineering</button>
+        <button class="filter-btn" data-filter="Engineering">Engineering</button
+        >
         <button class="filter-btn" data-filter="Research">Research</button>
       </div>
     </div>
@@ -107,7 +128,6 @@ const formatDate = (date: Date) => {
         })
       }
     </div>
-
   </main>
   <Footer />
 </BaseLayout>
@@ -144,10 +164,8 @@ const formatDate = (date: Date) => {
 
 <style>
   .wrap {
-    max-width: 1200px;
-    margin: 0 auto;
     padding: 2rem 1.5rem 6rem;
-    font-family: 'Inter', sans-serif; /* Ensure a clean font */
+    font-family: "Inter", sans-serif; /* Ensure a clean font */
   }
 
   /* Featured Section */
@@ -181,13 +199,13 @@ const formatDate = (date: Date) => {
     margin: 0 0 1.5rem;
     letter-spacing: -0.03em;
   }
-  
+
   .featured-title a {
     text-decoration: none;
     color: inherit;
     transition: color 0.2s;
   }
-  
+
   .featured-title a:hover {
     color: var(--primary, #3b82f6);
   }
@@ -229,7 +247,7 @@ const formatDate = (date: Date) => {
     transition: all 0.2s ease;
     font-size: 0.95rem;
   }
-  
+
   html[data-theme="dark"] .read-btn {
     background: #1f2937;
     color: #f3f4f6;
@@ -238,7 +256,7 @@ const formatDate = (date: Date) => {
   .read-btn:hover {
     background: #e5e7eb;
   }
-  
+
   html[data-theme="dark"] .read-btn:hover {
     background: #374151;
   }
@@ -281,7 +299,7 @@ const formatDate = (date: Date) => {
   }
 
   .filter-btn.active::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -1px; /* Align with border-bottom */
     left: 0;
@@ -324,13 +342,13 @@ const formatDate = (date: Date) => {
     margin: 0 0 0.75rem;
     letter-spacing: -0.02em;
   }
-  
+
   .card-title a {
     text-decoration: none;
     color: inherit;
     transition: color 0.2s;
   }
-  
+
   .card-title a:hover {
     color: var(--primary, #3b82f6);
   }
@@ -359,7 +377,7 @@ const formatDate = (date: Date) => {
     object-fit: cover;
     transition: transform 0.5s ease;
   }
-  
+
   .card:hover .card-img {
     transform: scale(1.05);
   }
@@ -371,11 +389,11 @@ const formatDate = (date: Date) => {
       gap: 2rem;
       margin-bottom: 4rem;
     }
-    
+
     .featured-content {
       max-width: 100%;
     }
-    
+
     .list {
       grid-template-columns: 1fr;
     }
@@ -385,11 +403,11 @@ const formatDate = (date: Date) => {
     .featured-title {
       font-size: 2.5rem;
     }
-    
+
     .card {
       flex-direction: column-reverse; /* Image on top for mobile */
     }
-    
+
     .card-img-wrapper {
       width: 100%;
       height: auto;
