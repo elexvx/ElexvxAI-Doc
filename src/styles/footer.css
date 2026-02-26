@@ -1,11 +1,18 @@
 /* footer.css */
 .site-footer {
-    width: 100%;
     background-color: var(--bg);
     color: var(--fg);
+    /* Ensure the footer spans full width with fluid padding */
+    padding-inline: clamp(16px, 3vw, 48px);
+    box-sizing: border-box;
+    /* Prevent any long text from creating page-level horizontal scrollbar */
+    overflow-x: hidden;
 }
 
 .footer-container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
     /* Top padding ensures breathing room after main content */
     padding-top: clamp(80px, 10vw, 160px);
     /* Bottom padding uses safe-area for mobile */
@@ -16,11 +23,12 @@
 
 /* 1) TOP SECTION */
 .footer-top {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: flex-start;
     width: 100%;
-    padding-bottom: clamp(60px, 10vw, 120px);
+    padding-bottom: clamp(20px, 4vw, 40px);
+    gap: 2rem;
 }
 
 .footer-tagline h2 {
@@ -34,7 +42,7 @@
 
 .footer-nav {
     display: grid;
-    grid-template-columns: repeat(2, minmax(120px, auto));
+    grid-template-columns: repeat(2, minmax(160px, 220px));
     gap: 6rem;
 }
 
@@ -66,19 +74,34 @@
 .footer-middle {
     width: 100%;
     /* Buffer space before bottom links */
-    padding-bottom: clamp(40px, 8vw, 80px);
+    padding-bottom: clamp(10px, 2vw, 20px);
+    overflow: visible;
+    /* Container Query for wordmark */
+    container-type: inline-size;
+    container-name: footer;
 }
 
 .footer-wordmark {
     margin: 0;
-    /* Massive typography clamp */
-    font-size: clamp(40px, 11vw, 250px);
+    /* Massive typography clamp - using container units to respect max-width limits */
+    font-size: clamp(72px, 18cqw, 320px);
     font-weight: 800;
     line-height: 0.9;
     letter-spacing: -0.04em;
     color: var(--fg);
     text-align: left;
     white-space: nowrap;
+    /* Desktop maintains single line */
+    max-width: 100%;
+    width: auto;
+    overflow: visible;
+}
+
+/* Compatibility fallback */
+@supports not (font-size: 1cqw) {
+    .footer-wordmark {
+        font-size: clamp(72px, 12vw, 220px);
+    }
 }
 
 /* 3) BOTTOM SECTION */
@@ -88,9 +111,14 @@
     align-items: center;
     width: 100%;
     padding-top: 1.5rem;
-    border-top: 1px solid color-mix(in srgb, var(--fg), transparent 85%);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
     flex-wrap: wrap;
     gap: 1.5rem;
+}
+
+:root[class~="dark"] .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    /* Adapts line in dark mode */
 }
 
 .footer-brand {
@@ -132,7 +160,7 @@
 
 @media (max-width: 768px) {
     .footer-top {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         gap: 4rem;
     }
 
@@ -148,9 +176,27 @@
     }
 }
 
+@media (max-width: 640px) {
+    .footer-wordmark {
+        white-space: normal;
+        font-size: clamp(48px, 14cqw, 140px);
+    }
+}
+
 @media (max-width: 480px) {
     .footer-nav {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+
+    .footer-bottom {
+        align-items: center;
+    }
+
+    .footer-meta-links {
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1.5rem;
     }
 }
