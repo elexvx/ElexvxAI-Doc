@@ -88,9 +88,7 @@ const features = [
     min-height: 220px;
     display: flex;
     flex-direction: column;
-    transition:
-      transform 0.18s ease,
-      box-shadow 0.2s ease;
+    transition: border-color 0.2s ease;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -191,12 +189,12 @@ const features = [
 
   @media (hover: hover), (max-width: 768px) {
     .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+      transform: none;
+      box-shadow: none;
     }
 
     :global([data-theme="light"]) .card:hover {
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.1);
+      box-shadow: none;
     }
 
     .card:hover .card-hover-bg {
@@ -213,12 +211,6 @@ const features = [
 
     .card:hover .body-medium {
       color: rgba(255, 255, 255, 0.9);
-    }
-  }
-
-  @media (hover: none), (pointer: coarse) {
-    .card:active {
-      transform: scale(0.99);
     }
   }
 

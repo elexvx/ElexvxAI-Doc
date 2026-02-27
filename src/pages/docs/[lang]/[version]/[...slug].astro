@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import { parseDocId } from "../../../../lib/docs";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("docs");
+  const pages = entries.filter((e) => !e.id.endsWith("/index"));
+
+  return pages.flatMap((entry) => {
+    const p = parseDocId(entry.id);
+    const slug = p.rest.join("/");
+    if (!slug) return [];
+    return [{ params: { lang: p.lang, version: p.version, slug } }];
+  });
+}
+
+const { lang, version } = Astro.params;
+const slug = Astro.params.slug ?? "";
+const target = `/${lang}/${version}/${slug}/`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+  </head>
+  <body>
+    <a href={target}>Moved to {target}</a>
+  </body>
+</html>

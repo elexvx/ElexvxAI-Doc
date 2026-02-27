@@ -14,6 +14,12 @@ export function remarkCards() {
       if (node.type === 'containerDirective' && node.name === 'cards') {
         hasCards = true;
         const items = [];
+        const columnsRaw = node.attributes?.columns ?? node.attributes?.cols;
+        const parsedColumns = Number(columnsRaw);
+        const columns =
+          Number.isInteger(parsedColumns) && parsedColumns >= 2 && parsedColumns <= 4
+            ? parsedColumns
+            : undefined;
 
         // Try to find list items inside the directive
         // Case 1: The content is parsed as a List
@@ -71,30 +77,52 @@ export function remarkCards() {
         const mdxNode = {
           type: 'mdxJsxFlowElement',
           name: 'DocCards',
-          attributes: [
-            {
-              type: 'mdxJsxAttribute',
-              name: 'items',
-              value: {
-                type: 'mdxJsxAttributeValueExpression',
-                value: JSON.stringify(items),
-                data: {
-                  estree: {
-                    type: 'Program',
-                    body: [
-                      {
-                        type: 'ExpressionStatement',
-                        expression: valueToEstree(items)
-                      }
-                    ],
-                    sourceType: 'module'
+          attributes: [],
+          children: []
+        };
+        mdxNode.attributes.push({
+          type: 'mdxJsxAttribute',
+          name: 'items',
+          value: {
+            type: 'mdxJsxAttributeValueExpression',
+            value: JSON.stringify(items),
+            data: {
+              estree: {
+                type: 'Program',
+                body: [
+                  {
+                    type: 'ExpressionStatement',
+                    expression: valueToEstree(items)
                   }
+                ],
+                sourceType: 'module'
+              }
+            }
+          }
+        });
+
+        if (typeof columns !== 'undefined') {
+          mdxNode.attributes.push({
+            type: 'mdxJsxAttribute',
+            name: 'columns',
+            value: {
+              type: 'mdxJsxAttributeValueExpression',
+              value: String(columns),
+              data: {
+                estree: {
+                  type: 'Program',
+                  body: [
+                    {
+                      type: 'ExpressionStatement',
+                      expression: valueToEstree(columns)
+                    }
+                  ],
+                  sourceType: 'module'
                 }
               }
             }
-          ],
-          children: []
-        };
+          });
+        }
 
         // Replace the directive node with the MDX component node
         parent.children[index] = mdxNode;
@@ -105,7 +133,7 @@ export function remarkCards() {
     if (hasCards) {
       const importNode = {
         type: 'mdxjsEsm',
-        value: "import DocCards from '/src/components/DocCards.astro';",
+        value: "import DocCards from '/src/components/ui/DocCards.astro';",
         data: {
           estree: {
             type: 'Program',
@@ -118,7 +146,7 @@ export function remarkCards() {
                     local: { type: 'Identifier', name: 'DocCards' }
                   }
                 ],
-                source: { type: 'Literal', value: '/src/components/DocCards.astro', raw: "'/src/components/DocCards.astro'" }
+                source: { type: 'Literal', value: '/src/components/ui/DocCards.astro', raw: "'/src/components/ui/DocCards.astro'" }
               }
             ],
             sourceType: 'module'

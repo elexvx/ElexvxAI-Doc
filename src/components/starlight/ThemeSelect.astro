@@ -1,0 +1,60 @@
+---
+import Select from "@astrojs/starlight/components/Select.astro";
+---
+
+<starlight-theme-select>
+  <Select
+    icon="moon"
+    label={Astro.locals.t("themeSelect.accessibleLabel")}
+    options={[
+      { label: Astro.locals.t("themeSelect.dark"), selected: false, value: "dark" },
+      { label: Astro.locals.t("themeSelect.light"), selected: true, value: "light" },
+    ]}
+    width="5.5em"
+  />
+</starlight-theme-select>
+
+<script is:inline>
+  StarlightThemeProvider.updatePickers();
+</script>
+
+<script>
+  type Theme = "dark" | "light";
+  const storageKey = "theme";
+  const legacyKey = "starlight-theme";
+
+  const parseTheme = (theme: unknown): Theme =>
+    theme === "dark" || theme === "light" ? theme : "light";
+
+  const loadTheme = (): Theme =>
+    parseTheme(
+      typeof localStorage !== "undefined" &&
+        (localStorage.getItem(storageKey) || localStorage.getItem(legacyKey)),
+    );
+
+  function storeTheme(theme: Theme): void {
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem(storageKey, theme);
+      localStorage.removeItem(legacyKey);
+    }
+  }
+
+  function onThemeChange(theme: Theme): void {
+    StarlightThemeProvider.updatePickers(theme);
+    document.documentElement.dataset.theme = theme;
+    storeTheme(theme);
+  }
+
+  class StarlightThemeSelect extends HTMLElement {
+    constructor() {
+      super();
+      onThemeChange(loadTheme());
+      this.querySelector("select")?.addEventListener("change", (e) => {
+        if (e.currentTarget instanceof HTMLSelectElement) {
+          onThemeChange(parseTheme(e.currentTarget.value));
+        }
+      });
+    }
+  }
+  customElements.define("starlight-theme-select", StarlightThemeSelect);
+</script>

@@ -1,0 +1,79 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type IconButtonSize = "sm" | "md" | "lg";
+
+type Props = HTMLAttributes<"button"> & {
+  size?: IconButtonSize;
+};
+
+const {
+  size = "md",
+  class: className,
+  type = "button",
+  ...rest
+} = Astro.props as Props;
+---
+
+<button
+  type={type}
+  class:list={["ui-icon-btn", `ui-icon-btn--${size}`, className]}
+  {...rest}
+>
+  <slot />
+</button>
+
+<style>
+  .ui-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    color: var(--muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .ui-icon-btn:hover {
+    color: var(--fg);
+    background-color: var(--panel);
+  }
+
+  .ui-icon-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  .ui-icon-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .ui-icon-btn--sm {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .ui-icon-btn--md {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .ui-icon-btn--lg {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  @media (max-width: 1024px) {
+    .ui-icon-btn--md {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 0.625rem;
+    }
+  }
+</style>

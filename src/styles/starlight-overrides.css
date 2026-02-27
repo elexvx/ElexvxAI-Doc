@@ -1,0 +1,98 @@
+@layer starlight.overrides {
+  :root,
+  ::backdrop {
+    --sl-color-text: var(--fg);
+    --sl-color-text-accent: var(--accent);
+    --sl-color-text-invert: var(--bg);
+    --sl-color-bg: var(--bg);
+    --sl-color-bg-nav: var(--panel-soft);
+    --sl-color-bg-sidebar: var(--panel-soft);
+    --sl-color-bg-inline-code: var(--panel-2);
+    --sl-color-bg-accent: var(--accent);
+    --sl-color-hairline: var(--border);
+    --sl-color-hairline-light: var(--border-2);
+    --sl-color-hairline-shade: var(--border);
+
+    --sl-color-white: var(--fg);
+    --sl-color-gray-1: color-mix(in srgb, var(--fg), transparent 6%);
+    --sl-color-gray-2: color-mix(in srgb, var(--fg), transparent 18%);
+    --sl-color-gray-3: color-mix(in srgb, var(--fg), transparent 38%);
+    --sl-color-gray-4: color-mix(in srgb, var(--fg), transparent 54%);
+    --sl-color-gray-5: color-mix(in srgb, var(--fg), transparent 72%);
+    --sl-color-gray-6: color-mix(in srgb, var(--fg), transparent 86%);
+    --sl-color-black: var(--bg);
+
+    --sl-color-accent: var(--accent);
+    --sl-color-accent-high: color-mix(in srgb, var(--accent), #fff 20%);
+    --sl-color-accent-low: color-mix(in srgb, var(--accent), transparent 85%);
+
+    --sl-shadow-sm: var(--shadow-sm);
+    --sl-shadow-md: var(--shadow-md);
+    --sl-shadow-lg: var(--shadow-md);
+
+    --sl-sidebar-width: var(--sidebar-w);
+    --sl-font: inherit;
+    --sl-font-mono: var(--mono);
+  }
+
+  :root[data-theme="light"],
+  [data-theme="light"] ::backdrop {
+    --sl-color-gray-6: color-mix(in srgb, var(--fg), transparent 92%);
+    --sl-color-gray-5: color-mix(in srgb, var(--fg), transparent 82%);
+  }
+
+  :where(
+      a,
+      button,
+      input,
+      select,
+      textarea,
+      summary,
+      [role="button"],
+      [role="tab"]
+    ):focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+    border-radius: var(--radius-md);
+  }
+
+  .header,
+  .sidebar-pane,
+  .right-sidebar-panel .sl-container {
+    backdrop-filter: blur(10px);
+  }
+
+  .sidebar-pane a:hover,
+  .right-sidebar-panel a:hover {
+    color: var(--accent);
+  }
+
+  .sidebar-pane a[aria-current="page"],
+  .sidebar-pane a[aria-current="page"]:hover,
+  .sidebar-pane a[aria-current="page"]:focus {
+    color: var(--bg);
+    background-color: var(--accent);
+  }
+
+  .right-sidebar-panel a[aria-current="true"] {
+    color: var(--accent);
+  }
+
+  .tab [role="tab"][aria-selected="true"] {
+    color: var(--accent);
+  }
+
+  .card,
+  .sl-link-button {
+    border-radius: var(--radius-md);
+  }
+
+  #starlight__search .pagefind-ui__search-input,
+  #starlight__search .pagefind-ui__result,
+  #starlight__search .pagefind-ui__result-nested {
+    border-color: var(--border);
+    border-radius: var(--radius-md);
+    background: var(--panel);
+    color: var(--fg);
+  }
+}

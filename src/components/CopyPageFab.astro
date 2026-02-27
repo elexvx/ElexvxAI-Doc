@@ -1,13 +1,19 @@
 ---
 import { Copy, Check, ChevronDown } from '@lucide/astro';
+import Button from "./ui/Button.astro";
 ---
 
-<button class="copy-page-btn" type="button" id="copyPageFab" aria-live="polite">
+<Button
+  variant="secondary"
+  size="md"
+  id="copyPageFab"
+  aria-live="polite"
+>
   <span class="icon-idle"><Copy size={16} stroke-width={1.5} /></span>
   <span class="icon-success"><Check size={16} stroke-width={1.5} /></span>
   <span class="text">Copy Page</span>
   <span class="icon-more"><ChevronDown size={14} stroke-width={1.6} /></span>
-</button>
+</Button>
 
 <script>
   async function copyText(text: string) {
@@ -68,7 +74,7 @@ import { Copy, Check, ChevronDown } from '@lucide/astro';
 </script>
 
 <style>
-  .copy-page-btn {
+  #copyPageFab {
     position: fixed;
     right: 18px;
     bottom: 18px;
@@ -99,31 +105,31 @@ import { Copy, Check, ChevronDown } from '@lucide/astro';
     margin-left: 2px;
   }
 
-  .copy-page-btn[data-state="copied"] .icon-idle {
+  #copyPageFab[data-state="copied"] .icon-idle {
     display: none;
   }
 
-  .copy-page-btn[data-state="copied"] .icon-success {
+  #copyPageFab[data-state="copied"] .icon-success {
     display: flex;
     color: var(--accent);
   }
 
-  .copy-page-btn:hover {
+  #copyPageFab:hover {
     border-color: var(--border-strong);
     background: var(--panel-2);
     transform: translateY(-1px);
   }
 
-  .copy-page-btn[data-state="copied"] {
+  #copyPageFab[data-state="copied"] {
     border-color: var(--border-strong);
     background: color-mix(in srgb, var(--fg), transparent 95%);
   }
 
-  .copy-page-btn[data-state="error"] {
+  #copyPageFab[data-state="error"] {
     border-color: var(--danger);
   }
   @media (max-width: 900px) {
-    .copy-page-btn {
+    #copyPageFab {
       right: 12px;
       bottom: 12px;
       height: 39px;

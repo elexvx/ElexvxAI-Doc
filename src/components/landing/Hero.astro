@@ -133,10 +133,9 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
     font-weight: 500;
     font-size: 1rem;
     transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease,
       background-color 0.2s ease,
-      color 0.2s ease;
+      color 0.2s ease,
+      opacity 0.2s ease;
   }
 
   :global([data-theme="dark"]) .btn-primary {
@@ -145,14 +144,14 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
   }
 
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: none;
+    box-shadow: none;
     text-decoration: none;
-    opacity: 0.9;
+    opacity: 0.92;
   }
 
   :global([data-theme="dark"]) .btn-primary:hover {
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+    box-shadow: none;
   }
 
   .btn-secondary {

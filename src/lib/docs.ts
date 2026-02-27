@@ -26,7 +26,7 @@ export function getDocUrl(opts: {
   version: string;
   slug?: string;
 }) {
-  const base = `/${opts.lang}/docs/${opts.version}`;
+  const base = `/${opts.lang}/${opts.version}`;
   if (!opts.slug) return `${base}/`;
   return `${base}/${opts.slug}`;
 }
