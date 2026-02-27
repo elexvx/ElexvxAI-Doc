@@ -1,6 +1,6 @@
 :root {
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--app-bg);
+  color: var(--text);
   --page-pad: clamp(16px, 3vw, 72px);
   --page-pad-dense: clamp(12px, 2.2vw, 56px);
 }
@@ -27,9 +27,10 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--fg);
-  line-height: 1.6;
+  background: var(--app-bg);
+  color: var(--text);
+  font-size: 15.5px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -58,13 +59,13 @@ select {
 }
 
 a {
-  color: var(--fg);
+  color: color-mix(in srgb, var(--accent), black 6%);
   text-decoration: none;
   text-underline-offset: 4px;
 }
 
 a:hover {
-  color: color-mix(in srgb, var(--fg), transparent 10%);
+  color: color-mix(in srgb, var(--accent), black 18%);
   text-decoration: underline;
 }
 
@@ -85,7 +86,7 @@ code {
 }
 
 pre {
-  background: var(--panel);
+  background: var(--panel-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.1rem 1.2rem;

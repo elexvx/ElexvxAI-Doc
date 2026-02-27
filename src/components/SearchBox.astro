@@ -37,11 +37,11 @@ const placeholder = lang === "zh" ? "搜索" : "Search";
     position: relative;
     display: flex;
     align-items: center;
-    height: 46px;
+    height: 42px;
     border-radius: 12px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    padding-left: 0.8rem;
+    background: var(--content-bg);
+    border: 1px solid var(--divider);
+    padding-left: 0.72rem;
   }
 
   .searchIcon {
@@ -65,7 +65,7 @@ const placeholder = lang === "zh" ? "搜索" : "Search";
     background: transparent;
     color: var(--fg);
     padding: 0 3.35rem 0 0.58rem;
-    font-size: 1.04rem;
+    font-size: 0.95rem;
     outline: none;
   }
 
@@ -84,12 +84,12 @@ const placeholder = lang === "zh" ? "搜索" : "Search";
   }
 
   .searchKey {
-    font-size: 0.84rem;
+    font-size: 0.78rem;
     line-height: 1;
     color: var(--muted-2);
     padding: 0.3rem 0.46rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--panel-2);
+    border: 1px solid var(--divider);
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--content-bg), var(--sidebar-bg) 56%);
   }
 </style>

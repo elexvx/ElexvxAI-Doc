@@ -6,27 +6,27 @@
 
 .doc-shell {
   display: grid;
-  grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--rail-w);
+  grid-template-columns: 280px minmax(0, 1fr) 320px;
   min-height: calc(100vh - var(--header-h));
   width: 100%;
-  background: var(--bg);
+  background: var(--app-bg);
 }
 
 .doc-sidebar {
   position: sticky;
   top: var(--header-h);
   height: calc(100vh - var(--header-h));
-  overflow: auto;
-  padding: 1.35rem 1rem 1.75rem;
-  border-right: 1px solid var(--border);
-  background: var(--panel-soft);
+  overflow: hidden;
+  padding: 0;
+  border-right: 1px solid var(--divider);
+  background: var(--sidebar-bg);
   display: flex;
   flex-direction: column;
 }
 
 .doc-main {
   min-height: calc(100vh - var(--header-h));
-  padding: 3rem clamp(1.5rem, 3vw, 4.5rem) 4rem;
+  padding: 0 clamp(1rem, 2.5vw, 2rem);
   overflow-wrap: anywhere;
 }
 
@@ -39,11 +39,11 @@
   top: var(--header-h);
   height: calc(100vh - var(--header-h));
   overflow: hidden;
-  padding: 3rem 1.5rem 1.5rem;
-  border-left: 1px solid var(--border);
+  padding: 1rem;
+  border-left: 1px solid var(--divider);
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background: var(--rail-bg);
 }
 
 /* Content overflow handling */
@@ -86,18 +86,18 @@
   justify-content: space-between;
   height: 56px;
   padding: 0 0.25rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--divider);
   margin-bottom: 0.5rem;
 }
 
 /* Tablet layout: hide ToC into drawer */
 @media (max-width: 1024px) {
   .doc-shell {
-    grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+    grid-template-columns: 280px minmax(0, 1fr);
   }
 
   .doc-main {
-    padding: 2.5rem clamp(1.25rem, 3vw, 2.5rem) 3.5rem;
+    padding: 0 clamp(0.9rem, 2.8vw, 1.5rem);
   }
 
   .doc-toc {
@@ -110,9 +110,9 @@
     z-index: 150;
     transform: translateX(100%);
     transition: transform 0.25s ease;
-    border-left: 1px solid var(--border);
+    border-left: 1px solid var(--divider);
     padding: 0 1rem 1.5rem;
-    background: var(--bg);
+    background: var(--rail-bg);
   }
 
   .doc-toc.open {
@@ -131,7 +131,7 @@
   }
 
   .doc-main {
-    padding: 1.1rem 16px 3rem;
+    padding: 0 12px 1.75rem;
   }
 
   .doc-sidebar {
@@ -144,9 +144,9 @@
     z-index: 150;
     transform: translateX(-100%);
     transition: transform 0.25s ease;
-    border-right: 1px solid var(--border);
+    border-right: 1px solid var(--divider);
     padding: 0 0.75rem 1.5rem;
-    background: var(--panel-soft);
+    background: var(--sidebar-bg);
   }
 
   .doc-sidebar.open {

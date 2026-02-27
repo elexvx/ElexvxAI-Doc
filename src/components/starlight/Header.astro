@@ -22,3 +22,147 @@ const slug = normalizedRest.join("/");
   as="div"
   sticky={false}
 />
+
+<script>
+  function setupStarlightSidebarTop() {
+    const sidebarContent = document.querySelector(".sidebar-content") as HTMLElement | null;
+    if (!sidebarContent || sidebarContent.querySelector(".stl-sidebar-top")) return;
+
+    const isZh = document.documentElement.lang.toLowerCase().startsWith("zh");
+    const langPrefix = isZh ? "/zh" : "/en";
+
+    const top = document.createElement("div");
+    top.className = "stl-sidebar-top";
+
+    const form = document.createElement("form");
+    form.className = "stl-sidebar-search";
+    form.method = "get";
+    form.action = `${langPrefix}/search/`;
+
+    const input = document.createElement("input");
+    input.type = "search";
+    input.name = "q";
+    input.placeholder = isZh ? "搜索" : "Search";
+    input.autocomplete = "off";
+
+    const keys = document.createElement("span");
+    keys.className = "stl-sidebar-search-keys";
+    keys.textContent = "⌘ K";
+
+    form.append(input, keys);
+    top.appendChild(form);
+    sidebarContent.insertBefore(top, sidebarContent.firstChild);
+  }
+
+  function setupExpressiveCodeButtons() {
+    const isZh = document.documentElement.lang.toLowerCase().startsWith("zh");
+    const copyLabel = isZh ? "复制" : "Copy";
+    const copiedLabel = isZh ? "已复制" : "Copied";
+    const buttons = document.querySelectorAll(".expressive-code .copy button");
+    buttons.forEach((button) => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      if (button.dataset.labelReady === "true") return;
+      button.dataset.labelReady = "true";
+      button.dataset.copyLabel = copyLabel;
+      button.dataset.copiedLabel = copiedLabel;
+      button.setAttribute("aria-label", copyLabel);
+    });
+  }
+
+  function setupStarlightTocPicker() {
+    const tocNav = document.querySelector(
+      ".right-sidebar-panel starlight-toc nav",
+    ) as HTMLElement | null;
+    if (!tocNav || tocNav.hasAttribute("data-picker-ready")) return;
+    tocNav.setAttribute("data-picker-ready", "true");
+
+    const tocTitle = tocNav.querySelector("h2")?.textContent?.trim() || "On this page";
+    const linkNodes = Array.from(tocNav.querySelectorAll("a[href^='#']")) as HTMLAnchorElement[];
+    if (linkNodes.length === 0) return;
+
+    const picker = document.createElement("details");
+    picker.className = "stl-toc-picker";
+
+    const summary = document.createElement("summary");
+    const label = document.createElement("span");
+    label.className = "stl-toc-picker-label";
+    label.textContent = tocTitle;
+    const value = document.createElement("span");
+    value.className = "stl-toc-picker-value";
+    value.textContent = linkNodes[0].textContent?.trim() || tocTitle;
+    summary.append(label, value);
+
+    const panel = document.createElement("div");
+    panel.className = "stl-toc-picker-panel";
+
+    const setValue = (text?: string | null) => {
+      const next = text?.trim();
+      if (!next) return;
+      value.textContent = next;
+    };
+
+    linkNodes.forEach((link) => {
+      const sectionId = link.getAttribute("href")?.replace(/^#/, "");
+      if (!sectionId) return;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "stl-toc-picker-btn";
+      button.textContent = link.textContent?.trim() || sectionId;
+      button.addEventListener("click", () => {
+        const target = document.getElementById(sectionId);
+        if (!target) return;
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        setValue(button.textContent);
+        picker.removeAttribute("open");
+      });
+      panel.appendChild(button);
+
+      if (!link.hasAttribute("data-picker-listener")) {
+        link.setAttribute("data-picker-listener", "true");
+        link.addEventListener("click", () => {
+          setValue(link.textContent);
+          picker.removeAttribute("open");
+        });
+      }
+    });
+
+    picker.append(summary, panel);
+    tocNav.insertBefore(picker, tocNav.firstChild);
+
+    const targets = linkNodes
+      .map((link) => link.getAttribute("href")?.replace(/^#/, ""))
+      .filter(Boolean)
+      .map((id) => document.getElementById(id as string))
+      .filter(Boolean) as HTMLElement[];
+    if (targets.length === 0) return;
+
+    const state = window as Window & { __stlTocPickerObserver?: IntersectionObserver };
+    state.__stlTocPickerObserver?.disconnect();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const match = linkNodes.find(
+            (link) => link.getAttribute("href") === `#${entry.target.id}`,
+          );
+          setValue(match?.textContent);
+        });
+      },
+      { rootMargin: "-90px 0px -60% 0px" },
+    );
+    targets.forEach((target) => observer.observe(target));
+    state.__stlTocPickerObserver = observer;
+  }
+
+  if (!document.documentElement.hasAttribute("data-starlight-picker-load-bound")) {
+    document.documentElement.setAttribute("data-starlight-picker-load-bound", "true");
+    document.addEventListener("astro:page-load", () => {
+      setupStarlightSidebarTop();
+      setupExpressiveCodeButtons();
+      setupStarlightTocPicker();
+    });
+  }
+  setupStarlightSidebarTop();
+  setupExpressiveCodeButtons();
+  setupStarlightTocPicker();
+</script>

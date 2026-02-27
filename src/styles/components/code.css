@@ -1,0 +1,83 @@
+.codeCard {
+  border: 1px solid var(--divider);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--content-bg), var(--sidebar-bg) 44%);
+  overflow: hidden;
+}
+
+.codeToolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 0 12px;
+  background: color-mix(in srgb, var(--content-bg), var(--sidebar-bg) 60%);
+  border-bottom: 1px solid var(--divider);
+}
+
+.codeLang {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.codeCopy {
+  appearance: none;
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  background: var(--content-bg);
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+.codeCopy:hover {
+  background: color-mix(in srgb, var(--content-bg), var(--sidebar-bg) 50%);
+}
+
+.codeCopy[data-state="copied"] {
+  color: #0f766e;
+  border-color: #14b8a6;
+}
+
+.codeBody {
+  counter-reset: line;
+  overflow: auto;
+}
+
+.codeBody pre {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 12px 16px;
+  overflow: visible;
+}
+
+.codeBody pre code {
+  display: block;
+  min-width: max-content;
+}
+
+.codeLine {
+  display: block;
+  white-space: pre;
+}
+
+.codeLine::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 44px;
+  margin-right: 12px;
+  text-align: right;
+  color: color-mix(in srgb, var(--text), transparent 66%);
+  user-select: none;
+}
