@@ -1,46 +1,17 @@
 ---
-import { SITE, type Lang } from "../config/site";
-import { t } from "../i18n/ui";
-import { getDocUrl } from "../lib/docs";
-import { getBlogUrl } from "../lib/blog";
-import {
-  Sun,
-  Moon,
-  Rss,
-  Menu,
-  ListTree,
-  PanelLeft,
-  X,
-  ChevronDown,
-} from "@lucide/astro";
-import IconButton from "./ui/IconButton.astro";
-import Button from "./ui/Button.astro";
+import { SITE, type Lang } from "../../config/site";
+import { t } from "../../i18n/ui";
+import { getDocUrl } from "../../lib/docs";
+import { getBlogUrl } from "../../lib/blog";
+import { Sun, Moon, Rss, Menu, X, ChevronDown } from "@lucide/astro";
+import IconButton from "../ui/IconButton.astro";
+import Button from "../ui/Button.astro";
 
 type Props = {
   lang: Lang;
-  version?: string;
-  slug?: string;
-  kind?: "docs" | "blog" | "search";
-  as?: "header" | "div";
-  sticky?: boolean;
 };
 
-const {
-  lang,
-  version,
-  slug,
-  kind = "docs",
-  as = "header",
-  sticky = true,
-} = Astro.props;
-const RootTag = as;
-
-const docsVersion = version ?? SITE.defaultVersion;
-
-const menuLabel = lang === "zh" ? "菜单" : "Menu";
-const closeMenuLabel = lang === "zh" ? "关闭菜单" : "Close menu";
-const tocLabel = lang === "zh" ? "目录" : "Table of Contents";
-const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
+const { lang } = Astro.props;
 const docsHomeHref = getDocUrl({ lang, version: SITE.defaultVersion });
 const apiReferenceHref = getDocUrl({
   lang,
@@ -48,7 +19,6 @@ const apiReferenceHref = getDocUrl({
   slug: "api/rest",
 });
 const rssHref = "/rss.xml";
-const apiLabel = "API";
 const docsLabel = lang === "zh" ? "文档" : "Docs";
 const docsDescription =
   lang === "zh"
@@ -57,34 +27,28 @@ const docsDescription =
 const apiReferenceLabel = lang === "zh" ? "API 参考" : "API reference";
 const apiReferenceDescription =
   lang === "zh" ? "端点、参数与响应" : "Endpoints, parameters, and responses";
-const isApiActive = kind !== "blog";
-const isBlogActive = kind === "blog";
 ---
 
-<RootTag
-  class="hdr"
-  data-sticky={sticky ? "true" : "false"}
-  transition:persist="header"
->
+<header class="hdr" data-sticky="true">
   <div class="inner container">
     <a class="logo" href="/">
       <img src="/logo/favicon.svg" alt="ElexvxAI Logo" class="logo-img" />
     </a>
 
     <nav class="nav">
-      <a class="nav-link" href="/">{t(lang, "home")}</a>
+      <a class="nav-link is-active" href="/">{t(lang, "home")}</a>
       <div class="api-nav">
         <button
-          class:list={["api-toggle", isApiActive && "is-active"]}
-          id="apiNavToggle"
+          class="api-toggle"
+          id="landingApiNavToggle"
           aria-expanded="false"
-          aria-controls="apiNavMenu"
+          aria-controls="landingApiNavMenu"
           type="button"
         >
-          <span>{apiLabel}</span>
+          <span>API</span>
           <ChevronDown class="api-chevron" size={16} stroke-width={1.5} />
         </button>
-        <div class="api-menu" id="apiNavMenu" data-open="false" role="menu">
+        <div class="api-menu" id="landingApiNavMenu" data-open="false" role="menu">
           <a class="api-menu-item" href={docsHomeHref} role="menuitem">
             <span class="api-menu-title">{docsLabel}</span>
             <span class="api-menu-desc">{docsDescription}</span>
@@ -95,9 +59,7 @@ const isBlogActive = kind === "blog";
           </a>
         </div>
       </div>
-      <a class:list={["nav-link", isBlogActive && "is-active"]} href={getBlogUrl({ lang })}
-        >{t(lang, "blog")}</a
-      >
+      <a class="nav-link" href={getBlogUrl({ lang })}>{t(lang, "blog")}</a>
     </nav>
 
     <div class="controls">
@@ -113,55 +75,31 @@ const isBlogActive = kind === "blog";
         <Rss size={18} stroke-width={1.7} />
       </IconButton>
 
-      <IconButton id="themeToggle" aria-label={t(lang, "theme")}>
+      <IconButton id="themeToggleLanding" aria-label={t(lang, "theme")}>
         <Sun class="sun" size={20} stroke-width={1.5} />
         <Moon class="moon" size={20} stroke-width={1.5} />
       </IconButton>
 
       <IconButton
-        class="sidebar-btn"
-        id="sidebarToggle"
-        aria-label={sidebarLabel}
-        data-hidden="true"
-      >
-        <PanelLeft size={20} stroke-width={1.5} />
-      </IconButton>
-
-      <IconButton
-        class="toc-btn"
-        id="tocToggle"
-        aria-label={tocLabel}
-        data-hidden="true"
-      >
-        <ListTree size={20} stroke-width={1.5} />
-      </IconButton>
-
-      <IconButton
         class="menu-btn"
-        id="menuToggle"
-        aria-label={menuLabel}
+        id="landingMenuToggle"
+        aria-label={lang === "zh" ? "菜单" : "Menu"}
         aria-expanded="false"
-        aria-controls="mobileDrawer"
+        aria-controls="landingMobileDrawer"
       >
         <Menu size={20} stroke-width={1.5} />
       </IconButton>
     </div>
   </div>
 
-  <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" data-open="false">
-  </div>
-  <aside
-    class="mobile-drawer"
-    id="mobileDrawer"
-    data-open="false"
-    aria-hidden="true"
-  >
+  <div class="mobile-drawer-overlay" id="landingMobileDrawerOverlay" data-open="false"></div>
+  <aside class="mobile-drawer" id="landingMobileDrawer" data-open="false" aria-hidden="true">
     <div class="drawer-header">
-      <span class="drawer-title">{menuLabel}</span>
+      <span class="drawer-title">{lang === "zh" ? "菜单" : "Menu"}</span>
       <IconButton
         class="drawer-close"
-        id="mobileDrawerClose"
-        aria-label={closeMenuLabel}
+        id="landingMobileDrawerClose"
+        aria-label={lang === "zh" ? "关闭菜单" : "Close menu"}
       >
         <X size={20} stroke-width={1.5} />
       </IconButton>
@@ -169,22 +107,14 @@ const isBlogActive = kind === "blog";
 
     <nav class="drawer-nav">
       <a class="drawer-link" data-drawer-link href="/">{t(lang, "home")}</a>
-      <a
-        class="drawer-link"
-        data-drawer-link
-        href={getDocUrl({ lang, version: docsVersion })}
-      >
-        {t(lang, "docs")}
-      </a>
-      <a class="drawer-link" data-drawer-link href={getBlogUrl({ lang })}>
-        {t(lang, "blog")}
-      </a>
+      <a class="drawer-link" data-drawer-link href={docsHomeHref}>{t(lang, "docs")}</a>
+      <a class="drawer-link" data-drawer-link href={getBlogUrl({ lang })}>{t(lang, "blog")}</a>
       <a class="drawer-link" data-drawer-link href={apiReferenceHref}>{apiReferenceLabel}</a>
       <a class="drawer-link" data-drawer-link href={rssHref} target="_blank" rel="noopener noreferrer"
         >RSS</a
       >
       <Button
-        id="drawerThemeToggle"
+        id="landingDrawerThemeToggle"
         variant="ghost"
         size="md"
         data-drawer-link
@@ -194,10 +124,10 @@ const isBlogActive = kind === "blog";
       </Button>
     </nav>
   </aside>
-</RootTag>
+</header>
 
 <script>
-  function initHeader() {
+  function initLandingHeader() {
     const toggleTheme = () => {
       const key = "theme";
       const cur = document.documentElement.dataset.theme || "dark";
@@ -207,18 +137,13 @@ const isBlogActive = kind === "blog";
     };
 
     const themeBtns = [
-      document.getElementById("themeToggle"),
-      document.getElementById("drawerThemeToggle"),
+      document.getElementById("themeToggleLanding"),
+      document.getElementById("landingDrawerThemeToggle"),
     ];
-    themeBtns.forEach((btn) => {
-      if (btn && !btn.hasAttribute("data-theme-listener")) {
-        btn.setAttribute("data-theme-listener", "true");
-        btn.addEventListener("click", toggleTheme);
-      }
-    });
+    themeBtns.forEach((btn) => btn?.addEventListener("click", toggleTheme));
 
-    const apiToggle = document.getElementById("apiNavToggle");
-    const apiMenu = document.getElementById("apiNavMenu");
+    const apiToggle = document.getElementById("landingApiNavToggle");
+    const apiMenu = document.getElementById("landingApiNavMenu");
     if (apiToggle && apiMenu && !apiToggle.hasAttribute("data-api-nav-listener")) {
       apiToggle.setAttribute("data-api-nav-listener", "true");
       const setApiOpen = (open) => {
@@ -232,11 +157,11 @@ const isBlogActive = kind === "blog";
         setApiOpen(!isOpen);
       });
 
-      if (!document.documentElement.hasAttribute("data-api-nav-doc-click")) {
-        document.documentElement.setAttribute("data-api-nav-doc-click", "true");
+      if (!document.documentElement.hasAttribute("data-landing-api-doc-click")) {
+        document.documentElement.setAttribute("data-landing-api-doc-click", "true");
         document.addEventListener("click", (event) => {
-          const currentToggle = document.getElementById("apiNavToggle");
-          const currentMenu = document.getElementById("apiNavMenu");
+          const currentToggle = document.getElementById("landingApiNavToggle");
+          const currentMenu = document.getElementById("landingApiNavMenu");
           if (!currentToggle || !currentMenu) return;
           if (
             currentToggle.contains(event.target) ||
@@ -249,37 +174,22 @@ const isBlogActive = kind === "blog";
         });
       }
 
-      if (!document.documentElement.hasAttribute("data-api-nav-esc")) {
-        document.documentElement.setAttribute("data-api-nav-esc", "true");
+      if (!document.documentElement.hasAttribute("data-landing-api-esc")) {
+        document.documentElement.setAttribute("data-landing-api-esc", "true");
         document.addEventListener("keydown", (event) => {
           if (event.key !== "Escape") return;
-          const currentToggle = document.getElementById("apiNavToggle");
-          const currentMenu = document.getElementById("apiNavMenu");
+          const currentToggle = document.getElementById("landingApiNavToggle");
+          const currentMenu = document.getElementById("landingApiNavMenu");
           currentMenu?.setAttribute("data-open", "false");
           currentToggle?.setAttribute("aria-expanded", "false");
         });
       }
     }
 
-    const tocBtn = document.getElementById("tocToggle");
-    const sidebarBtn = document.getElementById("sidebarToggle");
-    const hasToc = Boolean(document.getElementById("tocSidebar"));
-    const hasSidebar = Boolean(document.getElementById("sidebar"));
-    if (tocBtn) {
-      hasToc
-        ? tocBtn.removeAttribute("data-hidden")
-        : tocBtn.setAttribute("data-hidden", "true");
-    }
-    if (sidebarBtn) {
-      hasSidebar
-        ? sidebarBtn.removeAttribute("data-hidden")
-        : sidebarBtn.setAttribute("data-hidden", "true");
-    }
-
-    const menuBtn = document.getElementById("menuToggle");
-    const overlay = document.getElementById("mobileDrawerOverlay");
-    const drawer = document.getElementById("mobileDrawer");
-    const closeBtn = document.getElementById("mobileDrawerClose");
+    const menuBtn = document.getElementById("landingMenuToggle");
+    const overlay = document.getElementById("landingMobileDrawerOverlay");
+    const drawer = document.getElementById("landingMobileDrawer");
+    const closeBtn = document.getElementById("landingMobileDrawerClose");
     if (!menuBtn || !overlay || !drawer || !closeBtn) return;
 
     const setDrawerOpen = (open) => {
@@ -290,76 +200,34 @@ const isBlogActive = kind === "blog";
       document.body.style.overflow = open ? "hidden" : "";
     };
 
-    const toggleDrawer = () => {
+    menuBtn.addEventListener("click", () => {
       const isOpen = drawer.getAttribute("data-open") === "true";
       setDrawerOpen(!isOpen);
-    };
-
-    if (!menuBtn.hasAttribute("data-drawer-listener")) {
-      menuBtn.setAttribute("data-drawer-listener", "true");
-      menuBtn.addEventListener("click", toggleDrawer);
-    }
-    if (!overlay.hasAttribute("data-drawer-listener")) {
-      overlay.setAttribute("data-drawer-listener", "true");
-      overlay.addEventListener("click", () => setDrawerOpen(false));
-    }
-    if (!closeBtn.hasAttribute("data-drawer-listener")) {
-      closeBtn.setAttribute("data-drawer-listener", "true");
-      closeBtn.addEventListener("click", () => setDrawerOpen(false));
-    }
+    });
+    overlay.addEventListener("click", () => setDrawerOpen(false));
+    closeBtn.addEventListener("click", () => setDrawerOpen(false));
 
     const drawerLinks = drawer.querySelectorAll("[data-drawer-link]");
-    drawerLinks.forEach((link) => {
-      if (!link.hasAttribute("data-drawer-listener")) {
-        link.setAttribute("data-drawer-listener", "true");
-        link.addEventListener("click", () => setDrawerOpen(false));
-      }
+    drawerLinks.forEach((link) => link.addEventListener("click", () => setDrawerOpen(false)));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (drawer.getAttribute("data-open") !== "true") return;
+      setDrawerOpen(false);
     });
 
-    if (!document.documentElement.hasAttribute("data-drawer-esc-listener")) {
-      document.documentElement.setAttribute("data-drawer-esc-listener", "true");
-      document.addEventListener("keydown", (event) => {
-        if (event.key !== "Escape") return;
-        const currentDrawer = document.getElementById("mobileDrawer");
-        const isOpen = currentDrawer?.getAttribute("data-open") === "true";
-        if (!isOpen) return;
-        const currentOverlay = document.getElementById("mobileDrawerOverlay");
-        const currentMenuBtn = document.getElementById("menuToggle");
-        currentOverlay?.setAttribute("data-open", "false");
-        currentDrawer?.setAttribute("data-open", "false");
-        currentDrawer?.setAttribute("aria-hidden", "true");
-        currentMenuBtn?.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
-      });
-    }
-
-    if (!document.documentElement.hasAttribute("data-drawer-resize-listener")) {
-      document.documentElement.setAttribute(
-        "data-drawer-resize-listener",
-        "true",
-      );
-      window.addEventListener("resize", () => {
-        if (window.innerWidth >= 1025) {
-          const currentOverlay = document.getElementById("mobileDrawerOverlay");
-          const currentDrawer = document.getElementById("mobileDrawer");
-          const currentMenuBtn = document.getElementById("menuToggle");
-          currentOverlay?.setAttribute("data-open", "false");
-          currentDrawer?.setAttribute("data-open", "false");
-          currentDrawer?.setAttribute("aria-hidden", "true");
-          currentMenuBtn?.setAttribute("aria-expanded", "false");
-          document.body.style.overflow = "";
-        }
-      });
-    }
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 1025) setDrawerOpen(false);
+    });
 
     setDrawerOpen(false);
   }
 
-  if (!document.documentElement.hasAttribute("data-header-page-load-bound")) {
-    document.documentElement.setAttribute("data-header-page-load-bound", "true");
-    document.addEventListener("astro:page-load", initHeader);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initLandingHeader, { once: true });
+  } else {
+    initLandingHeader();
   }
-  initHeader();
 </script>
 
 <style>
@@ -369,15 +237,8 @@ const isBlogActive = kind === "blog";
     background: color-mix(in srgb, var(--bg), transparent 20%);
     border-bottom: 1px solid var(--border);
     backdrop-filter: blur(12px);
-  }
-
-  .hdr[data-sticky="true"] {
     position: sticky;
     top: 0;
-  }
-
-  .hdr[data-sticky="false"] {
-    position: relative;
   }
 
   .inner {
@@ -466,7 +327,6 @@ const isBlogActive = kind === "blog";
   }
 
   .api-toggle:hover,
-  .api-toggle.is-active,
   .api-toggle[aria-expanded="true"] {
     color: var(--fg);
     background-color: var(--panel);
@@ -547,21 +407,12 @@ const isBlogActive = kind === "blog";
     }
   }
 
-  .sidebar-btn,
-  .menu-btn,
-  .toc-btn {
+  .menu-btn {
     display: flex;
   }
 
-  .sidebar-btn[data-hidden="true"],
-  .toc-btn[data-hidden="true"] {
-    display: none !important;
-  }
-
   @media (min-width: 1025px) {
-    .sidebar-btn,
-    .menu-btn,
-    .toc-btn {
+    .menu-btn {
       display: none !important;
     }
   }
@@ -681,7 +532,6 @@ const isBlogActive = kind === "blog";
     }
   }
 
-  /* Theme toggle icons */
   :global([data-theme="dark"]) .sun {
     display: none;
   }

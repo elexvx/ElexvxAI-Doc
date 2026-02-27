@@ -32,8 +32,8 @@ export function getDocUrl(opts: {
 }
 
 export function sortDocs(a: DocEntry, b: DocEntry) {
-  const ao = a.data.nav?.order ?? 9999;
-  const bo = b.data.nav?.order ?? 9999;
+  const ao = a.data.nav?.order ?? a.data.sidebar?.order ?? 9999;
+  const bo = b.data.nav?.order ?? b.data.sidebar?.order ?? 9999;
   if (ao !== bo) return ao - bo;
   return a.data.title.localeCompare(b.data.title);
 }
@@ -48,6 +48,10 @@ export type SidebarGroup = {
   items: SidebarItem[];
 };
 
+function toTitleCase(value: string) {
+  return value.replace(/\b\w/g, (m) => m.toUpperCase());
+}
+
 export function buildSidebar(entries: DocEntry[], opts: { lang: Lang; version: string }) {
   const relevant = entries
     .filter((e) => {
@@ -61,7 +65,7 @@ export function buildSidebar(entries: DocEntry[], opts: { lang: Lang; version: s
   for (const entry of relevant) {
     const p = parseDocId(entry.id);
     const groupKey = p.rest[0] ?? 'root';
-    const title = entry.data.nav?.label ?? entry.data.title;
+    const title = entry.data.nav?.label ?? entry.data.sidebar?.label ?? entry.data.title;
     const href = getDocUrl({ lang: opts.lang, version: opts.version, slug: p.slug });
 
     const list = groups.get(groupKey) ?? [];
@@ -74,13 +78,15 @@ export function buildSidebar(entries: DocEntry[], opts: { lang: Lang; version: s
     'guides': '指南',
     'models': '模型',
     'api': 'API',
+    'faq': '常见问题',
+    'reference': '参考',
     'resources': '图书馆',
     'library': '图书馆',
   };
 
   const out: SidebarGroup[] = [];
   for (const [key, items] of groups) {
-    let title = key === 'root' ? 'Overview' : key.replace(/-/g, ' ');
+    let title = key === 'root' ? 'Overview' : toTitleCase(key.replace(/-/g, ' '));
 
     if (opts.lang === 'zh') {
       if (key === 'root') title = '概览';

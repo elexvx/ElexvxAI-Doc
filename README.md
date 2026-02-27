@@ -3,12 +3,7 @@
 ## Source Of Truth
 
 - Docs content source: `src/content/docs/**`
-- Blog content source: `src/content/blog/**`
-
-## Legacy Content
-
-- Old root `docs/` has been moved to `legacy/docs/`.
-- `legacy/docs/` is archival only and is not used by build/runtime.
+- Blog content source: `blog/**`
 
 ## UI Conventions
 

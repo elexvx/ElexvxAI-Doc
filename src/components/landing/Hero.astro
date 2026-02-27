@@ -412,34 +412,25 @@ const AnnouncementIcon = getLucideIcon(data.announcement?.icon);
 
 <script type="module" is:inline>
   const initTypewriter = () => {
-    // 检查是否有 reduced-motion 偏好
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const highlight = document.querySelector(".highlight");
     const caret = document.querySelector(".caret");
-
-    if (!highlight || !caret || highlight.dataset.initialized === "true")
-      return;
+    if (!highlight || !caret || highlight.dataset.initialized === "true") return;
 
     const fullText = highlight.getAttribute("data-fulltext");
     if (!fullText) return;
 
     if (prefersReducedMotion) {
-      // 降级：直接显示完整文本并隐藏光标，无动画
       highlight.textContent = fullText;
       caret.style.display = "none";
       highlight.dataset.initialized = "true";
       return;
     }
 
-    // 初始清空文本
     highlight.textContent = "";
 
-    // 逐字输入逻辑
     const startTyping = () => {
       let i = 0;
-      // 增加随机延迟，让打字看起来更自然平滑，而不是僵硬的匀速
       const getDelay = () => 120 + Math.random() * 80;
 
       const typeChar = () => {
@@ -448,22 +439,17 @@ const AnnouncementIcon = getLucideIcon(data.announcement?.icon);
           highlight.textContent = fullText.slice(0, i);
           setTimeout(typeChar, getDelay());
         } else {
-          // 打完后隐藏光标，避免后续闪烁干扰
           caret.style.display = "none";
           highlight.dataset.initialized = "true";
         }
       };
-
-      // 略微延迟再开始打字，防止首屏加载后立刻瞬间闪烁
       setTimeout(typeChar, 300);
     };
 
-    // 使用 IntersectionObserver：只在首屏/进入视口时开始
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // 开始后立即解绑保证只播一次，不循环
             observer.disconnect();
             startTyping();
           }
@@ -475,11 +461,9 @@ const AnnouncementIcon = getLucideIcon(data.announcement?.icon);
     observer.observe(highlight);
   };
 
-  // 支持首次加载
-  initTypewriter();
-  // 支持 Astro View Transitions
-  if (!document.documentElement.hasAttribute("data-hero-page-load-bound")) {
-    document.documentElement.setAttribute("data-hero-page-load-bound", "true");
-    document.addEventListener("astro:page-load", initTypewriter);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initTypewriter, { once: true });
+  } else {
+    initTypewriter();
   }
 </script>

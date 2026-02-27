@@ -134,46 +134,45 @@ const { data = defaultFooterData } = Astro.props;
       });
     };
 
-    if (!accordion.hasAttribute("data-accordion-init")) {
-      accordion.setAttribute("data-accordion-init", "true");
+    groups.forEach((group) => {
+      const trigger = group.querySelector(
+        "[data-footer-trigger]",
+      ) as HTMLButtonElement | null;
+      group.setAttribute("data-open", "false");
 
-      groups.forEach((group) => {
-        const trigger = group.querySelector(
-          "[data-footer-trigger]",
-        ) as HTMLButtonElement | null;
-        group.setAttribute("data-open", "false");
+      if (!trigger) return;
+      trigger.addEventListener("click", () => {
+        if (!isMobile()) return;
+        const isOpen = group.getAttribute("data-open") === "true";
 
-        if (!trigger) return;
-        trigger.addEventListener("click", () => {
-          if (!isMobile()) return;
-          const isOpen = group.getAttribute("data-open") === "true";
-          
-          // Close other groups to enforce accordion behavior
-          if (!isOpen) {
-            groups.forEach((g) => {
-              if (g !== group) {
-                g.setAttribute("data-open", "false");
-              }
-            });
-          }
+        if (!isOpen) {
+          groups.forEach((g) => {
+            if (g !== group) {
+              g.setAttribute("data-open", "false");
+            }
+          });
+        }
 
-          group.setAttribute("data-open", isOpen ? "false" : "true");
-          sync();
-        });
+        group.setAttribute("data-open", isOpen ? "false" : "true");
+        sync();
       });
+    });
 
-      window.addEventListener("resize", sync);
-    }
+    window.addEventListener("resize", sync);
 
     sync();
   }
 
-  if (!document.documentElement.hasAttribute("data-footer-page-load-bound")) {
-    document.documentElement.setAttribute(
-      "data-footer-page-load-bound",
-      "true",
-    );
-    document.addEventListener("astro:page-load", initFooterAccordion);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initFooterAccordion, { once: true });
+  } else {
+    initFooterAccordion();
   }
-  initFooterAccordion();
 </script>
+
+<style>
+  .site-footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 980px;
+  }
+</style>

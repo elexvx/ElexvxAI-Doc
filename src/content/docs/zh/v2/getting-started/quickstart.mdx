@@ -6,30 +6,23 @@ sidebar:
   label: "快速入门"
 ---
 
-import { TabItem, Tabs } from "@astrojs/starlight/components";
-
 欢迎使用 API。您可以通过我们的 API 访问所有模型，包括最新的语言和视觉模型。以下是如何开始：
 
 ## 创建并导出API密钥
 
 首先，您需要一个 API 密钥来进行身份验证。在您的环境变量中导出此密钥以便在代码中使用。
 
-<Tabs>
-  <TabItem label="macOS / Linux">
+### macOS / Linux
 
 ```bash
 export OPENAI_API_KEY="your_api_key_here"
 ```
 
-  </TabItem>
-  <TabItem label="Windows">
+### Windows
 
 ```cmd
 setx OPENAI_API_KEY "your_api_key_here"
 ```
-
-  </TabItem>
-</Tabs>
 
 完成此步骤后，系统就能识别您的请求了。
 
@@ -37,22 +30,17 @@ setx OPENAI_API_KEY "your_api_key_here"
 
 您可以通过 NPM 或 Python 的 pip 安装 SDK：
 
-<Tabs>
-  <TabItem label="Node.js">
+### Node.js
 
 ```bash
 npm install openai
 ```
 
-  </TabItem>
-  <TabItem label="Python">
+### Python
 
 ```bash
 pip install openai
 ```
-
-  </TabItem>
-</Tabs>
 
 ## 添加信用点以持续建设
 

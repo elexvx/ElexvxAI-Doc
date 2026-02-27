@@ -303,11 +303,16 @@ const formatDate = (date: Date) => {
     border: none;
     padding: 0;
     color: var(--muted);
+    text-decoration: none;
     font-size: clamp(14px, 1.5vw, 16px);
     font-weight: 500;
     cursor: pointer;
     position: relative;
     transition: color 0.2s;
+  }
+
+  [data-filter-btn].ui-btn--link {
+    text-decoration: none;
   }
 
   [data-filter-btn]:hover {
@@ -346,11 +351,9 @@ const formatDate = (date: Date) => {
     align-items: flex-start;
     padding-block: clamp(28px, 3.5vw, 36px);
     border-bottom: 1px solid var(--border-2);
-    transition: background-color 0.2s ease;
   }
 
   .card:hover {
-    background-color: var(--panel-2);
     margin-inline: -1rem;
     padding-inline: 1rem;
     border-radius: var(--radius-md);

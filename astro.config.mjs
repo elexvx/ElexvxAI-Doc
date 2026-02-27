@@ -4,7 +4,6 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-import starlight from '@astrojs/starlight';
 import pwa from '@vite-pwa/astro';
 import viteCompression from 'vite-plugin-compression';
 import rehypeSlug from 'rehype-slug';
@@ -17,39 +16,13 @@ const site =
   process.env.SITE_URL ??
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:4321');
 
-const versions = ['v2', 'v1'];
-
 export default defineConfig({
   site,
   output: 'static',
-  prefetch: {
-    prefetchAll: true,
-    defaultStrategy: 'hover',
-  },
+  prefetch: false,
   integrations: [
     tailwind(),
     react(),
-    starlight({
-      title: 'ElexvxAI Docs',
-      description: 'ElexvxAI documentation and blog',
-      locales: {
-        zh: { label: '简体中文', lang: 'zh-CN' },
-        en: { label: 'English', lang: 'en-US' },
-      },
-      defaultLocale: 'zh',
-      sidebar: versions.map((version, index) => ({
-        label: version,
-        collapsed: index !== 0,
-        autogenerate: { directory: version },
-      })),
-      customCss: ['/src/styles/tokens.css', '/src/styles/starlight-overrides.css'],
-      routeMiddleware: ['./src/starlight/route-data.ts'],
-      components: {
-        Header: './src/components/starlight/Header.astro',
-        ThemeProvider: './src/components/starlight/ThemeProvider.astro',
-        ThemeSelect: './src/components/starlight/ThemeSelect.astro',
-      },
-    }),
     sitemap(),
     mdx(),
     pwa({

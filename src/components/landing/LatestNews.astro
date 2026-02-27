@@ -126,6 +126,8 @@ const getCategoryLabel = (category: string, zh: boolean) => {
     color: var(--fg);
     display: flex;
     justify-content: center;
+    content-visibility: auto;
+    contain-intrinsic-size: 920px;
   }
 
   .header {
@@ -137,11 +139,11 @@ const getCategoryLabel = (category: string, zh: boolean) => {
   }
 
   .title {
-    font-size: 1.25rem;
+    font-size: clamp(1.25rem, 2.1vw, 1.65rem);
     font-weight: 600;
     margin: 0;
     color: var(--fg);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   .view-all {
@@ -211,7 +213,7 @@ const getCategoryLabel = (category: string, zh: boolean) => {
 
   .card-title {
     margin: 0 0 0.5rem 0;
-    font-size: 1.05rem;
+    font-size: clamp(1.05rem, 1.6vw, 1.35rem);
     line-height: 1.4;
     font-weight: 600;
     color: var(--fg);
@@ -232,7 +234,7 @@ const getCategoryLabel = (category: string, zh: boolean) => {
   .desc {
     margin: 0 0 1rem 0;
     color: var(--muted);
-    font-size: 0.875rem;
+    font-size: 0.95rem;
     line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 2;
