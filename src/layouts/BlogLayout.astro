@@ -1,104 +1,185 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import Header from "../components/Header.astro";
-import Toc from "../components/Toc.astro";
 import Footer from "../components/landing/Footer.astro";
 import type { Lang } from "../config/site";
 import "../styles/components/code.css";
-
-type Heading = { depth: number; slug: string; text: string };
 
 type Props = {
   lang: Lang;
   title: string;
   description?: string;
   slug?: string;
-  headings: Heading[];
+  headings: { depth: number; slug: string; text: string }[];
   pubDate: Date;
   tags?: string[];
 };
 
-const { lang, title, description, slug, headings, pubDate, tags } = Astro.props;
+const { lang, title, description, slug, pubDate, tags } = Astro.props;
+const dateText = pubDate.toISOString().slice(0, 10);
+const blogLabel = lang === "zh" ? "博客文章" : "Blog Article";
 ---
 
 <BaseLayout lang={lang} title={`${title} · Blog`} description={description}>
   <Header lang={lang} kind="blog" slug={slug} />
-  <div class="wrap container">
-    <main class="content" data-pagefind-body>
-      <span class="pf" data-pagefind-filter="Type">Blog</span>
-      <span class="pf" data-pagefind-filter="Language">{lang}</span>
-      <article class="article">
-        <header class="meta">
-          <h1 data-pagefind-meta="title">{title}</h1>
-          <div class="row">
-            <time datetime={pubDate.toISOString()}
-              >{pubDate.toISOString().slice(0, 10)}</time
-            >
-            {
-              tags?.length ? (
-                <div class="tags">
-                  {tags.map((t) => (
-                    <span class="tag">{t}</span>
-                  ))}
-                </div>
-              ) : null
-            }
-          </div>
-          {description ? <p class="desc">{description}</p> : null}
-        </header>
+
+  <main class="blog-open container" data-pagefind-body>
+    <span class="pf" data-pagefind-filter="Type">Blog</span>
+    <span class="pf" data-pagefind-filter="Language">{lang}</span>
+
+    <article class="blog-article">
+      <header class="meta">
+        <div class="meta-top">
+          <span class="blog-pill">{blogLabel}</span>
+          <time datetime={pubDate.toISOString()}>{dateText}</time>
+        </div>
+
+        <h1 data-pagefind-meta="title">{title}</h1>
+        {description ? <p class="desc">{description}</p> : null}
+
+        {
+          tags?.length ? (
+            <ul class="tags" aria-label={lang === "zh" ? "标签" : "Tags"}>
+              {tags.map((t) => (
+                <li class="tag">#{t}</li>
+              ))}
+            </ul>
+          ) : null
+        }
+      </header>
+
+      <div class="article-content">
         <slot />
-      </article>
-    </main>
-    <Toc
-      headings={headings}
-      title={lang === "zh" ? "本页目录" : "On this page"}
-    />
-  </div>
+      </div>
+    </article>
+  </main>
+
   <Footer />
 </BaseLayout>
 
 <style>
-  .wrap {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 260px;
+  .blog-open {
+    min-height: calc(100vh - var(--header-h));
+    padding-top: clamp(5rem, 12vh, 9.5rem);
+    padding-bottom: clamp(4rem, 10vh, 8rem);
   }
 
-  .content {
-    padding: 1.75rem 1.25rem 3.5rem;
-    min-height: calc(100vh - 4rem);
+  .blog-article {
+    width: min(100%, 760px);
+    margin: 0 auto;
   }
 
-  .meta h1 {
-    margin: 0;
+  .meta {
+    margin-bottom: clamp(2.4rem, 4vw, 3.6rem);
+    padding-bottom: clamp(1.2rem, 2.5vw, 2rem);
+    border-bottom: 1px solid var(--border);
   }
 
-  .row {
-    margin-top: 0.55rem;
+  .meta-top {
     display: flex;
-    gap: 0.75rem;
+    flex-wrap: wrap;
     align-items: center;
-    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
   }
 
-  .tags {
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    padding: 0.15rem 0.45rem;
+  .blog-pill {
     border: 1px solid var(--border);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--card), transparent 10%);
+    padding: 0.22rem 0.65rem;
+    background: color-mix(in srgb, var(--panel), transparent 24%);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 640;
+    color: var(--fg);
   }
 
   .desc {
+    margin: 1.1rem 0 0;
+    max-width: 64ch;
     color: var(--muted);
-    margin-top: 0.75rem;
-    margin-bottom: 1.25rem;
+    font-size: clamp(1rem, 1.8vw, 1.12rem);
+    line-height: 1.75;
+  }
+
+  .tags {
+    margin: 1.2rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .tag {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.16rem 0.6rem;
+    color: var(--muted);
+    font-size: 0.86rem;
+    background: color-mix(in srgb, var(--panel), transparent 38%);
+  }
+
+  .article-content {
+    color: var(--text);
+    font-size: clamp(1rem, 1.35vw, 1.08rem);
+    line-height: 1.9;
+  }
+
+  .article-content :global(h2) {
+    margin: 2.7rem 0 0.9rem;
+    font-size: clamp(1.52rem, 2.6vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  .article-content :global(h3) {
+    margin: 2rem 0 0.75rem;
+    font-size: clamp(1.22rem, 2vw, 1.5rem);
+    line-height: 1.28;
+  }
+
+  .article-content :global(p),
+  .article-content :global(ul),
+  .article-content :global(ol),
+  .article-content :global(blockquote),
+  .article-content :global(pre),
+  .article-content :global(table) {
+    margin: 0 0 1.2rem;
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    padding-left: 1.3rem;
+  }
+
+  .article-content :global(li) {
+    margin: 0.35rem 0;
+  }
+
+  .article-content :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .article-content :global(hr) {
+    margin: 2rem 0;
+  }
+
+  .article-content :global(pre) {
+    border-radius: 10px;
+  }
+
+  .article-content :global(img) {
+    margin: 1.1rem 0 1.4rem;
   }
 
   .pf {
@@ -110,12 +191,18 @@ const { lang, title, description, slug, headings, pubDate, tags } = Astro.props;
     white-space: nowrap;
   }
 
-  @media (max-width: 1024px) {
-    .wrap {
-      grid-template-columns: 1fr;
+  @media (max-width: 900px) {
+    .blog-open {
+      padding-top: clamp(3.2rem, 9vh, 5.4rem);
+      padding-bottom: clamp(3rem, 8vh, 4.4rem);
     }
-    :global(.toc) {
-      display: none;
+
+    .meta {
+      margin-bottom: 2rem;
+    }
+
+    .article-content {
+      line-height: 1.82;
     }
   }
 </style>

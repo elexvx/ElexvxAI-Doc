@@ -8,23 +8,23 @@ type Props = {
   title?: string;
 };
 
-const { lang = "zh", title = "Explore" } = Astro.props;
+const { lang = "zh", title = "探索" } = Astro.props;
 
 const cards = [
   {
-    label: "Blog",
+    label: "博客",
     href: getBlogUrl({ lang }),
     tone: "tone-blog",
     icon: "pen",
   },
   {
-    label: "Resources",
+    label: "资源",
     href: getDocUrl({ lang, version: "v2" }),
     tone: "tone-resources",
     icon: "gift",
   },
   {
-    label: "Cookbook",
+    label: "使用手册",
     href: getDocUrl({ lang, version: "v2", slug: "getting-started/quickstart" }),
     tone: "tone-cookbook",
     icon: "book",
@@ -157,12 +157,6 @@ const cards = [
   @media (hover: hover) and (pointer: fine) {
     .item:hover {
       text-decoration: none;
-    }
-
-    .item:hover .explore-card {
-      transform: translateY(-3px);
-      border-color: rgba(255, 255, 255, 0.24);
-      filter: saturate(1.08) brightness(1.03);
     }
   }
 

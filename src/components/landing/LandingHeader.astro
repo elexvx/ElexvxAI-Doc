@@ -146,6 +146,8 @@ const apiReferenceDescription =
     const apiMenu = document.getElementById("landingApiNavMenu");
     if (apiToggle && apiMenu && !apiToggle.hasAttribute("data-api-nav-listener")) {
       apiToggle.setAttribute("data-api-nav-listener", "true");
+      const apiNav = apiToggle.closest(".api-nav");
+      const isDesktop = () => window.matchMedia("(min-width: 1025px)").matches;
       const setApiOpen = (open) => {
         apiMenu.setAttribute("data-open", open ? "true" : "false");
         apiToggle.setAttribute("aria-expanded", open ? "true" : "false");
@@ -153,9 +155,25 @@ const apiReferenceDescription =
 
       apiToggle.addEventListener("click", (event) => {
         event.preventDefault();
+        if (isDesktop()) {
+          setApiOpen(true);
+          return;
+        }
         const isOpen = apiMenu.getAttribute("data-open") === "true";
         setApiOpen(!isOpen);
       });
+
+      if (apiNav && !apiNav.hasAttribute("data-api-nav-hover-listener")) {
+        apiNav.setAttribute("data-api-nav-hover-listener", "true");
+        apiNav.addEventListener("mouseenter", () => {
+          if (!isDesktop()) return;
+          setApiOpen(true);
+        });
+        apiNav.addEventListener("mouseleave", () => {
+          if (!isDesktop()) return;
+          setApiOpen(false);
+        });
+      }
 
       if (!document.documentElement.hasAttribute("data-landing-api-doc-click")) {
         document.documentElement.setAttribute("data-landing-api-doc-click", "true");
@@ -379,14 +397,14 @@ const apiReferenceDescription =
   }
 
   .api-menu-title {
-    font-size: 1.02rem;
-    font-weight: 600;
+    font-size: 0.875rem;
+    font-weight: 500;
     line-height: 1.35;
   }
 
   .api-menu-desc {
     color: var(--muted);
-    font-size: 0.92rem;
+    font-size: 0.875rem;
     line-height: 1.45;
   }
 
