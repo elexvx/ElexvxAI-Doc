@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
-import HelpSection from '../components/HelpSection.astro';
 import { SITE } from '../config/site';
 import { getEntry } from 'astro:content';
 import Hero from '../components/landing/Hero.astro';
@@ -25,7 +24,6 @@ if (!landingEntry) {
     <Hero data={landingEntry.data.hero} />
     <Features data={landingEntry.data.features} />
     <LatestNews lang="zh" />
-    <HelpSection data={landingEntry.data.help} />
     <Footer data={landingEntry.data.footer} />
   </main>
 </BaseLayout>

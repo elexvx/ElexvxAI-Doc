@@ -31,24 +31,6 @@ features:
     icon: book
     href: '#'
 
-help:
-  - title: 帮助中心
-    desc: 常见问题与使用指南
-    icon: life-buoy
-    href: '#'
-  - title: 开发者社区
-    desc: 与开发者交流实践经验
-    icon: users
-    href: '#'
-  - title: 项目合作
-    desc: 了解联合研发与合作方案
-    icon: sparkles
-    href: '#'
-  - title: 系统状态
-    desc: 查看服务运行状态与公告
-    icon: rss
-    href: '#'
-
 footer:
   tagline: 探索智能边界
   wordmark: ElexvxAILab

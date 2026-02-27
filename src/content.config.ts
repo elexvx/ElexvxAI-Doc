@@ -72,14 +72,6 @@ const landing = defineCollection({
         href: z.string(),
       }),
     ),
-    help: z.array(
-      z.object({
-        title: z.string(),
-        desc: z.string(),
-        icon: z.string(),
-        href: z.string(),
-      }),
-    ),
     footer: z.object({
       tagline: z.string().optional(),
       wordmark: z.string().optional(),

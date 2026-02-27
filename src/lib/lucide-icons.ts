@@ -2,14 +2,10 @@ import {
   Book,
   Code,
   Gift,
-  LifeBuoy,
   PenTool,
   Rocket,
-  Rss,
   Settings,
-  Sparkles,
   Terminal,
-  Users,
   Webhook,
 } from '@lucide/astro';
 
@@ -20,12 +16,8 @@ const ICON_MAP = {
   terminal: Terminal,
   settings: Settings,
   webhook: Webhook,
-  'life-buoy': LifeBuoy,
   'pen-tool': PenTool,
   gift: Gift,
-  users: Users,
-  sparkles: Sparkles,
-  rss: Rss,
 } as const;
 
 export function getLucideIcon(iconName: string | undefined) {
