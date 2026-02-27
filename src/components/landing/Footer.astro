@@ -1,45 +1,71 @@
 ---
-import { FlaskConical, ChevronDown } from "@lucide/astro";
+import { ChevronDown } from "@lucide/astro";
+import type { CollectionEntry } from "astro:content";
 import Button from "../ui/Button.astro";
 import "../../styles/footer.css";
 
-const navGroups = [
-  {
-    title: "研究",
-    links: ["发表论文", "开源项目", "开放数据"],
-  },
-  {
-    title: "资源",
-    links: ["技术文档", "API 参考", "官方博客"],
-  },
-  {
-    title: "开发者",
-    links: ["开发者社区", "模型代码"],
-  },
-  {
-    title: "关于",
-    links: [
-      "研究成果",
-      "项目合作",
-      "联系我们",
-      "关于我们",
-      "加入我们",
-      "隐私政策",
-      "服务条款",
-    ],
-  },
-];
+type FooterData = CollectionEntry<"landing">["data"]["footer"];
+
+interface Props {
+  data?: FooterData;
+}
+
+const defaultFooterData: FooterData = {
+  tagline: "探索智能边界",
+  wordmark: "ElexvxAILab",
+  columns: [
+    {
+      title: "研究",
+      links: [
+        { label: "发表论文", href: "#" },
+        { label: "开源项目", href: "#" },
+        { label: "开放数据", href: "#" },
+      ],
+    },
+    {
+      title: "资源",
+      links: [
+        { label: "技术文档", href: "#" },
+        { label: "API 参考", href: "#" },
+        { label: "官方博客", href: "#" },
+      ],
+    },
+    {
+      title: "开发者",
+      links: [
+        { label: "开发者社区", href: "#" },
+        { label: "模型代码", href: "#" },
+      ],
+    },
+    {
+      title: "关于",
+      links: [
+        { label: "研究成果", href: "#" },
+        { label: "项目合作", href: "#" },
+        { label: "联系我们", href: "#" },
+        { label: "关于我们", href: "#" },
+        { label: "加入我们", href: "#" },
+        { label: "隐私政策", href: "#" },
+        { label: "服务条款", href: "#" },
+      ],
+    },
+  ],
+  copyright:
+    "Copyright © 2024 ElexvxAI Lab | 隶属于 宏翔商道（南京）科技发展有限公司 | ICP备案：苏ICP备2025160017号",
+};
+
+const { data = defaultFooterData } = Astro.props;
 ---
 
 <footer class="site-footer">
   <div class="footer-container">
     <div class="footer-top">
       <div class="footer-tagline">
-        <h2>探索智能边界</h2>
+        {data.tagline && <h2>{data.tagline}</h2>}
       </div>
 
       <div class="footer-nav" id="footerAccordion">
-        {navGroups.map((group, index) => (
+        {data.columns.map((group, index) => (
           <section class="footer-group" data-footer-group data-open="false">
             <Button
               class="footer-group-trigger"
@@ -54,8 +80,8 @@ const navGroups = [
             </Button>
 
             <ul class="footer-group-links" id={`footer-links-${index}`} data-footer-panel>
-              {group.links.map((label) => (
-                <li><a href="#">{label}</a></li>
+              {group.links.map((link) => (
+                <li><a href={link.href}>{link.label}</a></li>
               ))}
             </ul>
           </section>
@@ -64,12 +90,12 @@ const navGroups = [
     </div>
 
     <div class="footer-middle">
-      <h2 class="footer-wordmark">ElexvxAILab</h2>
+      {data.wordmark && <h2 class="footer-wordmark">{data.wordmark}</h2>}
     </div>
 
     <div class="footer-bottom">
       <div class="footer-brand">
-        <span class="brand-text">Copyright © 2024 ElexvxAI Lab | 隶属于 宏翔商道（南京）科技发展有限公司 | ICP备案：苏ICP备2025160017号</span>
+        {data.copyright && <span class="brand-text">{data.copyright}</span>}
       </div>
     </div>
   </div>

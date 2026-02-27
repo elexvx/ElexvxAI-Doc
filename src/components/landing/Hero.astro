@@ -1,44 +1,55 @@
 ---
-import { getDocUrl } from "../../lib/docs";
-import { SITE } from "../../config/site";
-import { Code, ChevronRight } from "@lucide/astro";
+import { ChevronRight } from "@lucide/astro";
+import type { CollectionEntry } from "astro:content";
+import { getLucideIcon } from "../../lib/lucide-icons";
 
-const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
+type HeroData = CollectionEntry<"landing">["data"]["hero"];
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const AnnouncementIcon = getLucideIcon(data.announcement?.icon);
 ---
 
 <section class="hero-section">
   <div class="container">
     <div class="content">
       <h1 class="headline">
-        <span class="typewriter" data-fulltext="推动智能技术赋能工业创新">
+        <span class="typewriter" data-fulltext={data.headline}>
           <span class="typewriter-content">
-            <span class="highlight" data-fulltext="推动智能技术赋能工业创新"
+            <span class="highlight" data-fulltext={data.headline}
             ></span><span class="caret" aria-hidden="true">|</span>
           </span>
         </span>
       </h1>
 
-      <p class="subtitle">
-        文档和资源，帮助你在OpenAI上、为OpenAI开发和使用。
-      </p>
+      {data.subheadline && <p class="subtitle">{data.subheadline}</p>}
 
       <div class="actions">
-        <a href={zh} class="btn-primary"> 我们的项目 </a>
-        <a href={zh} class="btn-secondary"> 查看文档 </a>
+        <a href={data.primaryCta.href} class="btn-primary">
+          {data.primaryCta.label}
+        </a>
+        {data.secondaryCta && (
+          <a href={data.secondaryCta.href} class="btn-secondary">
+            {data.secondaryCta.label}
+          </a>
+        )}
       </div>
 
-      <a href={zh} class="announcement-banner">
-        <div class="banner-icon-wrapper">
-          <Code class="banner-icon" />
-        </div>
-        <div class="banner-content-text">
-          <h3 class="banner-title">用Codex应用更快构建</h3>
-          <p class="banner-desc">
-            在有限时间内，Codex 可包含在 ChatGPT 免费开放中，或享受 Plus、Pro、Business 和 Enterprise 订阅的 Codex 2倍速率限制。
-          </p>
-        </div>
-        <ChevronRight class="banner-arrow" />
-      </a>
+      {data.announcement && (
+        <a href={data.announcement.href} class="announcement-banner">
+          <div class="banner-icon-wrapper">
+            <AnnouncementIcon class="banner-icon" />
+          </div>
+          <div class="banner-content-text">
+            <h3 class="banner-title">{data.announcement.title}</h3>
+            <p class="banner-desc">{data.announcement.desc}</p>
+          </div>
+          <ChevronRight class="banner-arrow" />
+        </a>
+      )}
     </div>
   </div>
 </section>

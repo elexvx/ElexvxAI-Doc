@@ -1,51 +1,37 @@
 ---
-import { PenTool, Gift, Book } from "@lucide/astro";
+import type { CollectionEntry } from "astro:content";
+import { getLucideIcon } from "../../lib/lucide-icons";
 
-const features = [
-  {
-    title: "核心研究",
-    icon: "pen-tool",
-    desc: "深度学习算法与基础模型，拓展生成式任务的 AI 能力边界。",
-  },
-  {
-    title: "开源贡献",
-    icon: "gift",
-    desc: "向全球研究社区贡献最前沿的代码、预训练模型和大规模数据集。",
-  },
-  {
-    title: "工业应用",
-    icon: "book",
-    desc: "部署可扩展的 AI 解决方案，优化制造、物流和供应链。",
-  },
-];
+type FeatureItem = CollectionEntry<"landing">["data"]["features"][number];
+
+interface Props {
+  data: FeatureItem[];
+}
+
+const { data: features } = Astro.props;
 ---
 
 <section class="features-section">
   <div class="container">
     <div class="grid">
       {
-        features.map((feature, index) => (
-          <div class="card group">
-            <div class={`card-hover-bg preset-${index + 1}`} />
-            <div class="card-content">
-              <div class="icon-container">
-                {feature.icon === "pen-tool" && (
-                  <PenTool size={24} stroke-width={1.5} />
-                )}
-                {feature.icon === "gift" && (
-                  <Gift size={24} stroke-width={1.5} />
-                )}
-                {feature.icon === "book" && (
-                  <Book size={24} stroke-width={1.5} />
-                )}
+        features.map((feature, index) => {
+          const Icon = getLucideIcon(feature.icon);
+          return (
+            <a href={feature.href} class="card group">
+              <div class={`card-hover-bg preset-${index + 1}`} />
+              <div class="card-content">
+                <div class="icon-container">
+                  <Icon size={24} stroke-width={1.5} />
+                </div>
+                <div class="text-wrapper">
+                  <h3 class="headline-small">{feature.title}</h3>
+                  <p class="body-medium">{feature.desc}</p>
+                </div>
               </div>
-              <div class="text-wrapper">
-                <h3 class="headline-small">{feature.title}</h3>
-                <p class="body-medium">{feature.desc}</p>
-              </div>
-            </div>
-          </div>
-        ))
+            </a>
+          );
+        })
       }
     </div>
   </div>

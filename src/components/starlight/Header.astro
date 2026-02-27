@@ -54,18 +54,163 @@ const slug = normalizedRest.join("/");
     sidebarContent.insertBefore(top, sidebarContent.firstChild);
   }
 
-  function setupExpressiveCodeButtons() {
+  function normalizeLanguage(raw: string) {
+    return raw.trim().toLowerCase().replace(/^language-/, "");
+  }
+
+  function languageDisplayName(raw: string, isZh: boolean) {
+    const lang = normalizeLanguage(raw);
+    const labels: Record<string, string> = {
+      js: "JavaScript",
+      javascript: "JavaScript",
+      jsx: "JSX",
+      ts: "TypeScript",
+      tsx: "TSX",
+      json: "JSON",
+      bash: "Bash",
+      sh: "Shell",
+      shell: "Shell",
+      zsh: "Zsh",
+      cmd: "CMD",
+      powershell: "PowerShell",
+      ps1: "PowerShell",
+      py: "Python",
+      python: "Python",
+      yaml: "YAML",
+      yml: "YAML",
+      toml: "TOML",
+      md: "Markdown",
+      markdown: "Markdown",
+      html: "HTML",
+      css: "CSS",
+      sql: "SQL",
+      plaintext: isZh ? "文本" : "Text",
+      text: isZh ? "文本" : "Text",
+      txt: isZh ? "文本" : "Text",
+    };
+    return labels[lang] ?? (lang ? lang[0].toUpperCase() + lang.slice(1) : isZh ? "文本" : "Text");
+  }
+
+  function extractLanguage(pre: HTMLPreElement, code: HTMLElement) {
+    const dataLang = pre.dataset.language || pre.getAttribute("data-language") || "";
+    const classLang = Array.from(code.classList)
+      .find((name) => name.startsWith("language-"))
+      ?.replace(/^language-/, "");
+    return normalizeLanguage(dataLang || classLang || "text");
+  }
+
+  function getCodeLinesFromMarkup(code: HTMLElement) {
+    if (code.querySelector(":scope > .codeLine")) return null;
+
+    const expressiveLines = Array.from(code.querySelectorAll(":scope > .ec-line"));
+    if (expressiveLines.length > 0) {
+      return expressiveLines.map((line) => {
+        if (!(line instanceof HTMLElement)) return " ";
+        const source = (line.querySelector(":scope > .code") as HTMLElement | null) ?? line;
+        return source.innerHTML || " ";
+      });
+    }
+
+    return code.innerHTML.replace(/\r\n?/g, "\n").split("\n");
+  }
+
+  function wrapCodeLines(code: HTMLElement) {
+    const lineHtmlList = getCodeLinesFromMarkup(code);
+    if (!lineHtmlList) return;
+
+    const normalized = lineHtmlList.length > 0 ? lineHtmlList : [" "];
+    code.innerHTML = normalized
+      .map((lineHtml) => `<span class="codeLine">${lineHtml || " "}</span>`)
+      .join("");
+  }
+
+  async function copyText(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "true");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(textarea);
+      return ok;
+    }
+  }
+
+  function enhanceStarlightCodeBlocks() {
     const isZh = document.documentElement.lang.toLowerCase().startsWith("zh");
     const copyLabel = isZh ? "复制" : "Copy";
     const copiedLabel = isZh ? "已复制" : "Copied";
-    const buttons = document.querySelectorAll(".expressive-code .copy button");
-    buttons.forEach((button) => {
-      if (!(button instanceof HTMLButtonElement)) return;
-      if (button.dataset.labelReady === "true") return;
-      button.dataset.labelReady = "true";
-      button.dataset.copyLabel = copyLabel;
-      button.dataset.copiedLabel = copiedLabel;
-      button.setAttribute("aria-label", copyLabel);
+
+    const codes = document.querySelectorAll(".sl-markdown-content pre > code");
+    codes.forEach((codeNode) => {
+      if (!(codeNode instanceof HTMLElement)) return;
+      const pre = codeNode.parentElement;
+      if (!(pre instanceof HTMLPreElement)) return;
+      if (pre.closest(".stl-code-card")) return;
+
+      const figureHost = pre.closest("figure.frame") as HTMLElement | null;
+      const expressiveRoot = pre.closest(".expressive-code") as HTMLElement | null;
+      const mountParent = expressiveRoot?.parentElement ?? pre.parentElement;
+      if (!mountParent) return;
+      if (expressiveRoot?.previousElementSibling?.classList.contains("stl-code-card")) return;
+      if (!expressiveRoot && pre.previousElementSibling?.classList.contains("stl-code-card")) return;
+
+      if (figureHost) figureHost.classList.add("stl-code-host");
+
+      wrapCodeLines(codeNode);
+      const lang = languageDisplayName(extractLanguage(pre, codeNode), isZh);
+
+      const card = document.createElement("div");
+      card.className = "stl-code-card";
+      card.dataset.lang = lang;
+
+      const toolbar = document.createElement("div");
+      toolbar.className = "stl-code-toolbar";
+
+      const toolbarRight = document.createElement("div");
+      toolbarRight.className = "stl-code-toolbar-right";
+
+      const language = document.createElement("div");
+      language.className = "stl-code-lang";
+      language.textContent = lang;
+
+      const copyButton = document.createElement("button");
+      copyButton.type = "button";
+      copyButton.className = "stl-code-copy";
+      copyButton.textContent = copyLabel;
+      copyButton.setAttribute("aria-label", copyLabel);
+      copyButton.addEventListener("click", async () => {
+        const sourceText = codeNode.innerText;
+        const ok = await copyText(sourceText);
+        if (!ok) return;
+        copyButton.dataset.state = "copied";
+        copyButton.textContent = copiedLabel;
+        window.setTimeout(() => {
+          copyButton.dataset.state = "idle";
+          copyButton.textContent = copyLabel;
+        }, 1000);
+      });
+
+      toolbarRight.append(language, copyButton);
+      toolbar.appendChild(toolbarRight);
+
+      const body = document.createElement("div");
+      body.className = "stl-code-body";
+      card.append(toolbar, body);
+
+      if (expressiveRoot) {
+        mountParent.insertBefore(card, expressiveRoot);
+        body.appendChild(expressiveRoot);
+      } else {
+        mountParent.insertBefore(card, pre);
+        body.appendChild(pre);
+      }
     });
   }
 
@@ -76,9 +221,51 @@ const slug = normalizedRest.join("/");
     if (!tocNav || tocNav.hasAttribute("data-picker-ready")) return;
     tocNav.setAttribute("data-picker-ready", "true");
 
+    const isZh = document.documentElement.lang.toLowerCase().startsWith("zh");
     const tocTitle = tocNav.querySelector("h2")?.textContent?.trim() || "On this page";
+    const primaryLabel = isZh ? "本页内容" : "On this page";
+    const resourceLabel = isZh ? "示例 / 资源" : "Examples / Resources";
+    const resourceHeading = /^(示例|资源|examples?|resources?)$/i;
+
     const linkNodes = Array.from(tocNav.querySelectorAll("a[href^='#']")) as HTMLAnchorElement[];
     if (linkNodes.length === 0) return;
+
+    const items = linkNodes
+      .map((link) => {
+        const sectionId = link.getAttribute("href")?.replace(/^#/, "");
+        if (!sectionId) return null;
+        const label = link.textContent?.trim() || sectionId;
+        const li = link.closest("li");
+        const depth = Number.parseInt(li?.style.getPropertyValue("--depth") || "0", 10) || 0;
+        return { link, sectionId, label, depth };
+      })
+      .filter(Boolean) as Array<{
+      link: HTMLAnchorElement;
+      sectionId: string;
+      label: string;
+      depth: number;
+    }>;
+    if (items.length === 0) return;
+
+    const primaryItems: typeof items = [];
+    const resourceItems: typeof items = [];
+    let insideResourceSection = false;
+
+    items.forEach((item) => {
+      if (item.depth === 0 && resourceHeading.test(item.label)) {
+        insideResourceSection = true;
+        resourceItems.push(item);
+        return;
+      }
+      if (insideResourceSection && item.depth === 0) {
+        insideResourceSection = false;
+      }
+      if (insideResourceSection) {
+        resourceItems.push(item);
+      } else {
+        primaryItems.push(item);
+      }
+    });
 
     const picker = document.createElement("details");
     picker.className = "stl-toc-picker";
@@ -89,7 +276,7 @@ const slug = normalizedRest.join("/");
     label.textContent = tocTitle;
     const value = document.createElement("span");
     value.className = "stl-toc-picker-value";
-    value.textContent = linkNodes[0].textContent?.trim() || tocTitle;
+    value.textContent = items[0].label || tocTitle;
     summary.append(label, value);
 
     const panel = document.createElement("div");
@@ -101,38 +288,54 @@ const slug = normalizedRest.join("/");
       value.textContent = next;
     };
 
-    linkNodes.forEach((link) => {
-      const sectionId = link.getAttribute("href")?.replace(/^#/, "");
-      if (!sectionId) return;
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "stl-toc-picker-btn";
-      button.textContent = link.textContent?.trim() || sectionId;
-      button.addEventListener("click", () => {
-        const target = document.getElementById(sectionId);
-        if (!target) return;
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-        setValue(button.textContent);
-        picker.removeAttribute("open");
-      });
-      panel.appendChild(button);
+    const appendGroup = (groupLabel: string, groupItems: typeof items) => {
+      if (groupItems.length === 0) return;
+      const group = document.createElement("div");
+      group.className = "stl-toc-picker-group";
 
-      if (!link.hasAttribute("data-picker-listener")) {
-        link.setAttribute("data-picker-listener", "true");
-        link.addEventListener("click", () => {
-          setValue(link.textContent);
+      const title = document.createElement("p");
+      title.className = "stl-toc-picker-group-title";
+      title.textContent = groupLabel;
+
+      const list = document.createElement("div");
+      list.className = "stl-toc-picker-group-list";
+
+      groupItems.forEach((item) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "stl-toc-picker-btn";
+        button.dataset.depth = String(item.depth);
+        button.textContent = item.label;
+        button.addEventListener("click", () => {
+          const target = document.getElementById(item.sectionId);
+          if (!target) return;
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          setValue(item.label);
           picker.removeAttribute("open");
         });
-      }
-    });
+        list.appendChild(button);
+
+        if (!item.link.hasAttribute("data-picker-listener")) {
+          item.link.setAttribute("data-picker-listener", "true");
+          item.link.addEventListener("click", () => {
+            setValue(item.label);
+            picker.removeAttribute("open");
+          });
+        }
+      });
+
+      group.append(title, list);
+      panel.appendChild(group);
+    };
+
+    appendGroup(primaryLabel, primaryItems);
+    appendGroup(resourceLabel, resourceItems);
 
     picker.append(summary, panel);
     tocNav.insertBefore(picker, tocNav.firstChild);
 
-    const targets = linkNodes
-      .map((link) => link.getAttribute("href")?.replace(/^#/, ""))
-      .filter(Boolean)
-      .map((id) => document.getElementById(id as string))
+    const targets = items
+      .map((item) => document.getElementById(item.sectionId))
       .filter(Boolean) as HTMLElement[];
     if (targets.length === 0) return;
 
@@ -142,10 +345,8 @@ const slug = normalizedRest.join("/");
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const match = linkNodes.find(
-            (link) => link.getAttribute("href") === `#${entry.target.id}`,
-          );
-          setValue(match?.textContent);
+          const match = items.find((item) => item.sectionId === entry.target.id);
+          setValue(match?.label);
         });
       },
       { rootMargin: "-90px 0px -60% 0px" },
@@ -158,11 +359,11 @@ const slug = normalizedRest.join("/");
     document.documentElement.setAttribute("data-starlight-picker-load-bound", "true");
     document.addEventListener("astro:page-load", () => {
       setupStarlightSidebarTop();
-      setupExpressiveCodeButtons();
+      enhanceStarlightCodeBlocks();
       setupStarlightTocPicker();
     });
   }
   setupStarlightSidebarTop();
-  setupExpressiveCodeButtons();
+  enhanceStarlightCodeBlocks();
   setupStarlightTocPicker();
 </script>

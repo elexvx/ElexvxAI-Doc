@@ -21,13 +21,13 @@
   --danger: #ff5a72;
   --radius-sm: 4px;
   --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-lg: 12px;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --ring: 0 0 0 3px rgba(90, 166, 255, 0.25);
   --header-h: 56px;
-  --sidebar-w: clamp(260px, 18.5vw, 330px);
-  --rail-w: clamp(240px, 18.5vw, 320px);
+  --sidebar-w: 280px;
+  --rail-w: 320px;
   color-scheme: dark;
   font-family:
     "Inter",
@@ -57,20 +57,20 @@
 }
 
 :root[data-theme="light"] {
-  --bg: #f6f7f9;
+  --bg: #fafafa;
   --bg-elev: #ffffff;
   --panel: #ffffff;
-  --panel-2: #f9fafb;
-  --panel-soft: #f3f4f6;
-  --fg: rgba(0, 0, 0, 0.88);
-  --text: rgba(0, 0, 0, 0.88);
+  --panel-2: #fbfbfc;
+  --panel-soft: #f6f6f7;
+  --fg: rgba(0, 0, 0, 0.86);
+  --text: rgba(0, 0, 0, 0.82);
   --muted: rgba(0, 0, 0, 0.55);
-  --muted-2: rgba(0, 0, 0, 0.45);
-  --app-bg: #f6f7f9;
+  --muted-2: rgba(0, 0, 0, 0.46);
+  --app-bg: #fafafa;
   --content-bg: #ffffff;
-  --sidebar-bg: #f3f4f6;
-  --rail-bg: #f3f4f6;
-  --divider: rgba(0, 0, 0, 0.08);
+  --sidebar-bg: #f6f6f7;
+  --rail-bg: #f6f6f7;
+  --divider: rgba(0, 0, 0, 0.06);
   --border: rgba(26, 26, 26, 0.12);
   --border-2: rgba(26, 26, 26, 0.08);
   --border-strong: rgba(26, 26, 26, 0.25);

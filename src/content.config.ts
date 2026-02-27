@@ -35,4 +35,68 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { docs, blog };
+const landing = defineCollection({
+  type: 'data',
+  schema: z.object({
+    meta: z.object({
+      title: z.string(),
+      description: z.string(),
+    }),
+    hero: z.object({
+      headline: z.string(),
+      subheadline: z.string().optional(),
+      primaryCta: z.object({
+        label: z.string(),
+        href: z.string(),
+      }),
+      secondaryCta: z
+        .object({
+          label: z.string(),
+          href: z.string(),
+        })
+        .optional(),
+      announcement: z
+        .object({
+          title: z.string(),
+          desc: z.string(),
+          href: z.string(),
+          icon: z.string().optional(),
+        })
+        .optional(),
+    }),
+    features: z.array(
+      z.object({
+        title: z.string(),
+        desc: z.string(),
+        icon: z.string(),
+        href: z.string(),
+      }),
+    ),
+    help: z.array(
+      z.object({
+        title: z.string(),
+        desc: z.string(),
+        icon: z.string(),
+        href: z.string(),
+      }),
+    ),
+    footer: z.object({
+      tagline: z.string().optional(),
+      wordmark: z.string().optional(),
+      columns: z.array(
+        z.object({
+          title: z.string(),
+          links: z.array(
+            z.object({
+              label: z.string(),
+              href: z.string(),
+            }),
+          ),
+        }),
+      ),
+      copyright: z.string().optional(),
+    }),
+  }),
+});
+
+export const collections = { docs, blog, landing };

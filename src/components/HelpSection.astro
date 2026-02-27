@@ -1,40 +1,30 @@
 ---
-import { LifeBuoy, Users, Sparkles, Rss } from "@lucide/astro";
+import type { CollectionEntry } from "astro:content";
+import { getLucideIcon } from "../lib/lucide-icons";
+
+type HelpItem = CollectionEntry<"landing">["data"]["help"][number];
+
+interface Props {
+  data: HelpItem[];
+}
+
+const { data: helpItems } = Astro.props;
 ---
 
 <div class="help-section">
   <div class="help-container container">
-    <a href="#" class="help-card">
-      <div class="icon-wrapper">
-        <LifeBuoy size={24} stroke-width={1.5} />
-      </div>
-      <h3>帮助中心</h3>
-      <p>常见问题与使用指南</p>
-    </a>
-
-    <a href="#" class="help-card">
-      <div class="icon-wrapper">
-        <Users size={24} stroke-width={1.5} />
-      </div>
-      <h3>开发者社区</h3>
-      <p>与开发者交流实践经验</p>
-    </a>
-
-    <a href="#" class="help-card">
-      <div class="icon-wrapper">
-        <Sparkles size={24} stroke-width={1.5} />
-      </div>
-      <h3>项目合作</h3>
-      <p>了解联合研发与合作方案</p>
-    </a>
-
-    <a href="#" class="help-card">
-      <div class="icon-wrapper">
-        <Rss size={24} stroke-width={1.5} />
-      </div>
-      <h3>系统状态</h3>
-      <p>查看服务运行状态与公告</p>
-    </a>
+    {helpItems.map((item) => {
+      const Icon = getLucideIcon(item.icon);
+      return (
+        <a href={item.href} class="help-card">
+          <div class="icon-wrapper">
+            <Icon size={24} stroke-width={1.5} />
+          </div>
+          <h3>{item.title}</h3>
+          <p>{item.desc}</p>
+        </a>
+      );
+    })}
   </div>
 </div>
 

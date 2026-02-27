@@ -1,20 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
+import HelpSection from '../components/HelpSection.astro';
 import { SITE } from '../config/site';
+import { getEntry } from 'astro:content';
 import Hero from '../components/landing/Hero.astro';
 import LatestNews from '../components/landing/LatestNews.astro';
 import Features from '../components/landing/Features.astro';
 import Footer from '../components/landing/Footer.astro';
+
+const landingEntry = await getEntry('landing', 'zh');
+if (!landingEntry) {
+  throw new Error('Missing landing content entry: zh');
+}
 ---
 
-<BaseLayout lang="zh" title={SITE.title} description="推动智能技术 赋能工业创新">
+<BaseLayout
+  lang="zh"
+  title={landingEntry.data.meta.title}
+  description={landingEntry.data.meta.description}
+>
   <Header lang="zh" version={SITE.defaultVersion} />
   <main class="landing-page">
-    <Hero />
-    <Features />
+    <Hero data={landingEntry.data.hero} />
+    <Features data={landingEntry.data.features} />
     <LatestNews lang="zh" />
-    <Footer />
+    <HelpSection data={landingEntry.data.help} />
+    <Footer data={landingEntry.data.footer} />
   </main>
 </BaseLayout>
 
