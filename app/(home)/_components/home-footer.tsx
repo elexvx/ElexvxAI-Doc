@@ -29,7 +29,7 @@ export function HomeFooter() {
       </div>
 
       <div className="mt-8 flex w-full justify-center overflow-hidden border-b border-zinc-200 pb-6 dark:border-zinc-800">
-        <p className="select-none text-center text-[clamp(2.8rem,11vw,13.5rem)] font-black leading-none tracking-[-0.04em] text-zinc-900 dark:text-zinc-100">
+        <p className="w-full select-none text-center text-[clamp(2.8rem,13vw,15rem)] font-black leading-none tracking-[-0.02em] text-zinc-900 dark:text-zinc-100">
           ElexvxAILab
         </p>
       </div>
