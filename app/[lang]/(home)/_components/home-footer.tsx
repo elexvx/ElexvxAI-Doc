@@ -65,7 +65,7 @@ export function HomeFooter({ lang }: { lang: string }) {
       </div>
 
       <div className="w-full overflow-hidden py-7 sm:py-9 md:py-10">
-        <p className="w-full select-none whitespace-nowrap text-center text-[clamp(3.25rem,13vw,15rem)] font-black leading-[0.86] tracking-[-0.045em] text-zinc-900 dark:text-zinc-100">
+        <p className="w-full select-none whitespace-nowrap text-center text-[clamp(4.5rem,15vw,22rem)] font-black leading-[0.86] tracking-[-0.045em] text-zinc-900 dark:text-zinc-100">
           ElexvxAILab
         </p>
       </div>

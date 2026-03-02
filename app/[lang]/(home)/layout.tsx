@@ -13,7 +13,7 @@ export default async function Layout({
   const options = baseOptions(lang);
 
   return (
-    <HomeLayout {...options} links={[]} className="[--fd-layout-width:1680px]">
+    <HomeLayout {...options} links={[]} className="[--fd-layout-width:1400px]">
       {children}
     </HomeLayout>
   );
