@@ -10,9 +10,10 @@ export default async function Layout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+  const options = baseOptions(lang);
 
   return (
-    <HomeLayout {...baseOptions(lang)} className="[--fd-layout-width:1680px]">
+    <HomeLayout {...options} links={[]} className="[--fd-layout-width:1680px]">
       {children}
     </HomeLayout>
   );

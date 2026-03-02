@@ -23,7 +23,10 @@ export type ExploreItem = {
 
 export type FooterColumn = {
   title: string;
-  links: string[];
+  links: {
+    label: string;
+    href: string;
+  }[];
 };
 
 export const capabilities: CapabilityItem[] = [
@@ -86,18 +89,37 @@ export const exploreItems: ExploreItem[] = [
 export const footerColumns: FooterColumn[] = [
   {
     title: '研究',
-    links: ['发表论文', '开源项目', '开放数据'],
+    links: [
+      { label: '发表论文', href: 'https://arxiv.org/search/?query=artificial+intelligence&searchtype=all' },
+      { label: '开源项目', href: 'https://github.com/fuma-nama/fumadocs' },
+      { label: '开放数据', href: 'https://huggingface.co/datasets' },
+    ],
   },
   {
     title: '资源',
-    links: ['技术文档', 'API 参考', '官方博客'],
+    links: [
+      { label: '技术文档', href: '/docs' },
+      { label: 'API 参考', href: '/docs/test' },
+      { label: '官方博客', href: 'https://openai.com/news/' },
+    ],
   },
   {
     title: '开发者',
-    links: ['开发者社区', '模型代码'],
+    links: [
+      { label: '开发者社区', href: 'https://github.com/fuma-nama/fumadocs/discussions' },
+      { label: '模型代码', href: 'https://github.com/fuma-nama/fumadocs/tree/main/examples' },
+    ],
   },
   {
     title: '关于',
-    links: ['研究成果', '项目合作', '联系我们', '关于我们', '加入我们', '隐私政策', '服务条款'],
+    links: [
+      { label: '研究成果', href: '/docs' },
+      { label: '项目合作', href: '/docs/test' },
+      { label: '联系我们', href: 'mailto:hello@elexvx.ai' },
+      { label: '关于我们', href: '/docs' },
+      { label: '加入我们', href: '/docs' },
+      { label: '隐私政策', href: '/docs' },
+      { label: '服务条款', href: '/docs' },
+    ],
   },
 ];

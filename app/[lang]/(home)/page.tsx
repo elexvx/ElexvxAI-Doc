@@ -4,14 +4,18 @@ import { HeroSection } from './_components/hero-section';
 import { HomeFooter } from './_components/home-footer';
 import { NewsSection } from './_components/news-section';
 
-export default function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+
   return (
-    <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-4 pb-10 pt-3 sm:px-6 md:pt-6 lg:px-10 2xl:px-12">
-      <HeroSection />
-      <CapabilitiesSection />
-      <NewsSection />
-      <ExploreSection />
-      <HomeFooter />
-    </main>
+    <>
+      <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-4 pb-10 pt-3 sm:px-6 md:pt-6 lg:px-10 2xl:px-12">
+        <HeroSection />
+        <CapabilitiesSection />
+        <NewsSection />
+        <ExploreSection />
+      </main>
+      <HomeFooter lang={lang} />
+    </>
   );
 }
