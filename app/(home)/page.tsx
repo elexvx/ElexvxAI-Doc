@@ -6,7 +6,7 @@ import { NewsSection } from './_components/news-section';
 
 export default function HomePage() {
   return (
-    <main className="mx-auto w-full max-w-[1400px] px-4 pb-10 pt-3 sm:px-6 md:pt-6 lg:px-8">
+    <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-4 pb-10 pt-3 sm:px-6 md:pt-6 lg:px-10 2xl:px-12">
       <HeroSection />
       <CapabilitiesSection />
       <NewsSection />
