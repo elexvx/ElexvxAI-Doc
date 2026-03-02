@@ -1,6 +1,8 @@
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { baseOptions } from '@/lib/layout.shared';
 import type { ReactNode } from 'react';
+import { getNavLinks } from '@/lib/nav-links';
+import type { AppLocale } from '@/lib/i18n';
 
 export default async function Layout({
   children,
@@ -13,7 +15,12 @@ export default async function Layout({
   const options = baseOptions(lang);
 
   return (
-    <HomeLayout {...options} links={[]} className="[--fd-layout-width:1400px]">
+    <HomeLayout
+      {...options}
+      i18n={false}
+      links={getNavLinks(lang as AppLocale, { includeLanguageToggle: true })}
+      className="[--fd-layout-width:1400px]"
+    >
       {children}
     </HomeLayout>
   );

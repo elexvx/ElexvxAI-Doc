@@ -80,15 +80,6 @@ export function DocsSearchDialog({
         </SearchDialogHeader>
         <SearchDialogList items={query.data !== 'empty' ? query.data : defaultItems} />
         <SearchDialogFooter>
-          {tags.length > 0 && (
-            <TagsList tag={tag} onTagChange={setTag} allowClear={allowClear}>
-              {tags.map((item) => (
-                <TagsListItem key={item.value} value={item.value}>
-                  {item.name}
-                </TagsListItem>
-              ))}
-            </TagsList>
-          )}
           {footer}
         </SearchDialogFooter>
       </SearchDialogContent>
