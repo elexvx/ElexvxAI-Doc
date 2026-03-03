@@ -21,6 +21,7 @@ export default async function BlogPostPage({
   const MDX = post.body;
   const displayCategory =
     categoryParam && categoryParam.trim().length > 0 ? categoryParam : post.categories.join(' · ');
+  const summaryText = post.summary?.trim() || '文章详情';
 
   return (
     <DocsPage
@@ -30,9 +31,19 @@ export default async function BlogPostPage({
       tableOfContent={{ enabled: false }}
       tableOfContentPopover={{ enabled: false }}
     >
-      <p className="text-xs font-medium tracking-[0.18em] text-fd-muted-foreground uppercase">{displayCategory}</p>
-      <DocsTitle>{post.title}</DocsTitle>
-      <DocsDescription className="mb-0">{post.formattedDate} · 文章详情</DocsDescription>
+      <div className="text-center">
+        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-fd-muted-foreground md:text-base">
+          <span>{post.formattedDate}</span>
+          <span className="text-fd-border">·</span>
+          <span className="uppercase">{displayCategory}</span>
+        </div>
+        <DocsTitle className="mx-auto mt-5 max-w-4xl text-center text-4xl leading-[1.1] md:text-6xl">
+          {post.title}
+        </DocsTitle>
+        <DocsDescription className="mx-auto mt-4 mb-0 max-w-3xl text-center text-base md:text-lg">
+          {summaryText}
+        </DocsDescription>
+      </div>
       <div className="mt-8 overflow-hidden rounded-xl border bg-fd-card">
         <img src={post.cover} alt={post.title} className="aspect-[16/9] w-full object-cover" />
       </div>

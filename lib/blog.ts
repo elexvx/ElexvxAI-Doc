@@ -9,6 +9,7 @@ type BlogEntriesExport =
       title: string;
       date: string;
       category: BlogCategory;
+      summary?: string;
       cover: string;
       featured: boolean;
       body: unknown;
@@ -20,6 +21,7 @@ type BlogEntriesExport =
         title: string;
         date: string;
         category: BlogCategory;
+        summary?: string;
         cover: string;
         featured: boolean;
         body: unknown;
@@ -32,6 +34,7 @@ type BlogCollectionEntry = {
   title: string;
   date: string;
   category: BlogCategory;
+  summary?: string;
   cover: string;
   featured: boolean;
   body: unknown;
@@ -45,6 +48,7 @@ type BlogPostBase = {
   formattedDate: string;
   category: string;
   categories: string[];
+  summary?: string;
   cover: string;
   featured: boolean;
   timestamp: number;
@@ -97,6 +101,7 @@ function mapToListItem(entry: BlogCollectionEntry): BlogPostListItem {
     formattedDate: formatBlogDate(entry.date),
     category: categories[0],
     categories,
+    summary: entry.summary,
     cover: entry.cover,
     featured: entry.featured,
     timestamp: toTimestamp(entry.date),
