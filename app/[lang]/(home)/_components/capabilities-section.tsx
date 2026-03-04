@@ -1,9 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { capabilities } from './home-data';
+import { BookOpen, Gift, PenTool } from 'lucide-react';
+import type { HomeCapabilityItem } from '@/lib/home-content';
 
-export function CapabilitiesSection() {
+const iconMap = {
+  PenTool,
+  Gift,
+  BookOpen,
+};
+
+export function CapabilitiesSection({ capabilities }: { capabilities: HomeCapabilityItem[] }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const isTouchLikePointer = () =>
@@ -13,7 +20,7 @@ export function CapabilitiesSection() {
   return (
     <section className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-10 md:grid-cols-3 md:gap-6">
       {capabilities.map((cap, index) => {
-        const Icon = cap.icon;
+        const Icon = iconMap[cap.icon as keyof typeof iconMap] ?? PenTool;
         const isActive = activeIndex === index;
 
         return (

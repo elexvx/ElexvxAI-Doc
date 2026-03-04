@@ -1,0 +1,18 @@
+zh:
+  displayName: 中文
+  search: 搜索文档
+  searchNoResult: 未找到结果
+  chooseLanguage: 选择语言
+  toc: 目录
+  tocNoHeadings: 暂无标题
+  nextPage: 下一页
+  previousPage: 上一页
+en:
+  displayName: English
+  search: Search docs
+  searchNoResult: No results found
+  chooseLanguage: Choose language
+  toc: On this page
+  tocNoHeadings: No headings
+  nextPage: Next page
+  previousPage: Previous page

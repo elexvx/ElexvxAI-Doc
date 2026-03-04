@@ -1,11 +1,17 @@
 import { source } from '@/lib/source';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import type { LinkItemType } from 'fumadocs-ui/layouts/shared';
+import { buttonVariants } from 'fumadocs-ui/components/ui/button';
 import { baseOptions } from '@/lib/layout.shared';
 import { isLocale, type AppLocale } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { getNavLinks } from '@/lib/nav-links';
 import { notFound } from 'next/navigation';
 import { SiteRootProvider } from '@/components/site-root-provider';
+import { getI18nUIText } from '@/lib/i18n-ui';
+import { NavLanguageToggle } from '@/components/nav/nav-language-toggle';
+import { SidebarThemeToggle } from '@/components/nav/sidebar-theme-toggle';
+import { cn } from '@/lib/cn';
 
 function normalizeTagName(tag: string) {
   return tag
@@ -25,6 +31,10 @@ export default async function Layout({
   if (!isLocale(lang)) notFound();
 
   const locale = lang as AppLocale;
+  const links = await getNavLinks(locale);
+  const iconLinks = links.filter((item): item is Extract<LinkItemType, { type: 'icon' }> => item.type === 'icon');
+  const linksWithoutIcons = links.filter((item) => item.type !== 'icon');
+  const uiText = await getI18nUIText(locale);
   const tags = Array.from(
     new Set(
       source
@@ -40,8 +50,34 @@ export default async function Layout({
     }));
 
   return (
-    <SiteRootProvider locale={locale} tags={tags}>
-      <DocsLayout tree={source.getPageTree(locale)} {...baseOptions(locale)} links={getNavLinks(locale, { includeLanguageToggle: false })}>
+    <SiteRootProvider locale={locale} uiText={uiText} tags={tags}>
+      <DocsLayout
+        tree={source.getPageTree(locale)}
+        {...baseOptions(locale)}
+        i18n={false}
+        themeSwitch={{ enabled: false }}
+        links={linksWithoutIcons}
+        sidebar={{
+          footer: (
+            <div className="flex flex-nowrap items-center text-fd-muted-foreground whitespace-nowrap">
+              <NavLanguageToggle lang={locale} showText showChevron className="-mx-1 first:ms-0 last:me-0" />
+              {iconLinks.map((item, index) => (
+                <a
+                  key={`${item.url}-${index}`}
+                  href={item.url}
+                  className={cn(buttonVariants({ size: 'icon-sm', color: 'ghost' }))}
+                  aria-label={typeof item.label === 'string' ? item.label : undefined}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noreferrer noopener' : undefined}
+                >
+                  {item.icon}
+                </a>
+              ))}
+              <SidebarThemeToggle className="ms-auto p-0" />
+            </div>
+          ),
+        }}
+      >
         {children}
       </DocsLayout>
     </SiteRootProvider>

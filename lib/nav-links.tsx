@@ -1,37 +1,64 @@
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import type { LinkItemType } from 'fumadocs-ui/layouts/shared';
 import type { AppLocale } from '@/lib/i18n';
 import { Github, Globe } from 'lucide-react';
 import { NavLanguageToggle } from '@/components/nav/nav-language-toggle';
+import { parse } from 'yaml';
 
-export function getNavLinks(
+type LocalizedText = {
+  zh: string;
+  en: string;
+};
+
+type NavMainItem = {
+  text: LocalizedText;
+  url: string;
+  active: 'url' | 'nested-url';
+  on: 'nav';
+};
+
+type NavIconItem = {
+  text: LocalizedText;
+  label: LocalizedText;
+  url: string;
+  icon: 'Github' | 'Globe';
+  external: boolean;
+  active: 'none';
+};
+
+type NavLinksYaml = {
+  main: NavMainItem[];
+  icons: NavIconItem[];
+};
+
+function getNavLinksYamlPath() {
+  return path.join(process.cwd(), 'data', 'yaml', 'navigation', 'nav-links.yaml');
+}
+
+async function readNavLinksYaml(): Promise<NavLinksYaml> {
+  const file = await readFile(getNavLinksYamlPath(), 'utf8');
+  return parse(file) as NavLinksYaml;
+}
+
+function getIcon(icon: NavIconItem['icon']) {
+  if (icon === 'Github') return <Github />;
+  return <Globe />;
+}
+
+export async function getNavLinks(
   lang: AppLocale,
   { includeLanguageToggle = false }: { includeLanguageToggle?: boolean } = {},
-): LinkItemType[] {
+): Promise<LinkItemType[]> {
+  const navData = await readNavLinksYaml();
+
   return [
-    {
-      text: lang === 'zh' ? '首页' : 'Home',
-      url: `/${lang}`,
-      active: 'url',
-      on: 'nav',
-    },
-    {
-      text: lang === 'zh' ? '文档' : 'Docs',
-      url: `/${lang}/docs`,
-      active: 'nested-url',
-      on: 'nav',
-    },
-    {
-      text: lang === 'zh' ? '博客' : 'Blog',
-      url: `/${lang}/blog`,
-      active: 'nested-url',
-      on: 'nav',
-    },
-    {
-      text: lang === 'zh' ? '赞助商' : 'Sponsors',
-      url: `/${lang}/sponsors`,
-      active: 'nested-url',
-      on: 'nav',
-    },
+    ...navData.main.map((item) => ({
+      text: item.text[lang],
+      url: item.url.replace('{lang}', lang),
+      active: item.active,
+      on: item.on,
+    })),
     ...(includeLanguageToggle
       ? ([
           {
@@ -41,23 +68,14 @@ export function getNavLinks(
           },
         ] as LinkItemType[])
       : []),
-    {
-      type: 'icon',
-      text: 'GitHub',
-      label: 'GitHub',
-      url: 'https://github.com/elexvx',
-      icon: <Github />,
-      external: true,
-      active: 'none',
-    },
-    {
-      type: 'icon',
-      text: lang === 'zh' ? '官网' : 'Website',
-      label: lang === 'zh' ? '官网' : 'Website',
-      url: 'https://www.elexvx.com/',
-      icon: <Globe />,
-      external: true,
-      active: 'none',
-    },
+    ...navData.icons.map((item) => ({
+      type: 'icon' as const,
+      text: item.text[lang],
+      label: item.label[lang],
+      url: item.url,
+      icon: getIcon(item.icon),
+      external: item.external,
+      active: item.active,
+    })),
   ];
 }

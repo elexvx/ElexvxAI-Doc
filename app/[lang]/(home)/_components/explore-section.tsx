@@ -1,17 +1,24 @@
 import Link from 'next/link';
-import { exploreItems } from './home-data';
+import { BookOpen, Gift, PenTool } from 'lucide-react';
+import type { HomeExploreItem } from '@/lib/home-content';
 
-export function ExploreSection() {
+const iconMap = {
+  PenTool,
+  Gift,
+  BookOpen,
+};
+
+export function ExploreSection({ title, exploreItems }: { title: string; exploreItems: HomeExploreItem[] }) {
   return (
     <section className="mt-14 md:mt-20">
-      <h2 className="mb-5 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl dark:text-zinc-100">探索</h2>
+      <h2 className="mb-5 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl dark:text-zinc-100">{title}</h2>
 
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
         {exploreItems.map((item) => {
-          const Icon = item.icon;
+          const Icon = iconMap[item.icon as keyof typeof iconMap] ?? PenTool;
 
           return (
-            <Link key={item.title} href="docs" className="rounded-2xl">
+            <Link key={item.title} href={item.href} className="rounded-2xl">
               <div
                 className={`flex h-44 items-center justify-center rounded-2xl border border-zinc-200 bg-gradient-to-br ${item.tint} p-4 sm:h-52 md:h-60 dark:border-zinc-700/80`}
               >

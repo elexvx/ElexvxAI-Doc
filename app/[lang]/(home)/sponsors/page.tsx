@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import type { AppLocale } from '@/lib/i18n';
 import { HomeFooter } from '../_components/home-footer';
-import { getSponsorsPageCopy, sponsorItems } from './sponsors-data';
+import { getSponsorItems, getSponsorsPageCopy } from '@/lib/sponsors';
 
 export default async function SponsorsPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const locale = lang as AppLocale;
-  const copy = getSponsorsPageCopy(locale);
+  const copy = await getSponsorsPageCopy(locale);
+  const sponsorItems = await getSponsorItems();
 
   return (
     <>
@@ -15,7 +16,7 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
           <div className="grid gap-6 md:grid-cols-[1fr_minmax(260px,320px)] md:items-center md:gap-10">
             <div className="space-y-3">
               <p className="text-xs font-medium tracking-[0.16em] text-zinc-500 uppercase dark:text-zinc-400">
-                Sponsor Wall
+                {copy.eyebrow}
               </p>
               <h1 className="text-3xl leading-tight font-semibold tracking-[-0.02em] text-zinc-900 sm:text-4xl dark:text-zinc-100">
                 {copy.title}
@@ -73,7 +74,7 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
           </div>
         </section>
       </main>
-      <HomeFooter lang={lang} layout="blog" />
+      <HomeFooter lang={locale} layout="blog" />
     </>
   );
 }

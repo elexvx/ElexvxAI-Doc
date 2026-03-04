@@ -14,13 +14,14 @@ export default async function Layout({
 }) {
   const { lang } = await params;
   const options = baseOptions(lang);
+  const links = await getNavLinks(lang as AppLocale, { includeLanguageToggle: true });
 
   return (
     <SiteFrameworkProvider>
       <HomeLayout
         {...options}
         i18n={false}
-        links={getNavLinks(lang as AppLocale, { includeLanguageToggle: true })}
+        links={links}
         className="[--fd-layout-width:1400px]"
       >
         {children}

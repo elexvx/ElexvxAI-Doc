@@ -2,6 +2,7 @@ import { BlogFeatured } from '@/components/blog/blog-featured';
 import { BlogPostRow } from '@/components/blog/blog-post-row';
 import { BlogTabs } from '@/components/blog/blog-tabs';
 import { getAllPosts, getBlogCategories, getFeaturedPost, getPostsByCategory } from '@/lib/blog';
+import type { AppLocale } from '@/lib/i18n';
 import { HomeFooter } from '../_components/home-footer';
 
 export default async function BlogPage({
@@ -38,7 +39,7 @@ export default async function BlogPage({
           ))}
         </section>
       </main>
-      <HomeFooter lang={lang} layout="blog" />
+      <HomeFooter lang={lang as AppLocale} layout="blog" />
     </>
   );
 }

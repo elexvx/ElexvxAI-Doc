@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { Typewriter } from '@/components/Typewriter';
+import type { HomeHeroCopy } from '@/lib/home-content';
 
-export function HeroSection() {
+export function HeroSection({ copy }: { copy: HomeHeroCopy }) {
   return (
     <section className="mx-auto flex flex-col items-center pt-2 text-center sm:pt-4">
       <h1 className="min-h-[1.2em] max-w-5xl text-balance text-3xl font-semibold leading-[1.15] tracking-tight text-zinc-950 sm:text-4xl md:text-5xl lg:text-6xl dark:text-zinc-50">
-        <Typewriter text="推动智能技术赋能工业创新" />
+        <Typewriter text={copy.headline} />
       </h1>
       <p className="mt-3 max-w-2xl text-sm text-zinc-500 sm:text-base md:mt-4 md:text-lg dark:text-zinc-400">
-        文档和资源，帮助你在 OpenAI 上，为 OpenAI 开发和使用。
+        {copy.description}
       </p>
 
       <div className="mt-6 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:justify-center sm:gap-4">
@@ -17,13 +18,13 @@ export function HeroSection() {
           href="docs"
           className="inline-flex w-full items-center justify-center rounded-full bg-zinc-950 px-7 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-800 sm:w-auto sm:text-base dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-zinc-300"
         >
-          我们的项目
+          {copy.primaryCta}
         </Link>
         <Link
           href="docs"
           className="inline-flex w-full items-center justify-center rounded-full bg-zinc-100 px-7 py-2.5 text-sm font-medium text-zinc-900 transition hover:bg-zinc-200 sm:w-auto sm:text-base dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
         >
-          查看文档
+          {copy.secondaryCta}
         </Link>
       </div>
 
@@ -36,10 +37,9 @@ export function HeroSection() {
             {'</>'}
           </span>
           <div>
-            <p className="text-base font-semibold text-zinc-900 sm:text-lg md:text-xl dark:text-zinc-100">用Codex应用更快构建</p>
+            <p className="text-base font-semibold text-zinc-900 sm:text-lg md:text-xl dark:text-zinc-100">{copy.promoTitle}</p>
             <p className="mt-1 text-xs text-zinc-500 sm:text-sm md:text-base dark:text-zinc-400">
-              在有限时间内，Codex 可包含在 ChatGPT 免费开放中，或享受 Plus、Pro、Business 和 Enterprise
-              订阅的 Codex 2 倍速率限制。
+              {copy.promoDescription}
             </p>
           </div>
         </div>

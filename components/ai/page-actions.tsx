@@ -5,6 +5,7 @@ import { cn } from '@/lib/cn';
 import { useCopyButton } from 'fumadocs-ui/utils/use-copy-button';
 import { buttonVariants } from 'fumadocs-ui/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from 'fumadocs-ui/components/ui/popover';
+import { useI18n } from 'fumadocs-ui/contexts/i18n';
 
 const cache = new Map<string, string>();
 
@@ -16,6 +17,8 @@ export function LLMCopyButton({
 }: {
   markdownUrl: string;
 }) {
+  const { locale } = useI18n();
+  const isZh = locale === 'zh';
   const [isLoading, setLoading] = useState(false);
   const [checked, onClick] = useCopyButton(async () => {
     const cached = cache.get(markdownUrl);
@@ -52,7 +55,7 @@ export function LLMCopyButton({
       onClick={onClick}
     >
       {checked ? <Check /> : <Copy />}
-      Copy Markdown
+      {isZh ? '复制 Markdown' : 'Copy Markdown'}
     </button>
   );
 }
@@ -71,13 +74,15 @@ export function ViewOptions({
    */
   githubUrl: string;
 }) {
+  const { locale } = useI18n();
+  const isZh = locale === 'zh';
   const items = useMemo(() => {
     const pageUrl = typeof window !== 'undefined' ? window.location.href : 'loading';
-    const q = `Read ${pageUrl}, I want to ask questions about it.`;
+    const q = isZh ? `阅读 ${pageUrl}，我想围绕这页内容提问。` : `Read ${pageUrl}, I want to ask questions about it.`;
 
     return [
       {
-        title: 'Open in GitHub',
+        title: isZh ? '在 GitHub 中打开' : 'Open in GitHub',
         href: githubUrl,
         icon: (
           <svg fill="currentColor" role="img" viewBox="0 0 24 24">
@@ -87,12 +92,12 @@ export function ViewOptions({
         ),
       },
       {
-        title: 'View as Markdown',
+        title: isZh ? '查看 Markdown' : 'View as Markdown',
         href: markdownUrl,
         icon: <TextIcon />,
       },
       {
-        title: 'Open in Scira AI',
+        title: isZh ? '在 Scira AI 中打开' : 'Open in Scira AI',
         href: `https://scira.ai/?${new URLSearchParams({
           q,
         })}`,
@@ -156,7 +161,7 @@ export function ViewOptions({
         ),
       },
       {
-        title: 'Open in ChatGPT',
+        title: isZh ? '在 ChatGPT 中打开' : 'Open in ChatGPT',
         href: `https://chatgpt.com/?${new URLSearchParams({
           hints: 'search',
           q,
@@ -174,7 +179,7 @@ export function ViewOptions({
         ),
       },
       {
-        title: 'Open in Claude',
+        title: isZh ? '在 Claude 中打开' : 'Open in Claude',
         href: `https://claude.ai/new?${new URLSearchParams({
           q,
         })}`,
@@ -191,7 +196,7 @@ export function ViewOptions({
         ),
       },
       {
-        title: 'Open in Cursor',
+        title: isZh ? '在 Cursor 中打开' : 'Open in Cursor',
         icon: (
           <svg
             fill="currentColor"
@@ -208,7 +213,7 @@ export function ViewOptions({
         })}`,
       },
     ];
-  }, [githubUrl, markdownUrl]);
+  }, [githubUrl, isZh, markdownUrl]);
 
   return (
     <Popover>
@@ -221,7 +226,7 @@ export function ViewOptions({
           }),
         )}
       >
-        Open
+        {isZh ? '打开' : 'Open'}
         <ChevronDown className="size-3.5 text-fd-muted-foreground" />
       </PopoverTrigger>
       <PopoverContent className="flex flex-col">

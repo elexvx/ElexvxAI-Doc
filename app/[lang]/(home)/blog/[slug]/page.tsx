@@ -1,5 +1,6 @@
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
 import { i18n } from '@/lib/i18n';
+import type { AppLocale } from '@/lib/i18n';
 import { getMDXComponents } from '@/mdx-components';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import type { Metadata } from 'next';
@@ -49,7 +50,7 @@ export default async function BlogPostPage({
           <MDX components={getMDXComponents()} />
         </DocsBody>
       </DocsPage>
-      <HomeFooter lang={lang} />
+      <HomeFooter lang={lang as AppLocale} />
     </>
   );
 }

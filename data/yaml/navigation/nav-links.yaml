@@ -1,0 +1,46 @@
+main:
+  - text:
+      zh: 首页
+      en: Home
+    url: /{lang}
+    active: url
+    on: nav
+  - text:
+      zh: 文档
+      en: Docs
+    url: /{lang}/docs
+    active: nested-url
+    on: nav
+  - text:
+      zh: 博客
+      en: Blog
+    url: /{lang}/blog
+    active: nested-url
+    on: nav
+  - text:
+      zh: 赞助商
+      en: Sponsors
+    url: /{lang}/sponsors
+    active: nested-url
+    on: nav
+icons:
+  - text:
+      zh: GitHub
+      en: GitHub
+    label:
+      zh: GitHub
+      en: GitHub
+    url: https://github.com/elexvx
+    icon: Github
+    external: true
+    active: none
+  - text:
+      zh: 官网
+      en: Website
+    label:
+      zh: 官网
+      en: Website
+    url: https://www.elexvx.com/
+    icon: Globe
+    external: true
+    active: none

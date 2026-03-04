@@ -5,7 +5,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import type { TagItem } from 'fumadocs-ui/contexts/search';
 import { DocsSearchDialog } from '@/components/search/docs-search-dialog';
-import { i18n, i18nUI, isLocale, type AppLocale } from '@/lib/i18n';
+import { i18n, isLocale, type AppLocale } from '@/lib/i18n';
+import type { I18nUIText } from '@/lib/i18n-ui';
 
 function replaceLocale(pathname: string, nextLocale: string) {
   const segments = pathname.split('/');
@@ -19,20 +20,36 @@ function replaceLocale(pathname: string, nextLocale: string) {
 
 export function SiteRootProvider({
   locale,
+  uiText,
   tags,
   children,
 }: {
   locale: AppLocale;
+  uiText: I18nUIText;
   tags: TagItem[];
   children: ReactNode;
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const locales = i18n.languages.map((item) => ({
+    locale: item,
+    name: item === 'zh' ? '中文' : 'English',
+  }));
 
   return (
     <RootProvider
       i18n={{
-        ...i18nUI.provider(locale),
+        locale,
+        locales,
+        translations: {
+          search: uiText.search,
+          searchNoResult: uiText.searchNoResult,
+          chooseLanguage: uiText.chooseLanguage,
+          toc: uiText.toc,
+          tocNoHeadings: uiText.tocNoHeadings,
+          nextPage: uiText.nextPage,
+          previousPage: uiText.previousPage,
+        },
         onLocaleChange(nextLocale) {
           if (!i18n.languages.includes(nextLocale as AppLocale)) return;
           router.push(replaceLocale(pathname, nextLocale));
