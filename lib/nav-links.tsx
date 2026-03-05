@@ -6,21 +6,16 @@ import { Github, Globe } from 'lucide-react';
 import { NavLanguageToggle } from '@/components/nav/nav-language-toggle';
 import { parse } from 'yaml';
 
-type LocalizedText = {
-  zh: string;
-  en: string;
-};
-
 type NavMainItem = {
-  text: LocalizedText;
+  text: string;
   url: string;
   active: 'url' | 'nested-url';
   on: 'nav';
 };
 
 type NavIconItem = {
-  text: LocalizedText;
-  label: LocalizedText;
+  text: string;
+  label: string;
   url: string;
   icon: 'Github' | 'Globe';
   external: boolean;
@@ -32,12 +27,12 @@ type NavLinksYaml = {
   icons: NavIconItem[];
 };
 
-function getNavLinksYamlPath() {
-  return path.join(process.cwd(), 'data', 'yaml', 'navigation', 'nav-links.yaml');
+function getNavLinksYamlPath(locale: AppLocale) {
+  return path.join(process.cwd(), 'data', 'yaml', 'navigation', `nav-links_${locale}.yaml`);
 }
 
-async function readNavLinksYaml(): Promise<NavLinksYaml> {
-  const file = await readFile(getNavLinksYamlPath(), 'utf8');
+async function readNavLinksYaml(locale: AppLocale): Promise<NavLinksYaml> {
+  const file = await readFile(getNavLinksYamlPath(locale), 'utf8');
   return parse(file) as NavLinksYaml;
 }
 
@@ -50,11 +45,11 @@ export async function getNavLinks(
   lang: AppLocale,
   { includeLanguageToggle = false }: { includeLanguageToggle?: boolean } = {},
 ): Promise<LinkItemType[]> {
-  const navData = await readNavLinksYaml();
+  const navData = await readNavLinksYaml(lang);
 
   return [
     ...navData.main.map((item) => ({
-      text: item.text[lang],
+      text: item.text,
       url: item.url.replace('{lang}', lang),
       active: item.active,
       on: item.on,
@@ -70,8 +65,8 @@ export async function getNavLinks(
       : []),
     ...navData.icons.map((item) => ({
       type: 'icon' as const,
-      text: item.text[lang],
-      label: item.label[lang],
+      text: item.text,
+      label: item.label,
       url: item.url,
       icon: getIcon(item.icon),
       external: item.external,

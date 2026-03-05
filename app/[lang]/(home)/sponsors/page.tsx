@@ -11,7 +11,7 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
   if (!isLocale(lang)) notFound();
   const locale = lang as AppLocale;
   const copy = await getSponsorsPageCopy(locale);
-  const sponsorItems = await getSponsorItems();
+  const sponsorItems = await getSponsorItems(locale);
 
   return (
     <>
@@ -66,11 +66,11 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
                 <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${item.accent} opacity-0 transition group-hover:opacity-100`} />
                 <div className="relative">
                   <span className="inline-flex rounded-full border border-zinc-300/80 px-2.5 py-1 text-[11px] text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">
-                    {item.category[locale]}
+                    {item.category}
                   </span>
                   <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{item.name}</h3>
                   <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 text-zinc-500 dark:text-zinc-400">
-                    {item.description[locale]}
+                    {item.description}
                   </p>
                 </div>
               </a>

@@ -1,0 +1,74 @@
+copy:
+  title: R&D Team
+  description: Meet the core engineers at ElexvxAI Lab. Click a member to view qualifications and research focus.
+  featuredLabel: Featured Researcher
+  listTitle: All Researchers
+  detailCta: View Qualifications
+  expertiseLabel: Research Focus
+  experienceLabel: Experience
+  joinedLabel: Joined
+  sectionQualification: Qualifications
+  sectionAchievements: Key Achievements
+  sectionProjects: Core Projects
+  sectionContact: Contact
+members:
+  - slug: lin-yuchen
+    name: 林予辰
+    role: Head of R&D / LLM Systems Architect
+    summary: Leads multi-agent architecture and model inference platform design, focusing on production-grade reliability and observability.
+    expertise:
+      - Multi-Agent Orchestration
+      - LLM Infra
+      - RAG System Design
+    experience: 9+ years
+    joined: '2021'
+    location: Shenzhen, China
+    email: research@elexvx.com
+    education: M.S. in Computer Science with long-term focus on distributed inference systems and agent frameworks.
+    achievements:
+      - Led an enterprise-grade model orchestration platform serving unified inference across product lines.
+      - Designed observability pipelines that significantly reduced agent incident diagnosis time.
+    projects:
+      - Elexvx Multi-Agent Runtime
+      - Enterprise RAG Knowledge Platform
+    accent: from-indigo-500/20 via-cyan-500/10 to-transparent
+  - slug: zhao-anqi
+    name: 赵安琪
+    role: Senior Algorithm Engineer / Multimodal AI
+    summary: Focuses on vision-language models and document understanding, building multimodal data pipelines and evaluation systems.
+    expertise:
+      - Vision-Language Modeling
+      - Document Intelligence
+      - Evaluation Benchmarks
+    experience: 7+ years
+    joined: '2022'
+    location: Shanghai, China
+    email: research@elexvx.com
+    education: M.S. in AI with hands-on experience in large-scale multimodal model training and deployment.
+    achievements:
+      - Built document parsing and retrieval augmentation pipelines to improve QA accuracy.
+      - Established multimodal evaluation baselines and quality gates for model release.
+    projects:
+      - Multimodal Knowledge Retrieval Engine
+      - Document Understanding Evaluation Platform
+    accent: from-fuchsia-500/20 via-violet-500/10 to-transparent
+  - slug: guo-jinghao
+    name: 郭景皓
+    role: Senior Backend Engineer / Platform & Performance
+    summary: Owns inference gateways and high-concurrency scheduling, continuously improving throughput and latency.
+    expertise:
+      - High-Performance Backend
+      - Service Reliability
+      - Cost Optimization
+    experience: 8+ years
+    joined: '2020'
+    location: Hangzhou, China
+    email: research@elexvx.com
+    education: B.Eng. in Software Engineering, with years of ownership in highly available backend architecture and performance tuning.
+    achievements:
+      - Re-architected inference gateway with elastic scaling strategy, reducing peak-hour latency.
+      - Built cost observability workflows that improved GPU utilization.
+    projects:
+      - Unified Inference Gateway & Scheduling System
+      - Resource Cost Observability Platform
+    accent: from-emerald-500/20 via-teal-500/10 to-transparent

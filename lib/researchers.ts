@@ -3,11 +3,6 @@ import path from 'node:path';
 import { parse } from 'yaml';
 import type { AppLocale } from '@/lib/i18n';
 
-type LocalizedText = {
-  zh: string;
-  en: string;
-};
-
 export type ResearchersPageCopy = {
   title: string;
   description: string;
@@ -26,16 +21,16 @@ export type ResearchersPageCopy = {
 type ResearcherItem = {
   slug: string;
   name: string;
-  role: LocalizedText;
-  summary: LocalizedText;
+  role: string;
+  summary: string;
   expertise: string[];
   experience: string;
   joined: string;
-  location: LocalizedText;
+  location: string;
   email: string;
-  education: LocalizedText;
-  achievements: LocalizedText[];
-  projects: LocalizedText[];
+  education: string;
+  achievements: string[];
+  projects: string[];
   accent: string;
 };
 
@@ -59,7 +54,7 @@ export type ResearcherDetail = ResearcherListItem & {
 };
 
 type ResearchersYaml = {
-  copy: Record<AppLocale, ResearchersPageCopy>;
+  copy: ResearchersPageCopy;
   members: ResearcherItem[];
 };
 
@@ -91,21 +86,21 @@ export function getResearcherAccentPanelClassName(accent: string): string {
   ].join(' ');
 }
 
-function getResearchersYamlPath() {
-  return path.join(process.cwd(), 'data', 'yaml', 'researchers', 'researchers.yaml');
+function getResearchersYamlPath(locale: AppLocale) {
+  return path.join(process.cwd(), 'data', 'yaml', 'researchers', `researchers_${locale}.yaml`);
 }
 
-async function readResearchersYaml(): Promise<ResearchersYaml> {
-  const file = await readFile(getResearchersYamlPath(), 'utf8');
+async function readResearchersYaml(locale: AppLocale): Promise<ResearchersYaml> {
+  const file = await readFile(getResearchersYamlPath(locale), 'utf8');
   return parse(file) as ResearchersYaml;
 }
 
-function mapResearcherListItem(member: ResearcherItem, locale: AppLocale): ResearcherListItem {
+function mapResearcherListItem(member: ResearcherItem): ResearcherListItem {
   return {
     slug: member.slug,
     name: member.name,
-    role: member.role[locale],
-    summary: member.summary[locale],
+    role: member.role,
+    summary: member.summary,
     expertise: member.expertise,
     experience: member.experience,
     joined: member.joined,
@@ -113,38 +108,38 @@ function mapResearcherListItem(member: ResearcherItem, locale: AppLocale): Resea
   };
 }
 
-function mapResearcherDetail(member: ResearcherItem, locale: AppLocale): ResearcherDetail {
+function mapResearcherDetail(member: ResearcherItem): ResearcherDetail {
   return {
-    ...mapResearcherListItem(member, locale),
-    location: member.location[locale],
+    ...mapResearcherListItem(member),
+    location: member.location,
     email: member.email,
-    education: member.education[locale],
-    achievements: member.achievements.map((item) => item[locale]),
-    projects: member.projects.map((item) => item[locale]),
+    education: member.education,
+    achievements: member.achievements,
+    projects: member.projects,
   };
 }
 
 export async function getResearchersPageCopy(locale: AppLocale): Promise<ResearchersPageCopy> {
-  const data = await readResearchersYaml();
-  return data.copy[locale];
+  const data = await readResearchersYaml(locale);
+  return data.copy;
 }
 
 export async function getAllResearchers(locale: AppLocale): Promise<ResearcherListItem[]> {
-  const data = await readResearchersYaml();
+  const data = await readResearchersYaml(locale);
 
   return data.members
-    .map((member) => mapResearcherListItem(member, locale))
+    .map((member) => mapResearcherListItem(member))
     .sort((a, b) => Number(b.joined) - Number(a.joined));
 }
 
 export async function getResearcherBySlug(slug: string, locale: AppLocale): Promise<ResearcherDetail | undefined> {
-  const data = await readResearchersYaml();
+  const data = await readResearchersYaml(locale);
   const member = data.members.find((item) => item.slug === slug);
   if (!member) return undefined;
-  return mapResearcherDetail(member, locale);
+  return mapResearcherDetail(member);
 }
 
-export async function getResearcherSlugs(): Promise<string[]> {
-  const data = await readResearchersYaml();
+export async function getResearcherSlugs(locale: AppLocale = 'zh'): Promise<string[]> {
+  const data = await readResearchersYaml(locale);
   return data.members.map((member) => member.slug);
 }

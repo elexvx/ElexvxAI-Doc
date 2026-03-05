@@ -1,0 +1,74 @@
+copy:
+  title: 研发人员
+  description: 认识 ElexvxAI Lab 的核心研发团队，点击成员即可查看资历与研究方向。
+  featuredLabel: 核心成员
+  listTitle: 全部成员
+  detailCta: 查看资历
+  expertiseLabel: 研究方向
+  experienceLabel: 研发经验
+  joinedLabel: 加入时间
+  sectionQualification: 资历概览
+  sectionAchievements: 代表成果
+  sectionProjects: 重点项目
+  sectionContact: 联系方式
+members:
+  - slug: lin-yuchen
+    name: 林予辰
+    role: 研发负责人 / LLM 系统架构师
+    summary: 负责多智能体架构与模型推理平台设计，聚焦生产级 Agent 系统稳定性与可观测性。
+    expertise:
+      - Multi-Agent Orchestration
+      - LLM Infra
+      - RAG System Design
+    experience: 9+ years
+    joined: '2021'
+    location: 中国 · 深圳
+    email: research@elexvx.com
+    education: 计算机科学硕士，长期从事分布式推理系统与智能体框架研发。
+    achievements:
+      - 主导搭建企业级模型编排平台，支撑多产品线统一推理服务。
+      - 设计可观测链路，显著降低线上 Agent 故障定位时间。
+    projects:
+      - Elexvx Multi-Agent Runtime
+      - 企业级 RAG 知识中台
+    accent: from-indigo-500/20 via-cyan-500/10 to-transparent
+  - slug: zhao-anqi
+    name: 赵安琪
+    role: 高级算法工程师 / 多模态方向
+    summary: 专注视觉-语言模型与文档理解流程，负责多模态数据处理和评测体系建设。
+    expertise:
+      - Vision-Language Modeling
+      - Document Intelligence
+      - Evaluation Benchmarks
+    experience: 7+ years
+    joined: '2022'
+    location: 中国 · 上海
+    email: research@elexvx.com
+    education: 人工智能硕士，具备大规模图文模型训练与落地经验。
+    achievements:
+      - 构建文档解析与检索增强流程，提升知识问答准确性。
+      - 建立多模态评测基线，完善模型上线质量门禁。
+    projects:
+      - 多模态知识检索引擎
+      - 文档理解评测平台
+    accent: from-fuchsia-500/20 via-violet-500/10 to-transparent
+  - slug: guo-jinghao
+    name: 郭景皓
+    role: 资深后端工程师 / 平台与性能
+    summary: 负责推理服务网关与高并发任务调度，持续优化系统吞吐与延迟表现。
+    expertise:
+      - High-Performance Backend
+      - Service Reliability
+      - Cost Optimization
+    experience: 8+ years
+    joined: '2020'
+    location: 中国 · 杭州
+    email: research@elexvx.com
+    education: 软件工程本科，长期主导高可用后端架构设计与性能治理。
+    achievements:
+      - 重构推理网关并实现弹性扩缩容策略，降低峰值时段延迟。
+      - 建立资源成本监控体系，提升 GPU 利用率。
+    projects:
+      - 统一推理网关与任务调度系统
+      - 资源成本可观测平台
+    accent: from-emerald-500/20 via-teal-500/10 to-transparent
