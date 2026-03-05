@@ -1,95 +1,49 @@
 copy:
   eyebrow: Sponsor Wall
   title: Sponsorship Program
-  description: Thanks to every partner supporting free docs, components, and engineering resources.
+  description: Thanks to every supporter for keeping documentation, components, and engineering practices freely accessible.
   cta: Become a Sponsor
-  subline: Build the developer ecosystem together with us.
+  subline: Join us in advancing the developer ecosystem.
   stats:
-    totalLabel: Sponsors
-    totalValue: 48+
+    totalLabel: Partner Sponsors
     yearlyLabel: New This Year
-    yearlyValue: "12"
+    yearlyValue: "6"
     openSourceLabel: Open-source Projects
-    openSourceValue: "9"
+    openSourceValue: "6"
   sectionTitle: Partner Brands
 items:
-  - name: AxionJS
-    category: Frontend Framework
-    description: Focused on high-performance component compilation and progressive rendering.
+  - name: Elexvx Inc
+    category: Lead Investor, Initiator
+    description: A technology-focused SME in 2025 with AAA credit rating, dedicated to AI products and services.
     href: https://www.elexvx.com/
     accent: from-indigo-500/20 via-sky-400/15 to-cyan-300/20
-  - name: NeuroDB
-    category: Database
-    description: A distributed database engine with millisecond-level query performance.
-    href: https://www.elexvx.com/
-    accent: from-emerald-500/25 via-teal-400/15 to-cyan-300/15
-  - name: CloudNest
-    category: Cloud Platform
-    description: Helps teams build stable and observable cloud-native environments.
-    href: https://www.elexvx.com/
-    accent: from-violet-500/25 via-fuchsia-400/15 to-indigo-300/20
-  - name: TypeFlow
-    category: Developer Tooling
+  
+  - name: Tonggujiyu - Jadeisle
+    category: Strategic Partner
     description: Provides type-safe API workflows and debugging experiences.
-    href: https://www.elexvx.com/
+    href: https://www.tongujiyu.cn/
     accent: from-blue-500/20 via-indigo-300/15 to-purple-300/15
-  - name: Kibo UI
-    category: Design System
-    description: Enterprise-ready components and design standards for admin products.
-    href: https://www.elexvx.com/
+  
+  - name: National College Student Innovation and Entrepreneurship Practice Competition
+    category: Strategic Partner
+    description: A university innovation and entrepreneurship competition hosted by Tongwutong Chamber of Commerce and Jiaozuo Association for Science and Technology.
+    href: https://baike.baidu.com/item/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E5%88%9B%E6%96%B0%E5%88%9B%E4%B8%9A%E5%AE%9E%E8%B7%B5%E5%A4%A7%E8%B5%9B/65502098
+    accent: from-emerald-500/25 via-teal-400/15 to-cyan-300/15
+
+  - name: Shaohua Workshop, Jianye District, Nanjing, Jiangsu
+    category: Strategic Partner
+    description: "Nanjing Technology Business Incubator", "Jiangsu Technology Business Incubator", "Provincial College Student Entrepreneurship Demonstration Park"
+    href: https://www.njjy.gov.cn/ztzl/yshjzl/202401/t20240129_4158107.html
+    accent: from-violet-500/25 via-fuchsia-400/15 to-indigo-300/20
+
+  - name: Nanjing Linxi Zhijue Technology Co., Ltd.
+    category: Partner
+    description: Technology enterprise
+    href: https://aiqicha.baidu.com/company_detail_63903449782455
     accent: from-orange-500/20 via-amber-300/15 to-rose-300/15
-  - name: MintOps
-    category: Observability
-    description: Unifies logs, metrics, and tracing for faster issue diagnosis.
-    href: https://www.elexvx.com/
+
+  - name: Nanjing Fangsheng Yunji Technology Co., Ltd.
+    category: Partner
+    description: Technology enterprise
+    href: https://aiqicha.baidu.com/company_detail_63793913715120
     accent: from-lime-500/20 via-emerald-300/15 to-teal-300/15
-  - name: OpenPart
-    category: Open-source Community
-    description: Continuously sponsors docs infrastructure and developer events.
-    href: https://www.elexvx.com/
-    accent: from-cyan-500/20 via-sky-300/15 to-blue-300/15
-  - name: ZenBrowser
-    category: Browser Ecosystem
-    description: Builds a faster and lighter browser experience for developers.
-    href: https://www.elexvx.com/
-    accent: from-rose-500/20 via-orange-300/15 to-yellow-300/15
-  - name: Yecord
-    category: Collaboration Platform
-    description: Combines docs, tasks, and communication into one workflow.
-    href: https://www.elexvx.com/
-    accent: from-slate-500/20 via-zinc-300/10 to-sky-300/10
-  - name: Laminex
-    category: Build Tooling
-    description: Delivers cross-framework fast builds with smart caching.
-    href: https://www.elexvx.com/
-    accent: from-fuchsia-500/20 via-violet-300/15 to-indigo-300/15
-  - name: SwiftLyn
-    category: Engineering Platform
-    description: Improves delivery speed through platform engineering capabilities.
-    href: https://www.elexvx.com/
-    accent: from-red-500/20 via-rose-300/15 to-orange-300/15
-  - name: Nextra Docs
-    category: Documentation Ecosystem
-    description: Supports structured content management and team co-authoring.
-    href: https://www.elexvx.com/
-    accent: from-sky-500/20 via-cyan-300/15 to-teal-300/15
-  - name: Codify
-    category: AI Coding
-    description: Provides code generation and refactoring assistance for teams.
-    href: https://www.elexvx.com/
-    accent: from-violet-500/20 via-purple-300/15 to-pink-300/15
-  - name: TarotStarter
-    category: App Starter
-    description: Offers production-ready full-stack templates and best practices.
-    href: https://www.elexvx.com/
-    accent: from-indigo-500/20 via-blue-300/15 to-cyan-300/15
-  - name: Rehooks
-    category: React Utilities
-    description: Focuses on reusable hooks and state management patterns.
-    href: https://www.elexvx.com/
-    accent: from-emerald-500/20 via-green-300/15 to-lime-300/15
-  - name: DirStarter
-    category: CLI Tooling
-    description: Speeds up project bootstrapping and standards adoption.
-    href: https://www.elexvx.com/
-    accent: from-zinc-500/20 via-slate-300/10 to-blue-300/10

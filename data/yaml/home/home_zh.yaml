@@ -1,45 +1,51 @@
 copy:
   hero:
-    headline: 推动智能技术赋能工业创新
-    description: 文档和资源，帮助你在 OpenAI 上，为 OpenAI 开发和使用。
+    headline: 以智能技术赋能数字化未来
+    description: 欢迎访问宏翔商道 (Elexvx Inc) 创新产业研发中心。我们致力于将前沿的 AI 算法能力与坚实的底层架构相融合，把创新技术转化为企业服务的澎湃动力。
     primaryCta: 我们的项目
+    primaryCtaHref: /{lang}/researchers
     secondaryCta: 查看文档
-    promoTitle: 用Codex应用更快构建
-    promoDescription: 在有限时间内，Codex 可包含在 ChatGPT 免费开放中，或享受 Plus、Pro、Business 和 Enterprise 订阅的 Codex 2 倍速率限制。
+    secondaryCtaHref: /{lang}/docs
+    promoTitle: 尝试我们最新的脚手架系统
+    promoDescription: Elexvx 脚手架系统 是由 Elexvx ® Inc 推出的一套面向企业后台的脚手架/管理系统，涵盖用户与权限管理、系统配置、消息公告、文件与对象存储、短信/邮箱验证等基础能力，帮助快速搭建业务后台。
+    promoHref: /{lang}/docs
   news:
     title: 最新消息
     viewAll: 查看全部
   explore:
     title: 探索
+
 capabilities:
-  - title: 核心研究
-    description: 深度学习算法与基础模型，拓展生成式任务的 AI 能力边界。
+  - title: AI 研发与智能制造
+    description: 深耕人工智能设计与训练。提供从核心算法研究到智能制造落地的全栈解决方案。
     icon: PenTool
     hoverGradient: from-sky-300 via-blue-200 to-blue-500
     hoverGlow: from-white/45 to-transparent
-  - title: 开源贡献
-    description: 向全球研究社区贡献最前沿的代码、预训练模型和大规模数据集。
+  - title: 开源架构与极客生态
+    description: 拥抱开源社区。持续输出并维护高效的底层服务器部署方案、高可用私有云架构。
     icon: Gift
     hoverGradient: from-violet-300 via-indigo-200 to-blue-300
     hoverGlow: from-lime-300/50 to-transparent
-  - title: 工业应用
-    description: 部署可扩展的 AI 解决方案，优化制造、物流和供应链。
+  - title: 数字化与研发效能
+    description: 构建现代化企业协作流。深度集成敏捷项目管理系统、精细化的代码安全审计方案与自动化运维链路。
     icon: BookOpen
     hoverGradient: from-emerald-300/80 via-cyan-300/75 to-blue-400/90
     hoverGlow: from-emerald-200/40 to-transparent
+
 exploreItems:
   - title: 博客
     icon: PenTool
     tint: from-indigo-200 via-violet-300 to-sky-300
     href: /{lang}/blog
-  - title: 资源
+  - title: 研发人员
     icon: Gift
     tint: from-cyan-100 via-sky-200 to-indigo-200
-    href: /{lang}/docs
-  - title: 使用手册
+    href: /{lang}/researchers
+  - title: 赞助商
     icon: BookOpen
     tint: from-cyan-300 via-emerald-200 to-blue-300
-    href: /{lang}/docs
+    href: /{lang}/sponsors
+
 footer:
   title: 探索智能边界
   description: 持续推动 AI 研究走向真实产业场景，连接研究、开发与落地实践。
@@ -47,33 +53,20 @@ footer:
   columns:
     - title: 研究
       links:
-        - label: 发表论文
-          href: https://arxiv.org/search/?query=artificial+intelligence&searchtype=all
         - label: 开源项目
-          href: https://github.com/fuma-nama/fumadocs
-        - label: 开放数据
-          href: https://huggingface.co/datasets
+          href: https://github.com/elexvx
         - label: 研究成果
           href: /{lang}/docs
-        - label: 项目合作
-          href: /{lang}/docs/test
     - title: 资源
       links:
         - label: 技术文档
           href: /{lang}/docs
-        - label: API 参考
-          href: /{lang}/docs/test
-        - label: 官方博客
-          href: https://openai.com/news/
     - title: 关于
       links:
-        - label: 联系我们
-          href: mailto:hello@elexvx.ai
+        - label: 官方网站
+          href: https://www.elexvx.com
         - label: 关于我们
-          href: /{lang}/docs
+          href: https://www.elexvx.com/company/about
         - label: 加入我们
-          href: /{lang}/docs
-        - label: 隐私政策
-          href: /{lang}/docs
-        - label: 服务条款
-          href: /{lang}/docs
+          href: https://www.elexvx.com/company/careers
+

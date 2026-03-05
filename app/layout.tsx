@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { HtmlLangSync } from '@/components/html-lang-sync';
+import { LivePreviewClient } from '@/components/live-preview-client';
 import { siteConfig } from '@/lib/site';
 import './global.css';
 
@@ -35,6 +36,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <html lang="zh-CN" className={inter.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col antialiased">
         <HtmlLangSync />
+        <LivePreviewClient />
         {children}
       </body>
     </html>

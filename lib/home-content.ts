@@ -22,9 +22,12 @@ export type HomeHeroCopy = {
   headline: string;
   description: string;
   primaryCta: string;
+  primaryCtaHref: string;
   secondaryCta: string;
+  secondaryCtaHref: string;
   promoTitle: string;
   promoDescription: string;
+  promoHref: string;
 };
 
 export type HomePageCopy = {
@@ -54,7 +57,10 @@ export type HomeFooterContent = {
 };
 
 type HomeContentYaml = {
-  copy: HomePageCopy;
+  copy: Omit<HomePageCopy, 'hero'> & {
+    hero: Omit<HomeHeroCopy, 'primaryCtaHref' | 'secondaryCtaHref' | 'promoHref'> &
+      Partial<Pick<HomeHeroCopy, 'primaryCtaHref' | 'secondaryCtaHref' | 'promoHref'>>;
+  };
   capabilities: HomeCapabilityItem[];
   exploreItems: HomeExploreItem[];
   footer: HomeFooterContent;
@@ -71,7 +77,15 @@ async function readHomeYaml(locale: AppLocale): Promise<HomeContentYaml> {
 
 export async function getHomePageCopy(locale: AppLocale): Promise<HomePageCopy> {
   const data = await readHomeYaml(locale);
-  return data.copy;
+  return {
+    ...data.copy,
+    hero: {
+      ...data.copy.hero,
+      primaryCtaHref: (data.copy.hero.primaryCtaHref ?? '/{lang}/docs').replace('{lang}', locale),
+      secondaryCtaHref: (data.copy.hero.secondaryCtaHref ?? '/{lang}/docs').replace('{lang}', locale),
+      promoHref: (data.copy.hero.promoHref ?? '/{lang}/docs').replace('{lang}', locale),
+    },
+  };
 }
 
 export async function getHomeCapabilities(locale: AppLocale): Promise<HomeCapabilityItem[]> {

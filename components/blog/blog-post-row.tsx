@@ -23,7 +23,7 @@ export function BlogPostRow({ post, lang }: { post: BlogPostListItem; lang: stri
           src={post.cover}
           alt={post.title}
           fill
-          className="object-contain object-center p-2.5 sm:p-3"
+          className="object-cover object-center"
           sizes="132px"
         />
       </div>

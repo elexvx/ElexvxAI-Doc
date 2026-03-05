@@ -3,9 +3,12 @@ copy:
     headline: Empower Industrial Innovation with Intelligent Technology
     description: Docs and resources to help you build and use OpenAI on OpenAI.
     primaryCta: Our Projects
+    primaryCtaHref: /{lang}/researchers
     secondaryCta: View Docs
+    secondaryCtaHref: /{lang}/docs
     promoTitle: Build Faster with Codex Apps
     promoDescription: For a limited time, Codex is included in ChatGPT for free, or available with higher rate limits on Plus, Pro, Business, and Enterprise plans.
+    promoHref: /{lang}/docs
   news:
     title: Latest News
     viewAll: View All
