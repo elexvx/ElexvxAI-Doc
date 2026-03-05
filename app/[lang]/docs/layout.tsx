@@ -7,6 +7,7 @@ import { isLocale, type AppLocale } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { getNavLinks } from '@/lib/nav-links';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { SiteRootProvider } from '@/components/site-root-provider';
 import { getI18nUIText } from '@/lib/i18n-ui';
 import { NavLanguageToggle } from '@/components/nav/nav-language-toggle';
@@ -34,7 +35,31 @@ export default async function Layout({
   const links = await getNavLinks(locale);
   const iconLinks = links.filter((item): item is Extract<LinkItemType, { type: 'icon' }> => item.type === 'icon');
   const linksWithoutIcons = links.filter((item) => item.type !== 'icon');
-  const mobileOnlyLinks = linksWithoutIcons.map((item) => ({ ...item, on: 'menu' as const }));
+  const mobileShortcutLinks = linksWithoutIcons.flatMap((item) =>
+    'url' in item && typeof item.url === 'string' ? [{ url: item.url, text: item.text }] : [],
+  );
+  const mobileOnlyLinks: LinkItemType[] =
+    mobileShortcutLinks.length > 0
+      ? [
+          {
+            type: 'custom',
+            on: 'menu',
+            children: (
+              <div className="md:hidden mb-4 flex flex-col gap-1">
+                {mobileShortcutLinks.map((item, index) => (
+                  <Link
+                    key={`${item.url}-${index}`}
+                    href={item.url}
+                    className="relative flex flex-row items-center gap-2 rounded-lg p-2 text-start text-fd-muted-foreground wrap-anywhere transition-colors hover:bg-fd-accent/50 hover:text-fd-accent-foreground/80 hover:transition-none"
+                  >
+                    {item.text}
+                  </Link>
+                ))}
+              </div>
+            ),
+          },
+        ]
+      : [];
   const uiText = await getI18nUIText(locale);
   const tags = Array.from(
     new Set(
