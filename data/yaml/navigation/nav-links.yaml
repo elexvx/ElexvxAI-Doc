@@ -18,6 +18,12 @@ main:
     active: nested-url
     on: nav
   - text:
+      zh: 研发人员
+      en: R&D Team
+    url: /{lang}/researchers
+    active: nested-url
+    on: nav
+  - text:
       zh: 赞助商
       en: Sponsors
     url: /{lang}/sponsors

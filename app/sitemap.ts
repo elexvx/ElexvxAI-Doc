@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { i18n } from '@/lib/i18n';
 import { getAllPosts } from '@/lib/blog';
+import { getResearcherSlugs } from '@/lib/researchers';
 import { source } from '@/lib/source';
 import { buildAbsoluteUrl, buildLocalePath } from '@/lib/site';
 
@@ -8,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const pages: MetadataRoute.Sitemap = [];
   const posts = await getAllPosts();
+  const researcherSlugs = await getResearcherSlugs();
 
   for (const locale of i18n.languages) {
     pages.push({
@@ -34,6 +36,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.7,
     });
+    pages.push({
+      url: buildAbsoluteUrl(buildLocalePath(locale, '/researchers')),
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    });
 
     for (const page of source.getPages(locale)) {
       pages.push({
@@ -48,6 +56,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       pages.push({
         url: buildAbsoluteUrl(buildLocalePath(locale, `/blog/${post.slug}`)),
         lastModified: post.date ? new Date(post.date) : now,
+        changeFrequency: 'weekly',
+        priority: 0.6,
+      });
+    }
+
+    for (const slug of researcherSlugs) {
+      pages.push({
+        url: buildAbsoluteUrl(buildLocalePath(locale, `/researchers/${slug}`)),
+        lastModified: now,
         changeFrequency: 'weekly',
         priority: 0.6,
       });

@@ -3,8 +3,6 @@ import path from 'node:path';
 import { parse } from 'yaml';
 import type { AppLocale } from '@/lib/i18n';
 
-type LocalizedText = Record<AppLocale, string>;
-
 export type HomeCapabilityItem = {
   title: string;
   description: string;
@@ -55,55 +53,36 @@ export type HomeFooterContent = {
   columns: HomeFooterColumn[];
 };
 
-type HomeFooterLocalizedContent = Record<AppLocale, HomeFooterContent>;
-
-type HomePageCopyYaml = Record<AppLocale, HomePageCopy>;
-
-type HomeCapabilityItemYaml = Omit<HomeCapabilityItem, 'title' | 'description'> & {
-  title: LocalizedText;
-  description: LocalizedText;
-};
-
-type HomeExploreItemYaml = Omit<HomeExploreItem, 'title'> & {
-  title: LocalizedText;
-};
-
 type HomeContentYaml = {
-  copy: HomePageCopyYaml;
-  capabilities: HomeCapabilityItemYaml[];
-  exploreItems: HomeExploreItemYaml[];
-  footer: HomeFooterLocalizedContent;
+  copy: HomePageCopy;
+  capabilities: HomeCapabilityItem[];
+  exploreItems: HomeExploreItem[];
+  footer: HomeFooterContent;
 };
 
-function getHomeYamlPath() {
-  return path.join(process.cwd(), 'data', 'yaml', 'home', 'home.yaml');
+function getHomeYamlPath(locale: AppLocale) {
+  return path.join(process.cwd(), 'data', 'yaml', 'home', `home_${locale}.yaml`);
 }
 
-async function readHomeYaml(): Promise<HomeContentYaml> {
-  const file = await readFile(getHomeYamlPath(), 'utf8');
+async function readHomeYaml(locale: AppLocale): Promise<HomeContentYaml> {
+  const file = await readFile(getHomeYamlPath(locale), 'utf8');
   return parse(file) as HomeContentYaml;
 }
 
 export async function getHomePageCopy(locale: AppLocale): Promise<HomePageCopy> {
-  const data = await readHomeYaml();
-  return data.copy[locale];
+  const data = await readHomeYaml(locale);
+  return data.copy;
 }
 
 export async function getHomeCapabilities(locale: AppLocale): Promise<HomeCapabilityItem[]> {
-  const data = await readHomeYaml();
-  return data.capabilities.map((item) => ({
-    title: item.title[locale],
-    description: item.description[locale],
-    icon: item.icon,
-    hoverGradient: item.hoverGradient,
-    hoverGlow: item.hoverGlow,
-  }));
+  const data = await readHomeYaml(locale);
+  return data.capabilities;
 }
 
 export async function getHomeExploreItems(locale: AppLocale): Promise<HomeExploreItem[]> {
-  const data = await readHomeYaml();
+  const data = await readHomeYaml(locale);
   return data.exploreItems.map((item) => ({
-    title: item.title[locale],
+    title: item.title,
     icon: item.icon,
     tint: item.tint,
     href: item.href.replace('{lang}', locale),
@@ -111,8 +90,8 @@ export async function getHomeExploreItems(locale: AppLocale): Promise<HomeExplor
 }
 
 export async function getHomeFooterContent(locale: AppLocale): Promise<HomeFooterContent> {
-  const data = await readHomeYaml();
-  const content = data.footer[locale];
+  const data = await readHomeYaml(locale);
+  const content = data.footer;
   return {
     ...content,
     columns: content.columns.map((column) => ({

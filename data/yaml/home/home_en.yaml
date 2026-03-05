@@ -1,0 +1,79 @@
+copy:
+  hero:
+    headline: Empower Industrial Innovation with Intelligent Technology
+    description: Docs and resources to help you build and use OpenAI on OpenAI.
+    primaryCta: Our Projects
+    secondaryCta: View Docs
+    promoTitle: Build Faster with Codex Apps
+    promoDescription: For a limited time, Codex is included in ChatGPT for free, or available with higher rate limits on Plus, Pro, Business, and Enterprise plans.
+  news:
+    title: Latest News
+    viewAll: View All
+  explore:
+    title: Explore
+capabilities:
+  - title: Core Research
+    description: Deep learning algorithms and foundation models, expanding generative AI capabilities.
+    icon: PenTool
+    hoverGradient: from-sky-300 via-blue-200 to-blue-500
+    hoverGlow: from-white/45 to-transparent
+  - title: Open-source Contribution
+    description: Contributing cutting-edge code, pretrained models, and large-scale datasets to the research community.
+    icon: Gift
+    hoverGradient: from-violet-300 via-indigo-200 to-blue-300
+    hoverGlow: from-lime-300/50 to-transparent
+  - title: Industrial Applications
+    description: Deploy scalable AI solutions to optimize manufacturing, logistics, and supply chains.
+    icon: BookOpen
+    hoverGradient: from-emerald-300/80 via-cyan-300/75 to-blue-400/90
+    hoverGlow: from-emerald-200/40 to-transparent
+exploreItems:
+  - title: Blog
+    icon: PenTool
+    tint: from-indigo-200 via-violet-300 to-sky-300
+    href: /{lang}/blog
+  - title: Resources
+    icon: Gift
+    tint: from-cyan-100 via-sky-200 to-indigo-200
+    href: /{lang}/docs
+  - title: User Guide
+    icon: BookOpen
+    tint: from-cyan-300 via-emerald-200 to-blue-300
+    href: /{lang}/docs
+footer:
+  title: Explore Intelligence Frontiers
+  description: We keep advancing AI research into real industry scenarios and connect research, development, and deployment.
+  copyright: "Copyright © 2024 ElexvxAI Lab | Affiliated with Hongxiang Shangdao (Nanjing) Technology Development Co., Ltd. | ICP License: 苏ICP备2025160017号"
+  columns:
+    - title: Research
+      links:
+        - label: Papers
+          href: https://arxiv.org/search/?query=artificial+intelligence&searchtype=all
+        - label: Open Source
+          href: https://github.com/fuma-nama/fumadocs
+        - label: Open Datasets
+          href: https://huggingface.co/datasets
+        - label: Outcomes
+          href: /{lang}/docs
+        - label: Collaboration
+          href: /{lang}/docs/test
+    - title: Resources
+      links:
+        - label: Technical Docs
+          href: /{lang}/docs
+        - label: API Reference
+          href: /{lang}/docs/test
+        - label: Official Blog
+          href: https://openai.com/news/
+    - title: About
+      links:
+        - label: Contact Us
+          href: mailto:hello@elexvx.ai
+        - label: About Us
+          href: /{lang}/docs
+        - label: Careers
+          href: /{lang}/docs
+        - label: Privacy Policy
+          href: /{lang}/docs
+        - label: Terms of Service
+          href: /{lang}/docs
