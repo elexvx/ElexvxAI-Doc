@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import type { ResearcherListItem } from '@/lib/researchers';
+import { getResearcherAccentOverlayClassName, type ResearcherListItem } from '@/lib/researchers';
 
 export function ResearcherCard({
   researcher,
@@ -22,7 +22,7 @@ export function ResearcherCard({
       href={`/${lang}/researchers/${researcher.slug}`}
       className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 px-5 py-5 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900"
     >
-      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${researcher.accent} opacity-0 transition group-hover:opacity-100`} />
+      <div className={getResearcherAccentOverlayClassName(researcher.accent)} />
       <div className="relative">
         <h3 className="text-lg font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{researcher.name}</h3>
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{researcher.role}</p>

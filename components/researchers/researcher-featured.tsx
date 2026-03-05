@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { ResearcherListItem } from '@/lib/researchers';
+import { getResearcherAccentPanelClassName, type ResearcherListItem } from '@/lib/researchers';
 
 export function ResearcherFeatured({
   researcher,
@@ -32,7 +32,7 @@ export function ResearcherFeatured({
           </Link>
         </div>
 
-        <div className={`relative overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-br ${researcher.accent} p-5 dark:border-zinc-800`}>
+        <div className={getResearcherAccentPanelClassName(researcher.accent)}>
           <div className="rounded-lg bg-white/80 px-4 py-3 backdrop-blur-sm dark:bg-zinc-900/70">
             <p className="text-xs text-zinc-500 dark:text-zinc-400">{expertiseLabel}</p>
             <div className="mt-2 flex flex-wrap gap-2">

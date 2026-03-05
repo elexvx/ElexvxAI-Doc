@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { HomeFooter } from '../../_components/home-footer';
 import { i18n, isLocale, type AppLocale } from '@/lib/i18n';
-import { getResearcherBySlug, getResearchersPageCopy, getResearcherSlugs } from '@/lib/researchers';
+import { getResearcherAccentPanelClassName, getResearcherBySlug, getResearchersPageCopy, getResearcherSlugs } from '@/lib/researchers';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 
 export default async function ResearcherDetailPage({
@@ -38,7 +38,7 @@ export default async function ResearcherDetailPage({
           </DocsDescription>
         </div>
 
-        <div className={`relative mt-8 overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-br ${researcher.accent} p-5 dark:border-zinc-800`}>
+        <div className={['mt-8', getResearcherAccentPanelClassName(researcher.accent)].join(' ')}>
           <div className="grid gap-3 sm:grid-cols-3">
             <article className="rounded-lg border border-zinc-200 bg-white/85 px-4 py-3 backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-900/70">
               <p className="text-xs text-zinc-500 dark:text-zinc-400">{copy.experienceLabel}</p>

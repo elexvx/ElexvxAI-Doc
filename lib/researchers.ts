@@ -63,6 +63,34 @@ type ResearchersYaml = {
   members: ResearcherItem[];
 };
 
+const RESEARCHER_ACCENT_CLASS_MAP = {
+  'from-indigo-500/20 via-cyan-500/10 to-transparent': 'from-indigo-500/20 via-cyan-500/10 to-transparent',
+  'from-fuchsia-500/20 via-violet-500/10 to-transparent': 'from-fuchsia-500/20 via-violet-500/10 to-transparent',
+  'from-emerald-500/20 via-teal-500/10 to-transparent': 'from-emerald-500/20 via-teal-500/10 to-transparent',
+} as const;
+
+const DEFAULT_RESEARCHER_ACCENT_CLASS = 'from-indigo-500/20 via-cyan-500/10 to-transparent';
+
+function resolveResearcherAccentClass(accent: string): string {
+  return RESEARCHER_ACCENT_CLASS_MAP[accent as keyof typeof RESEARCHER_ACCENT_CLASS_MAP] ?? DEFAULT_RESEARCHER_ACCENT_CLASS;
+}
+
+export function getResearcherAccentOverlayClassName(accent: string): string {
+  return [
+    'pointer-events-none absolute inset-0 bg-gradient-to-br',
+    resolveResearcherAccentClass(accent),
+    'opacity-0 transition group-hover:opacity-100',
+  ].join(' ');
+}
+
+export function getResearcherAccentPanelClassName(accent: string): string {
+  return [
+    'relative overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-br',
+    resolveResearcherAccentClass(accent),
+    'p-5 dark:border-zinc-800',
+  ].join(' ');
+}
+
 function getResearchersYamlPath() {
   return path.join(process.cwd(), 'data', 'yaml', 'researchers', 'researchers.yaml');
 }
@@ -81,7 +109,7 @@ function mapResearcherListItem(member: ResearcherItem, locale: AppLocale): Resea
     expertise: member.expertise,
     experience: member.experience,
     joined: member.joined,
-    accent: member.accent,
+    accent: resolveResearcherAccentClass(member.accent),
   };
 }
 
