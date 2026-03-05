@@ -34,6 +34,7 @@ export default async function Layout({
   const links = await getNavLinks(locale);
   const iconLinks = links.filter((item): item is Extract<LinkItemType, { type: 'icon' }> => item.type === 'icon');
   const linksWithoutIcons = links.filter((item) => item.type !== 'icon');
+  const mobileOnlyLinks = linksWithoutIcons.map((item) => ({ ...item, on: 'menu' as const }));
   const uiText = await getI18nUIText(locale);
   const tags = Array.from(
     new Set(
@@ -56,7 +57,7 @@ export default async function Layout({
         {...baseOptions(locale)}
         i18n={false}
         themeSwitch={{ enabled: false }}
-        links={linksWithoutIcons}
+        links={mobileOnlyLinks}
         sidebar={{
           footer: (
             <div className="flex flex-nowrap items-center text-fd-muted-foreground whitespace-nowrap">

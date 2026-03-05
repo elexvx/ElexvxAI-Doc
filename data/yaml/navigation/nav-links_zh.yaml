@@ -2,23 +2,23 @@ main:
   - text: 首页
     url: /{lang}
     active: url
-    on: nav
+    on: all
   - text: 文档
     url: /{lang}/docs
     active: nested-url
-    on: nav
+    on: all
   - text: 博客
     url: /{lang}/blog
     active: nested-url
-    on: nav
+    on: all
   - text: 研发人员
     url: /{lang}/researchers
     active: nested-url
-    on: nav
+    on: all
   - text: 赞助商
     url: /{lang}/sponsors
     active: nested-url
-    on: nav
+    on: all
 icons:
   - text: GitHub
     label: GitHub

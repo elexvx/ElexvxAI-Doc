@@ -2,23 +2,23 @@ main:
   - text: Home
     url: /{lang}
     active: url
-    on: nav
+    on: all
   - text: Docs
     url: /{lang}/docs
     active: nested-url
-    on: nav
+    on: all
   - text: Blog
     url: /{lang}/blog
     active: nested-url
-    on: nav
+    on: all
   - text: R&D Team
     url: /{lang}/researchers
     active: nested-url
-    on: nav
+    on: all
   - text: Sponsors
     url: /{lang}/sponsors
     active: nested-url
-    on: nav
+    on: all
 icons:
   - text: GitHub
     label: GitHub

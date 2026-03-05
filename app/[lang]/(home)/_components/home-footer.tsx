@@ -63,8 +63,8 @@ export async function HomeFooter({ lang, layout = 'home' }: { lang: AppLocale; l
         </div>
       </div>
 
-      <div className="w-full overflow-hidden py-7 sm:py-9 md:py-10">
-        <p className="w-full select-none whitespace-nowrap text-center text-[clamp(4.5rem,15vw,22rem)] font-black leading-[0.86] tracking-[-0.045em] text-zinc-900 dark:text-zinc-100">
+      <div className="w-full overflow-hidden px-4 py-7 sm:px-0 sm:py-9 md:py-10">
+        <p className="w-full select-none whitespace-nowrap text-center text-[clamp(2.3rem,15vw,3.2rem)] font-black leading-[0.9] tracking-[-0.035em] text-zinc-900 sm:text-[clamp(3.2rem,15vw,8rem)] md:text-[clamp(4.5rem,15vw,22rem)] md:tracking-[-0.045em] dark:text-zinc-100">
           ElexvxAILab
         </p>
       </div>

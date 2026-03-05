@@ -10,7 +10,7 @@ type NavMainItem = {
   text: string;
   url: string;
   active: 'url' | 'nested-url';
-  on: 'nav';
+  on?: 'menu' | 'nav' | 'all';
 };
 
 type NavIconItem = {
@@ -52,7 +52,7 @@ export async function getNavLinks(
       text: item.text,
       url: item.url.replace('{lang}', lang),
       active: item.active,
-      on: item.on,
+      on: item.on ?? 'all',
     })),
     ...(includeLanguageToggle
       ? ([
