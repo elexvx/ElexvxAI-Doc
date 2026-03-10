@@ -13,9 +13,11 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const locale = lang as AppLocale;
-  const copy = await getHomePageCopy(locale);
-  const capabilities = await getHomeCapabilities(locale);
-  const exploreItems = await getHomeExploreItems(locale);
+  const [copy, capabilities, exploreItems] = await Promise.all([
+    getHomePageCopy(locale),
+    getHomeCapabilities(locale),
+    getHomeExploreItems(locale),
+  ]);
 
   return (
     <>

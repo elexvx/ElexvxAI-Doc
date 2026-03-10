@@ -10,8 +10,10 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const locale = lang as AppLocale;
-  const copy = await getSponsorsPageCopy(locale);
-  const sponsorItems = await getSponsorItems(locale);
+  const [copy, sponsorItems] = await Promise.all([
+    getSponsorsPageCopy(locale),
+    getSponsorItems(locale),
+  ]);
 
   return (
     <>

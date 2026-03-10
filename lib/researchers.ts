@@ -90,9 +90,27 @@ function getResearchersYamlPath(locale: AppLocale) {
   return path.join(process.cwd(), 'data', 'yaml', 'researchers', `researchers_${locale}.yaml`);
 }
 
+const researchersYamlCache = new Map<AppLocale, Promise<ResearchersYaml>>();
+const useResearchersYamlCache = process.env.NODE_ENV === 'production';
+
 async function readResearchersYaml(locale: AppLocale): Promise<ResearchersYaml> {
-  const file = await readFile(getResearchersYamlPath(locale), 'utf8');
-  return parse(file) as ResearchersYaml;
+  if (!useResearchersYamlCache) {
+    const file = await readFile(getResearchersYamlPath(locale), 'utf8');
+    return parse(file) as ResearchersYaml;
+  }
+
+  let cached = researchersYamlCache.get(locale);
+  if (!cached) {
+    cached = readFile(getResearchersYamlPath(locale), 'utf8')
+      .then((file) => parse(file) as ResearchersYaml)
+      .catch((error) => {
+        researchersYamlCache.delete(locale);
+        throw error;
+      });
+    researchersYamlCache.set(locale, cached);
+  }
+
+  return cached;
 }
 
 function mapResearcherListItem(member: ResearcherItem): ResearcherListItem {

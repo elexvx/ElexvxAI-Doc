@@ -11,8 +11,10 @@ export default async function ResearchersPage({ params }: { params: Promise<{ la
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const locale = lang as AppLocale;
-  const copy = await getResearchersPageCopy(locale);
-  const researchers = await getAllResearchers(locale);
+  const [copy, researchers] = await Promise.all([
+    getResearchersPageCopy(locale),
+    getAllResearchers(locale),
+  ]);
   const [featuredResearcher, ...others] = researchers;
 
   return (

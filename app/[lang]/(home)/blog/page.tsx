@@ -1,7 +1,7 @@
 import { BlogFeatured } from '@/components/blog/blog-featured';
 import { BlogPostRow } from '@/components/blog/blog-post-row';
 import { BlogTabs } from '@/components/blog/blog-tabs';
-import { getAllPosts, getBlogCategories, getFeaturedPost, getPostsByCategory } from '@/lib/blog';
+import { getAllPosts } from '@/lib/blog';
 import { isLocale, type AppLocale } from '@/lib/i18n';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -38,16 +38,15 @@ export default async function BlogPage({
   const locale = lang as AppLocale;
   const copy = blogPageCopy[locale];
 
-  const categories = await getBlogCategories();
+  const allPosts = await getAllPosts();
+  const categories = [...new Set(allPosts.flatMap((post) => post.categories))].sort((a, b) => a.localeCompare(b));
   const activeCategory = rawCategory && categories.includes(rawCategory) ? rawCategory : null;
-  const featuredPost = await getFeaturedPost();
-
-  const postsByCategory = await getPostsByCategory(activeCategory ?? '');
+  const featuredPost = allPosts.find((post) => post.featured);
+  const postsByCategory =
+    activeCategory == null ? allPosts : allPosts.filter((post) => post.categories.includes(activeCategory));
   const listPosts =
     featuredPost == null ? postsByCategory : postsByCategory.filter((post) => post.slug !== featuredPost.slug);
-
-  const fallbackPosts = featuredPost == null ? await getAllPosts() : [];
-  const displayFeatured = featuredPost ?? fallbackPosts[0];
+  const displayFeatured = featuredPost ?? allPosts[0];
 
   return (
     <>

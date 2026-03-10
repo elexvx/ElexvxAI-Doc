@@ -14,8 +14,10 @@ export default async function ResearcherDetailPage({
   const { lang, slug } = await params;
   if (!isLocale(lang)) notFound();
   const locale = lang as AppLocale;
-  const copy = await getResearchersPageCopy(locale);
-  const researcher = await getResearcherBySlug(slug, locale);
+  const [copy, researcher] = await Promise.all([
+    getResearchersPageCopy(locale),
+    getResearcherBySlug(slug, locale),
+  ]);
 
   if (!researcher) notFound();
 

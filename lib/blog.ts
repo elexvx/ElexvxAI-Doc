@@ -108,7 +108,14 @@ function mapToListItem(entry: BlogCollectionEntry): BlogPostListItem {
   };
 }
 
-async function resolveBlogEntries(): Promise<BlogCollectionEntry[]> {
+const useBlogCache = process.env.NODE_ENV === 'production';
+let blogEntriesCache: Promise<BlogCollectionEntry[]> | null = null;
+let allPostsCache: Promise<BlogPostListItem[]> | null = null;
+let featuredPostCache: Promise<BlogPostListItem | undefined> | null = null;
+let blogCategoriesCache: Promise<string[]> | null = null;
+const blogPostBySlugCache = new Map<string, Promise<BlogPost | undefined>>();
+
+async function readBlogEntriesUncached(): Promise<BlogCollectionEntry[]> {
   const resolved = (await Promise.resolve(blogEntries as unknown)) as BlogEntriesExport | undefined;
 
   if (Array.isArray(resolved)) return resolved as BlogCollectionEntry[];
@@ -116,7 +123,22 @@ async function resolveBlogEntries(): Promise<BlogCollectionEntry[]> {
   return [];
 }
 
-export async function getAllPosts(): Promise<BlogPostListItem[]> {
+async function resolveBlogEntries(): Promise<BlogCollectionEntry[]> {
+  if (!useBlogCache) {
+    return readBlogEntriesUncached();
+  }
+
+  if (!blogEntriesCache) {
+    blogEntriesCache = readBlogEntriesUncached().catch((error) => {
+      blogEntriesCache = null;
+      throw error;
+    });
+  }
+
+  return blogEntriesCache;
+}
+
+async function buildAllPosts(): Promise<BlogPostListItem[]> {
   const entries = await resolveBlogEntries();
 
   return entries
@@ -124,8 +146,36 @@ export async function getAllPosts(): Promise<BlogPostListItem[]> {
     .sort((a, b) => b.timestamp - a.timestamp);
 }
 
+export async function getAllPosts(): Promise<BlogPostListItem[]> {
+  if (!useBlogCache) {
+    return buildAllPosts();
+  }
+
+  if (!allPostsCache) {
+    allPostsCache = buildAllPosts().catch((error) => {
+      allPostsCache = null;
+      throw error;
+    });
+  }
+
+  return allPostsCache;
+}
+
 export async function getFeaturedPost(): Promise<BlogPostListItem | undefined> {
-  return (await getAllPosts()).find((post) => post.featured);
+  if (!useBlogCache) {
+    return (await getAllPosts()).find((post) => post.featured);
+  }
+
+  if (!featuredPostCache) {
+    featuredPostCache = getAllPosts()
+      .then((posts) => posts.find((post) => post.featured))
+      .catch((error) => {
+        featuredPostCache = null;
+        throw error;
+      });
+  }
+
+  return featuredPostCache;
 }
 
 export async function getPostsByCategory(category: string): Promise<BlogPostListItem[]> {
@@ -139,20 +189,61 @@ export async function getPostsByCategory(category: string): Promise<BlogPostList
 }
 
 export async function getBlogCategories(): Promise<string[]> {
-  const categories = new Set((await getAllPosts()).flatMap((post) => post.categories));
-  return [...categories].sort((a, b) => a.localeCompare(b));
+  if (!useBlogCache) {
+    const categories = new Set((await getAllPosts()).flatMap((post) => post.categories));
+    return [...categories].sort((a, b) => a.localeCompare(b));
+  }
+
+  if (!blogCategoriesCache) {
+    blogCategoriesCache = getAllPosts()
+      .then((posts) => {
+        const categories = new Set(posts.flatMap((post) => post.categories));
+        return [...categories].sort((a, b) => a.localeCompare(b));
+      })
+      .catch((error) => {
+        blogCategoriesCache = null;
+        throw error;
+      });
+  }
+
+  return blogCategoriesCache;
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
-  const entries = await resolveBlogEntries();
-  const entry = entries.find((item) => getSlugFromPath(item.info.path) === slug);
-  if (!entry) return undefined;
+  if (!useBlogCache) {
+    const entries = await resolveBlogEntries();
+    const entry = entries.find((item) => getSlugFromPath(item.info.path) === slug);
+    if (!entry) return undefined;
 
-  const listItem = mapToListItem(entry);
+    const listItem = mapToListItem(entry);
 
-  return {
-    ...listItem,
-    body: entry.body as (props: Record<string, unknown>) => ReactNode,
-    toc: entry.toc,
-  };
+    return {
+      ...listItem,
+      body: entry.body as (props: Record<string, unknown>) => ReactNode,
+      toc: entry.toc,
+    };
+  }
+
+  let cached = blogPostBySlugCache.get(slug);
+  if (!cached) {
+    cached = resolveBlogEntries()
+      .then((entries) => {
+        const entry = entries.find((item) => getSlugFromPath(item.info.path) === slug);
+        if (!entry) return undefined;
+        const listItem = mapToListItem(entry);
+
+        return {
+          ...listItem,
+          body: entry.body as (props: Record<string, unknown>) => ReactNode,
+          toc: entry.toc,
+        };
+      })
+      .catch((error) => {
+        blogPostBySlugCache.delete(slug);
+        throw error;
+      });
+    blogPostBySlugCache.set(slug, cached);
+  }
+
+  return cached;
 }

@@ -31,9 +31,27 @@ function getNavLinksYamlPath(locale: AppLocale) {
   return path.join(process.cwd(), 'data', 'yaml', 'navigation', `nav-links_${locale}.yaml`);
 }
 
+const navLinksYamlCache = new Map<AppLocale, Promise<NavLinksYaml>>();
+const useNavLinksCache = process.env.NODE_ENV === 'production';
+
 async function readNavLinksYaml(locale: AppLocale): Promise<NavLinksYaml> {
-  const file = await readFile(getNavLinksYamlPath(locale), 'utf8');
-  return parse(file) as NavLinksYaml;
+  if (!useNavLinksCache) {
+    const file = await readFile(getNavLinksYamlPath(locale), 'utf8');
+    return parse(file) as NavLinksYaml;
+  }
+
+  let cached = navLinksYamlCache.get(locale);
+  if (!cached) {
+    cached = readFile(getNavLinksYamlPath(locale), 'utf8')
+      .then((file) => parse(file) as NavLinksYaml)
+      .catch((error) => {
+        navLinksYamlCache.delete(locale);
+        throw error;
+      });
+    navLinksYamlCache.set(locale, cached);
+  }
+
+  return cached;
 }
 
 function getIcon(icon: NavIconItem['icon']) {

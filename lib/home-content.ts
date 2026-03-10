@@ -70,9 +70,27 @@ function getHomeYamlPath(locale: AppLocale) {
   return path.join(process.cwd(), 'data', 'yaml', 'home', `home_${locale}.yaml`);
 }
 
+const homeYamlCache = new Map<AppLocale, Promise<HomeContentYaml>>();
+const useHomeYamlCache = process.env.NODE_ENV === 'production';
+
 async function readHomeYaml(locale: AppLocale): Promise<HomeContentYaml> {
-  const file = await readFile(getHomeYamlPath(locale), 'utf8');
-  return parse(file) as HomeContentYaml;
+  if (!useHomeYamlCache) {
+    const file = await readFile(getHomeYamlPath(locale), 'utf8');
+    return parse(file) as HomeContentYaml;
+  }
+
+  let cached = homeYamlCache.get(locale);
+  if (!cached) {
+    cached = readFile(getHomeYamlPath(locale), 'utf8')
+      .then((file) => parse(file) as HomeContentYaml)
+      .catch((error) => {
+        homeYamlCache.delete(locale);
+        throw error;
+      });
+    homeYamlCache.set(locale, cached);
+  }
+
+  return cached;
 }
 
 export async function getHomePageCopy(locale: AppLocale): Promise<HomePageCopy> {
