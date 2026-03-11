@@ -104,7 +104,7 @@ export default async function MaintenancePage({ params }: { params: Promise<{ la
           </div>
         </section>
       </main>
-      <HomeFooter lang={locale} layout="blog" />
+      <HomeFooter lang={locale} />
     </>
   );
 }

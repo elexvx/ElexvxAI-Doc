@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { BlogPostListItem } from '@/lib/blog';
+import { isSvgImage } from '@/lib/image-utils';
 
 export function BlogPostRow({ post, lang }: { post: BlogPostListItem; lang: string }) {
   const href = `/${lang}/blog/${post.slug}`;
   const categoryText = post.categories.join(' · ');
+  const coverIsSvg = isSvgImage(post.cover);
 
   return (
     <article className="flex items-center justify-between gap-5 border-b border-zinc-200 py-7 dark:border-zinc-800 sm:gap-6">
@@ -23,7 +25,8 @@ export function BlogPostRow({ post, lang }: { post: BlogPostListItem; lang: stri
           src={post.cover}
           alt={post.title}
           fill
-          className="object-cover object-center"
+          unoptimized={coverIsSvg}
+          className={coverIsSvg ? 'object-contain p-2' : 'object-cover object-center'}
           sizes="132px"
         />
       </div>

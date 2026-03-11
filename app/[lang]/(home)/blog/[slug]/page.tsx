@@ -8,6 +8,8 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../../_components/home-footer';
+import { isSvgImage } from '@/lib/image-utils';
+import { getSvgDimensionsFromPublicPath } from '@/lib/svg-image';
 
 export default async function BlogPostPage({
   params,
@@ -22,6 +24,9 @@ export default async function BlogPostPage({
   const MDX = post.body;
   const displayCategory = post.categories.join(' · ');
   const summaryText = post.summary;
+  const coverIsSvg = isSvgImage(post.cover);
+  const svgDimensions = coverIsSvg ? await getSvgDimensionsFromPublicPath(post.cover) : null;
+  const coverAspectRatio = svgDimensions ? `${svgDimensions.width} / ${svgDimensions.height}` : '16 / 9';
 
   return (
     <>
@@ -45,8 +50,29 @@ export default async function BlogPostPage({
             {summaryText}
           </DocsDescription>
         </div>
-        <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-xl border bg-fd-card">
-          <Image src={post.cover} alt={post.title} fill className="object-cover" sizes="(min-width: 1024px) 960px, 100vw" />
+        <div
+          className="relative mt-8 overflow-hidden rounded-xl border bg-fd-card"
+          style={{ aspectRatio: coverIsSvg ? coverAspectRatio : '16 / 9' }}
+        >
+          {coverIsSvg ? (
+            <Image
+              src={post.cover}
+              alt={post.title}
+              width={svgDimensions?.width ?? 1600}
+              height={svgDimensions?.height ?? 900}
+              unoptimized
+              className="h-full w-full object-contain"
+              sizes="(min-width: 1024px) 960px, 100vw"
+            />
+          ) : (
+            <Image
+              src={post.cover}
+              alt={post.title}
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 960px, 100vw"
+            />
+          )}
         </div>
         <DocsBody>
           <MDX components={getMDXComponents()} />

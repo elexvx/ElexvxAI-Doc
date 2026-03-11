@@ -52,7 +52,7 @@ export default async function ResearchersPage({ params }: { params: Promise<{ la
           </div>
         </section>
       </main>
-      <HomeFooter lang={locale} layout="blog" />
+      <HomeFooter lang={locale} />
     </>
   );
 }

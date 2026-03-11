@@ -80,7 +80,7 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
           </div>
         </section>
       </main>
-      <HomeFooter lang={locale} layout="blog" />
+      <HomeFooter lang={locale} />
     </>
   );
 }

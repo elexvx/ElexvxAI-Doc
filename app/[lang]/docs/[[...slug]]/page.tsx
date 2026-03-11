@@ -19,7 +19,11 @@ export default async function Page({ params }: { params: Promise<{ lang: string;
   const MDX = page.data.body;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      className="max-w-[980px] 2xl:max-w-[1180px] [@media(min-width:2100px)]:max-w-[1320px]"
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
       <div className="flex flex-row items-center gap-2 border-b pb-6">

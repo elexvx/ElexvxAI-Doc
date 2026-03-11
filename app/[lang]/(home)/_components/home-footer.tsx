@@ -6,12 +6,9 @@ function isHttpLink(href: string) {
   return href.startsWith('http://') || href.startsWith('https://');
 }
 
-export async function HomeFooter({ lang, layout = 'home' }: { lang: AppLocale; layout?: 'home' | 'blog' }) {
+export async function HomeFooter({ lang }: { lang: AppLocale }) {
   const footerContent = await getHomeFooterContent(lang);
-  const containerClassName =
-    layout === 'blog'
-      ? 'mx-auto w-full max-w-[1460px] px-8 md:px-12 lg:px-20 2xl:max-w-[1700px] 2xl:px-24 [@media(min-width:2100px)]:max-w-[1880px] [@media(min-width:2100px)]:px-28'
-      : 'mx-auto w-full max-w-[var(--fd-layout-width)] px-4';
+  const containerClassName = 'mx-auto w-full max-w-[var(--fd-layout-width)] px-4';
 
   return (
     <footer className="mt-8 sm:mt-10 md:mt-12">

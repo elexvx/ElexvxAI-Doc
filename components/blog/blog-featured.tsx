@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { BlogPostListItem } from '@/lib/blog';
+import { isSvgImage } from '@/lib/image-utils';
 
 export function BlogFeatured({ post, lang, badgeLabel }: { post: BlogPostListItem; lang: string; badgeLabel: string }) {
   const href = `/${lang}/blog/${post.slug}`;
   const categoryText = post.categories.join(' · ');
+  const coverIsSvg = isSvgImage(post.cover);
 
   return (
     <section className="mt-8 grid items-center gap-10 lg:grid-cols-[1fr_1.25fr] lg:gap-14">
@@ -20,7 +22,14 @@ export function BlogFeatured({ post, lang, badgeLabel }: { post: BlogPostListIte
         </p>
       </div>
       <div className="order-2 relative aspect-[16/8.8] overflow-hidden rounded-[1.1rem] bg-zinc-100 dark:bg-zinc-900">
-        <Image src={post.cover} alt={post.title} fill className="object-cover" sizes="(min-width: 1024px) 50vw, 100vw" />
+        <Image
+          src={post.cover}
+          alt={post.title}
+          fill
+          unoptimized={coverIsSvg}
+          className={coverIsSvg ? 'object-contain p-4' : 'object-cover'}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
       </div>
     </section>
   );

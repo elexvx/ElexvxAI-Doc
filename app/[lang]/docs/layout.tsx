@@ -83,6 +83,9 @@ export default async function Layout({
         i18n={false}
         themeSwitch={{ enabled: false }}
         links={mobileOnlyLinks}
+        containerProps={{
+          className: '[--fd-layout-width:min(2200px,96vw)]',
+        }}
         sidebar={{
           footer: (
             <div className="flex flex-nowrap items-center text-fd-muted-foreground whitespace-nowrap">

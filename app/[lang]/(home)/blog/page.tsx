@@ -67,7 +67,7 @@ export default async function BlogPage({
           ))}
         </section>
       </main>
-      <HomeFooter lang={locale} layout="blog" />
+      <HomeFooter lang={locale} />
     </>
   );
 }
