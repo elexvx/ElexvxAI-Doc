@@ -16,12 +16,14 @@ export function HeroSection({ lang, copy }: { lang: AppLocale; copy: HomeHeroCop
       <div className="mt-6 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:justify-center sm:gap-4">
         <Link
           href={copy.primaryCtaHref}
+          prefetch={false}
           className="inline-flex w-full items-center justify-center rounded-full bg-zinc-950 px-7 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-800 sm:w-auto sm:text-base dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-zinc-300"
         >
           {copy.primaryCta}
         </Link>
         <Link
           href={copy.secondaryCtaHref}
+          prefetch={false}
           className="inline-flex w-full items-center justify-center rounded-full bg-zinc-100 px-7 py-2.5 text-sm font-medium text-zinc-900 transition hover:bg-zinc-200 sm:w-auto sm:text-base dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
         >
           {copy.secondaryCta}
@@ -30,6 +32,7 @@ export function HeroSection({ lang, copy }: { lang: AppLocale; copy: HomeHeroCop
 
       <Link
         href={copy.promoHref}
+        prefetch={false}
         className="group mx-auto mt-7 flex w-full max-w-5xl items-start justify-between rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-4 text-left transition hover:bg-zinc-100 sm:items-center sm:px-6 sm:py-5 md:px-8 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:bg-zinc-900"
       >
         <div className="flex min-w-0 items-start gap-3 sm:gap-4">

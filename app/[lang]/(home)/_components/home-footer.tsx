@@ -47,6 +47,7 @@ export async function HomeFooter({ lang }: { lang: AppLocale }) {
                         ) : (
                           <Link
                             href={href}
+                            prefetch={false}
                             className="text-xs text-zinc-500 transition hover:text-zinc-900 sm:text-sm lg:text-base dark:text-zinc-400 dark:hover:text-zinc-100"
                           >
                             {item.label}
