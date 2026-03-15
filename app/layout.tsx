@@ -1,7 +1,6 @@
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { HtmlLangSync } from '@/components/html-lang-sync';
 import { LivePreviewClient } from '@/components/live-preview-client';
 import { siteConfig } from '@/lib/site';
 import './global.css';
@@ -9,6 +8,9 @@ import './global.css';
 const inter = Inter({
   subsets: ['latin'],
 });
+
+const htmlLangSyncInlineScript =
+  "(()=>{var p=window.location.pathname;document.documentElement.lang=p.startsWith('/en')?'en':'zh-CN';})();";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -35,8 +37,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-CN" className={inter.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col antialiased">
-        <HtmlLangSync />
-        <LivePreviewClient />
+        <script dangerouslySetInnerHTML={{ __html: htmlLangSyncInlineScript }} />
+        {process.env.NODE_ENV === 'development' ? <LivePreviewClient /> : null}
         {children}
       </body>
     </html>
