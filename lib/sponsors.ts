@@ -1,7 +1,5 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
-import { parse } from 'yaml';
 import type { AppLocale } from '@/lib/i18n';
+import { readLocaleYaml } from '@/lib/content-yaml';
 
 export type SponsorsPageCopy = {
   eyebrow: string;
@@ -43,59 +41,21 @@ type SponsorsData = {
   items: SponsorItem[];
 };
 
-function getSponsorsYamlPath(locale: AppLocale) {
-  return path.join(process.cwd(), 'data', 'yaml', 'sponsors', `sponsors_${locale}.yaml`);
-}
-
-const sponsorsYamlCache = new Map<AppLocale, Promise<SponsorsData>>();
-const useSponsorsYamlCache = process.env.NODE_ENV === 'production';
-
 async function readSponsorsYaml(locale: AppLocale): Promise<SponsorsData> {
-  if (!useSponsorsYamlCache) {
-    const file = await readFile(getSponsorsYamlPath(locale), 'utf8');
-    const parsed = parse(file) as SponsorsYaml;
-    const suffix = parsed.copy.stats.totalSuffix ?? parsed.copy.stats.totalValue?.replace(/^\s*\d+/, '') ?? '+';
-    const totalValue = `${parsed.items.length}${suffix}`;
+  const parsed = await readLocaleYaml<SponsorsYaml>('sponsors', locale);
+  const suffix = parsed.copy.stats.totalSuffix ?? parsed.copy.stats.totalValue?.replace(/^\s*\d+/, '') ?? '+';
+  const totalValue = `${parsed.items.length}${suffix}`;
 
-    return {
-      copy: {
-        ...parsed.copy,
-        stats: {
-          ...parsed.copy.stats,
-          totalValue,
-        },
+  return {
+    copy: {
+      ...parsed.copy,
+      stats: {
+        ...parsed.copy.stats,
+        totalValue,
       },
-      items: parsed.items,
-    };
-  }
-
-  let cached = sponsorsYamlCache.get(locale);
-  if (!cached) {
-    cached = readFile(getSponsorsYamlPath(locale), 'utf8')
-      .then((file) => {
-        const parsed = parse(file) as SponsorsYaml;
-        const suffix = parsed.copy.stats.totalSuffix ?? parsed.copy.stats.totalValue?.replace(/^\s*\d+/, '') ?? '+';
-        const totalValue = `${parsed.items.length}${suffix}`;
-
-        return {
-          copy: {
-            ...parsed.copy,
-            stats: {
-              ...parsed.copy.stats,
-              totalValue,
-            },
-          },
-          items: parsed.items,
-        };
-      })
-      .catch((error) => {
-        sponsorsYamlCache.delete(locale);
-        throw error;
-      });
-    sponsorsYamlCache.set(locale, cached);
-  }
-
-  return cached;
+    },
+    items: parsed.items,
+  };
 }
 
 export async function getSponsorsPageCopy(locale: AppLocale): Promise<SponsorsPageCopy> {

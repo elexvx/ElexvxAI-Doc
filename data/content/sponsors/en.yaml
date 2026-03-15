@@ -1,26 +1,26 @@
 copy:
-  eyebrow: Sponsor Wall
-  title: Sponsorship Program
+  eyebrow: Partners
+  title: Partnership Program
   description: Thanks to every supporter for keeping documentation, components, and engineering practices freely accessible.
-  cta: Become a Sponsor
+  cta: Partner With Us
   subline: Join us in advancing the developer ecosystem.
   stats:
-    totalLabel: Partner Sponsors
+    totalLabel: Partners
     yearlyLabel: New This Year
     yearlyValue: "6"
-    openSourceLabel: Open-source Projects
+    openSourceLabel: Open-source Maintained Projects
     openSourceValue: "6"
   sectionTitle: Partner Brands
 items:
-  - name: Elexvx Inc
-    category: Lead Investor, Initiator
-    description: A technology-focused SME in 2025 with AAA credit rating, dedicated to AI products and services.
+  - name: Hongxiang Shangdao - Elexvx Inc
+    category: Primary Investor, Initiator
+    description: A technology-oriented SME recognized in 2025 with AAA credit rating, focused on AI products and services.
     href: https://www.elexvx.com/
     accent: from-indigo-500/20 via-sky-400/15 to-cyan-300/20
   
   - name: Tonggujiyu - Jadeisle
     category: Strategic Partner
-    description: Provides type-safe API workflows and debugging experiences.
+    description: A research-oriented enterprise focused on AI products and services.
     href: https://www.tongujiyu.cn/
     accent: from-blue-500/20 via-indigo-300/15 to-purple-300/15
   
@@ -38,12 +38,12 @@ items:
 
   - name: Nanjing Linxi Zhijue Technology Co., Ltd.
     category: Partner
-    description: Technology enterprise
+    description: Technology-focused enterprise
     href: https://aiqicha.baidu.com/company_detail_63903449782455
     accent: from-orange-500/20 via-amber-300/15 to-rose-300/15
 
   - name: Nanjing Fangsheng Yunji Technology Co., Ltd.
     category: Partner
-    description: Technology enterprise
+    description: Technology-focused enterprise
     href: https://aiqicha.baidu.com/company_detail_63793913715120
     accent: from-lime-500/20 via-emerald-300/15 to-teal-300/15

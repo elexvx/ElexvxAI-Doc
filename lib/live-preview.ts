@@ -1,6 +1,6 @@
-import { EventEmitter } from 'node:events';
-import { existsSync, watch, type FSWatcher } from 'node:fs';
-import path from 'node:path';
+import { EventEmitter } from 'events';
+import { existsSync, watch, type FSWatcher } from 'fs';
+import path from 'path';
 
 type LivePreviewEvent = {
   type: 'change';

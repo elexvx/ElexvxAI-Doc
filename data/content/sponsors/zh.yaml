@@ -1,11 +1,11 @@
 copy:
-  eyebrow: 赞助墙
-  title: 赞助商计划
+  eyebrow: 合作伙伴
+  title: 同行计划
   description: 感谢每一家支持者，让文档、组件与工程实践能够持续免费开放。
-  cta: 成为赞助商
+  cta: 与我们同行
   subline: 与我们一起推动开发者生态建设。
   stats:
-    totalLabel: 合作赞助商
+    totalLabel: 合作伙伴
     yearlyLabel: 年度新增
     yearlyValue: "6"
     openSourceLabel: 开源维护项目

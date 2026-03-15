@@ -1,0 +1,67 @@
+copy:
+  hero:
+    headline: Empower the Digital Future with Intelligent Technology
+    description: Welcome to the Innovation Industry R&D Center of Hongxiang Shangdao (Elexvx Inc). We are committed to integrating cutting-edge AI algorithm capabilities with robust foundational architecture, transforming innovative technology into powerful momentum for enterprise services.
+    primaryCta: Our Projects
+    primaryCtaHref: /{lang}/docs
+    secondaryCta: View Docs
+    secondaryCtaHref: /{lang}/docs
+    promoTitle: Try Our Latest Scaffolding System
+    promoDescription: The Elexvx Scaffolding System, launched by Elexvx ® Inc, is an enterprise-oriented scaffolding and management platform. It includes foundational capabilities such as user and permission management, system configuration, announcements, file and object storage, and SMS/email verification to help teams quickly build business back-office systems.
+    promoHref: /{lang}/docs
+  news:
+    title: Latest News
+    viewAll: View All
+  explore:
+    title: Explore
+
+capabilities:
+  - title: AI R&D and Intelligent Manufacturing
+    description: Deep expertise in AI design and training, delivering full-stack solutions from core algorithm research to intelligent manufacturing deployment.
+    icon: PenTool
+    hoverGradient: from-sky-300 via-blue-200 to-blue-500
+    hoverGlow: from-white/45 to-transparent
+  - title: Open-source Architecture and Geek Ecosystem
+    description: Embracing the open-source community by continuously delivering and maintaining efficient foundational server deployment solutions and highly available private cloud architectures.
+    icon: Gift
+    hoverGradient: from-violet-300 via-indigo-200 to-blue-300
+    hoverGlow: from-lime-300/50 to-transparent
+  - title: Digitalization and R&D Productivity
+    description: Building modern enterprise collaboration workflows with deep integration of agile project management systems, fine-grained code security auditing solutions, and automated operations pipelines.
+    icon: BookOpen
+    hoverGradient: from-emerald-300/80 via-cyan-300/75 to-blue-400/90
+    hoverGlow: from-emerald-200/40 to-transparent
+
+exploreItems:
+  - title: Blog
+    icon: PenTool
+    tint: from-indigo-200 via-violet-300 to-sky-300
+    href: /{lang}/blog
+  - title: Partners
+    icon: BookOpen
+    tint: from-cyan-300 via-emerald-200 to-blue-300
+    href: /{lang}/sponsors
+
+footer:
+  title: Explore the Frontiers of Intelligence
+  description: We continuously drive AI research into real industrial scenarios, connecting research, development, and practical deployment.
+  copyright: "Copyright © 2024 ElexvxAI Lab | Affiliated with Elexvx Inc | ICP: 苏ICP备2025160017号"
+  columns:
+    - title: Research
+      links:
+        - label: Open Source
+          href: https://github.com/elexvx
+        - label: Research Outcomes
+          href: /{lang}/docs
+    - title: Resources
+      links:
+        - label: Technical Docs
+          href: /{lang}/docs
+    - title: About
+      links:
+        - label: Official Website
+          href: https://www.elexvx.com
+        - label: About Us
+          href: https://www.elexvx.com/company/about
+        - label: Careers
+          href: https://www.elexvx.com/company/careers

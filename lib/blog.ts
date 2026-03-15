@@ -1,4 +1,4 @@
-import { blog as blogEntries } from 'fumadocs-mdx:collections/server';
+import { blog as blogEntries } from '@/.source/server';
 import type { ReactNode } from 'react';
 
 type BlogCategory = string | string[];
@@ -108,12 +108,29 @@ function mapToListItem(entry: BlogCollectionEntry): BlogPostListItem {
   };
 }
 
-const useBlogCache = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
+const useBlogCache = true;
+const DEV_BLOG_CACHE_TTL_MS = 1000;
 let blogEntriesCache: Promise<BlogCollectionEntry[]> | null = null;
 let allPostsCache: Promise<BlogPostListItem[]> | null = null;
 let featuredPostCache: Promise<BlogPostListItem | undefined> | null = null;
 let blogCategoriesCache: Promise<string[]> | null = null;
 const blogPostBySlugCache = new Map<string, Promise<BlogPost | undefined>>();
+let devBlogCacheExpiresAt = 0;
+
+function invalidateDevBlogCachesIfExpired() {
+  if (isProduction) return;
+
+  const now = Date.now();
+  if (now <= devBlogCacheExpiresAt) return;
+
+  devBlogCacheExpiresAt = now + DEV_BLOG_CACHE_TTL_MS;
+  blogEntriesCache = null;
+  allPostsCache = null;
+  featuredPostCache = null;
+  blogCategoriesCache = null;
+  blogPostBySlugCache.clear();
+}
 
 async function readBlogEntriesUncached(): Promise<BlogCollectionEntry[]> {
   const resolved = (await Promise.resolve(blogEntries as unknown)) as BlogEntriesExport | undefined;
@@ -124,6 +141,8 @@ async function readBlogEntriesUncached(): Promise<BlogCollectionEntry[]> {
 }
 
 async function resolveBlogEntries(): Promise<BlogCollectionEntry[]> {
+  invalidateDevBlogCachesIfExpired();
+
   if (!useBlogCache) {
     return readBlogEntriesUncached();
   }
@@ -147,6 +166,8 @@ async function buildAllPosts(): Promise<BlogPostListItem[]> {
 }
 
 export async function getAllPosts(): Promise<BlogPostListItem[]> {
+  invalidateDevBlogCachesIfExpired();
+
   if (!useBlogCache) {
     return buildAllPosts();
   }
@@ -162,6 +183,8 @@ export async function getAllPosts(): Promise<BlogPostListItem[]> {
 }
 
 export async function getFeaturedPost(): Promise<BlogPostListItem | undefined> {
+  invalidateDevBlogCachesIfExpired();
+
   if (!useBlogCache) {
     return (await getAllPosts()).find((post) => post.featured);
   }
@@ -189,6 +212,8 @@ export async function getPostsByCategory(category: string): Promise<BlogPostList
 }
 
 export async function getBlogCategories(): Promise<string[]> {
+  invalidateDevBlogCachesIfExpired();
+
   if (!useBlogCache) {
     const categories = new Set((await getAllPosts()).flatMap((post) => post.categories));
     return [...categories].sort((a, b) => a.localeCompare(b));
@@ -210,6 +235,8 @@ export async function getBlogCategories(): Promise<string[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
+  invalidateDevBlogCachesIfExpired();
+
   if (!useBlogCache) {
     const entries = await resolveBlogEntries();
     const entry = entries.find((item) => getSlugFromPath(item.info.path) === slug);

@@ -1,6 +1,5 @@
 import 'server-only';
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
+import { joinPath, readTextFile } from '@/lib/server-node';
 import { isSvgImage } from '@/lib/image-utils';
 
 type SvgDimensions = {
@@ -57,10 +56,10 @@ export async function getSvgDimensionsFromPublicPath(src: string): Promise<SvgDi
 
   const cleanSrc = src.split(/[?#]/)[0];
   const publicPath = cleanSrc.replace(/^\/+/, '');
-  const filePath = path.join(process.cwd(), 'public', publicPath);
+  const filePath = joinPath(process.cwd(), 'public', publicPath);
 
   try {
-    const svgContent = await readFile(filePath, 'utf8');
+    const svgContent = await readTextFile(filePath);
     return parseSvgDimensions(svgContent);
   } catch {
     return null;

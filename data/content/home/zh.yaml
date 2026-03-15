@@ -37,7 +37,7 @@ exploreItems:
     icon: PenTool
     tint: from-indigo-200 via-violet-300 to-sky-300
     href: /{lang}/blog
-  - title: 赞助商
+  - title: 合作
     icon: BookOpen
     tint: from-cyan-300 via-emerald-200 to-blue-300
     href: /{lang}/sponsors

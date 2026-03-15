@@ -1,10 +1,8 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
 import type { LinkItemType } from 'fumadocs-ui/layouts/shared';
 import type { AppLocale } from '@/lib/i18n';
 import { Github, Globe } from 'lucide-react';
 import { NavLanguageToggle } from '@/components/nav/nav-language-toggle';
-import { parse } from 'yaml';
+import { readLocaleYaml } from '@/lib/content-yaml';
 
 type NavMainItem = {
   text: string;
@@ -27,31 +25,8 @@ type NavLinksYaml = {
   icons: NavIconItem[];
 };
 
-function getNavLinksYamlPath(locale: AppLocale) {
-  return path.join(process.cwd(), 'data', 'yaml', 'navigation', `nav-links_${locale}.yaml`);
-}
-
-const navLinksYamlCache = new Map<AppLocale, Promise<NavLinksYaml>>();
-const useNavLinksCache = process.env.NODE_ENV === 'production';
-
 async function readNavLinksYaml(locale: AppLocale): Promise<NavLinksYaml> {
-  if (!useNavLinksCache) {
-    const file = await readFile(getNavLinksYamlPath(locale), 'utf8');
-    return parse(file) as NavLinksYaml;
-  }
-
-  let cached = navLinksYamlCache.get(locale);
-  if (!cached) {
-    cached = readFile(getNavLinksYamlPath(locale), 'utf8')
-      .then((file) => parse(file) as NavLinksYaml)
-      .catch((error) => {
-        navLinksYamlCache.delete(locale);
-        throw error;
-      });
-    navLinksYamlCache.set(locale, cached);
-  }
-
-  return cached;
+  return readLocaleYaml<NavLinksYaml>('navigation', locale);
 }
 
 function getIcon(icon: NavIconItem['icon']) {

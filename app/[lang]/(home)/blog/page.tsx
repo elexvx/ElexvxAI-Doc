@@ -1,6 +1,4 @@
-import { BlogFeatured } from '@/components/blog/blog-featured';
-import { BlogPostRow } from '@/components/blog/blog-post-row';
-import { BlogTabs } from '@/components/blog/blog-tabs';
+import { BlogIndexClient } from '@/components/blog/blog-index-client';
 import { getAllPosts } from '@/lib/blog';
 import { isLocale, type AppLocale } from '@/lib/i18n';
 import type { Metadata } from 'next';
@@ -8,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
 import { SITE_BLOG_MAIN_CLASS } from '@/lib/responsive-layout';
+import { Suspense } from 'react';
 
 const blogPageCopy: Record<AppLocale, { featuredLabel: string; allLabel: string; tabsAriaLabel: string; title: string; description: string }> = {
   zh: {
@@ -28,45 +27,30 @@ const blogPageCopy: Record<AppLocale, { featuredLabel: string; allLabel: string;
 
 export default async function BlogPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ lang: string }>;
-  searchParams: Promise<{ category?: string }>;
 }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const { category: rawCategory } = await searchParams;
   const locale = lang as AppLocale;
   const copy = blogPageCopy[locale];
 
   const allPosts = await getAllPosts();
   const categories = [...new Set(allPosts.flatMap((post) => post.categories))].sort((a, b) => a.localeCompare(b));
-  const activeCategory = rawCategory && categories.includes(rawCategory) ? rawCategory : null;
-  const featuredPost = allPosts.find((post) => post.featured);
-  const postsByCategory =
-    activeCategory == null ? allPosts : allPosts.filter((post) => post.categories.includes(activeCategory));
-  const listPosts =
-    featuredPost == null ? postsByCategory : postsByCategory.filter((post) => post.slug !== featuredPost.slug);
-  const displayFeatured = featuredPost ?? allPosts[0];
 
   return (
     <>
       <main className={SITE_BLOG_MAIN_CLASS}>
-        {displayFeatured ? <BlogFeatured post={displayFeatured} lang={lang} badgeLabel={copy.featuredLabel} /> : null}
-
-        <BlogTabs
-          lang={lang}
-          categories={categories}
-          activeCategory={activeCategory}
-          allLabel={copy.allLabel}
-          navAriaLabel={copy.tabsAriaLabel}
-        />
-
-        <section className="mt-2 grid gap-x-10 md:grid-cols-2">
-          {listPosts.map((post) => (
-            <BlogPostRow key={post.slug} post={post} lang={lang} />
-          ))}
-        </section>
+        <Suspense>
+          <BlogIndexClient
+            lang={lang}
+            allPosts={allPosts}
+            categories={categories}
+            featuredLabel={copy.featuredLabel}
+            allLabel={copy.allLabel}
+            tabsAriaLabel={copy.tabsAriaLabel}
+          />
+        </Suspense>
       </main>
       <HomeFooter lang={locale} />
     </>

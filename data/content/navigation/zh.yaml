@@ -11,7 +11,7 @@ main:
     url: /{lang}/blog
     active: nested-url
     on: all
-  - text: 赞助商
+  - text: 合作
     url: /{lang}/sponsors
     active: nested-url
     on: all
