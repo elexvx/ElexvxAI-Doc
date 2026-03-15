@@ -52,7 +52,11 @@ export async function getNavLinks(
           {
             type: 'custom',
             secondary: true,
-            children: <NavLanguageToggle lang={lang} showText showChevron className="-mx-1 first:ms-0 last:me-0" />,
+            children: (
+              <li className="list-none">
+                <NavLanguageToggle lang={lang} showText showChevron className="-mx-1 first:ms-0 last:me-0" />
+              </li>
+            ),
           },
         ] as LinkItemType[])
       : []),

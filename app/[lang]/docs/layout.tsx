@@ -46,17 +46,19 @@ export default async function Layout({
             type: 'custom',
             on: 'menu',
             children: (
-              <div className="md:hidden mb-4 flex flex-col gap-1">
-                {mobileShortcutLinks.map((item, index) => (
-                  <Link
-                    key={`${item.url}-${index}`}
-                    href={item.url}
-                    className="relative flex flex-row items-center gap-2 rounded-lg p-2 text-start text-fd-muted-foreground wrap-anywhere transition-colors hover:bg-fd-accent/50 hover:text-fd-accent-foreground/80 hover:transition-none"
-                  >
-                    {item.text}
-                  </Link>
-                ))}
-              </div>
+              <li className="md:hidden mb-4 list-none">
+                <div className="flex flex-col gap-1">
+                  {mobileShortcutLinks.map((item, index) => (
+                    <Link
+                      key={`${item.url}-${index}`}
+                      href={item.url}
+                      className="relative flex flex-row items-center gap-2 rounded-lg p-2 text-start text-fd-muted-foreground wrap-anywhere transition-colors hover:bg-fd-accent/50 hover:text-fd-accent-foreground/80 hover:transition-none"
+                    >
+                      {item.text}
+                    </Link>
+                  ))}
+                </div>
+              </li>
             ),
           },
         ]
