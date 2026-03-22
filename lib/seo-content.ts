@@ -1,7 +1,7 @@
 import { readLocaleYaml } from '@/lib/content-yaml';
 import type { AppLocale } from '@/lib/i18n';
 
-export type SeoPageKey = 'home' | 'blog' | 'sponsors' | 'maintenance' | 'docs';
+export type SeoPageKey = 'home' | 'blog' | 'sponsors' | 'maintenance' | 'docs' | 'about';
 
 export type SeoEntry = {
   title: string;
@@ -46,6 +46,10 @@ const seoFallbacks: Record<
         title: '技术文档',
         description: '浏览 ElexvxAI Lab 文档，查看产品能力与技术说明。',
       },
+      about: {
+        title: '关于我们',
+        description: '了解 ElexvxAI Lab 的愿景、使命与驱动 AI 创新的团队。',
+      },
     },
   },
   en: {
@@ -75,6 +79,10 @@ const seoFallbacks: Record<
         title: 'Documentation',
         description: 'Browse ElexvxAI Lab documentation for product capabilities and technical guidance.',
       },
+      about: {
+        title: 'About Us',
+        description: "Learn about ElexvxAI Lab's mission, vision, and the team driving AI innovation.",
+      },
     },
   },
 };
@@ -101,6 +109,7 @@ async function getSeoContent(locale: AppLocale) {
       sponsors: normalizeEntry(fallback.pages.sponsors, raw.pages?.sponsors),
       maintenance: normalizeEntry(fallback.pages.maintenance, raw.pages?.maintenance),
       docs: normalizeEntry(fallback.pages.docs, raw.pages?.docs),
+      about: normalizeEntry(fallback.pages.about, raw.pages?.about),
     },
   };
 }

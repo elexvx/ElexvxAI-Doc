@@ -1,0 +1,84 @@
+header:
+  title: ElexvxAI创新产业研发中心
+  subtitle: 以人工智能驱动产业创新与数字化转型
+  badges:
+    - label: AI Innovation
+      color: blue
+    - label: "专注：产业应用"
+      color: black
+    - label: "成立：2026-03-06"
+      color: emerald
+    - label: "机构：ElexvxAI Lab"
+      color: orange
+
+about:
+  title: 关于我们
+  content: |
+    **ElexvxAI创新产业研发中心**（英文名：**ElexvxAI Lab**）由**宏翔商道（南京）科技发展有限公司**于 **2026年03月06日**正式成立。
+
+    中心聚焦人工智能技术创新、产业场景应用研发、数字化转型支撑与成果转化，致力于打造集**技术研究、产品研发、系统集成、场景落地、协同创新**于一体的综合性创新研发平台。
+
+whatWeDo:
+  title: 我们在做什么
+  items:
+    - title: 人工智能技术研究
+      description: 围绕人工智能模型能力、数据分析、智能决策、自动化流程及应用算法开展研究与工程实践。
+    - title: 产业场景应用研发
+      description: 面向企业服务、产业升级、智慧运营与数字化转型场景，研发具备实用性与可扩展性的智能解决方案。
+    - title: 智能产品与平台建设
+      description: 推进人工智能相关产品、工具、平台及数字系统的研发与孵化，提升技术成果产品化与工程化能力。
+    - title: 技术融合与创新转化
+      description: 推动人工智能与软件系统、工业场景、数据平台、智能监测及相关业务体系深度融合，加快成果转化与应用落地。
+
+focusAreas:
+  title: 重点方向
+  items:
+    - AI 应用研发
+    - 行业数字化解决方案
+    - 智能系统与平台开发
+    - 数据驱动分析与决策支持
+    - 产业协同创新与成果转化
+
+mission:
+  title: 我们的使命
+  content: 以人工智能赋能产业创新，以研发驱动应用升级，以协同促进价值创造。
+
+vision:
+  title: 我们的愿景
+  content: 建设具有前瞻性、创新性、工程化能力与产业服务能力的人工智能创新研发平台。
+
+coreValues:
+  title: 核心理念
+  items:
+    - title: 创新驱动
+      description: 坚持技术创新与应用创新并重
+    - title: 场景导向
+      description: 聚焦真实需求与落地价值
+    - title: 开放协同
+      description: 推动合作共建与资源共享
+    - title: 稳健发展
+      description: 坚持规范、责任与长期主义
+
+organization:
+  title: 组织信息
+  items:
+    - label: 中心名称
+      value: ElexvxAI创新产业研发中心
+    - label: 英文名称
+      value: ElexvxAI Lab
+    - label: 成立时间
+      value: 2026-03-06
+    - label: 设立单位
+      value: 宏翔商道（南京）科技发展有限公司
+
+collaboration:
+  title: 合作共建
+  content: 我们欢迎开发者、研究者、合作伙伴及产业创新实践者共同参与交流与合作，围绕人工智能技术研发、产品创新、场景应用与产业转化开展协同共建。
+
+lookingAhead:
+  title: 未来展望
+  content: ElexvxAI创新产业研发中心将持续面向未来技术趋势与产业发展需求，深化人工智能研究与应用探索，推进更多高质量成果形成与落地，为产业升级与数字化发展贡献力量。
+
+footer:
+  title: ElexvxAI Lab
+  subtitle: Build with Intelligence · Innovate for Industry

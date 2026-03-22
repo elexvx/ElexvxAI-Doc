@@ -20,38 +20,24 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
   return (
     <>
       <main className={SITE_SECTION_MAIN_CLASS}>
-        <section className="rounded-2xl border border-zinc-200 px-5 py-6 sm:px-7 sm:py-8 dark:border-zinc-800">
-          <div className="grid gap-6 md:grid-cols-[1fr_minmax(260px,320px)] md:items-center md:gap-10">
-            <div className="space-y-3">
-              <p className="text-xs font-medium tracking-[0.16em] text-zinc-500 uppercase dark:text-zinc-400">
-                {copy.eyebrow}
-              </p>
-              <h1 className="text-3xl leading-tight font-semibold tracking-[-0.02em] text-zinc-900 sm:text-4xl dark:text-zinc-100">
-                {copy.title}
-              </h1>
-              <p className="max-w-2xl text-sm leading-6 text-zinc-500 sm:text-base dark:text-zinc-400">{copy.description}</p>
+        <section className="rounded-2xl border border-zinc-200 px-5 py-12 sm:px-7 sm:py-16 dark:border-zinc-800 mb-12 text-center bg-zinc-50/50 dark:bg-zinc-900/50">
+          <div className="mx-auto max-w-[var(--fd-layout-width)]">
+            <p className="text-xs font-medium tracking-[0.16em] text-zinc-500 uppercase dark:text-zinc-400">
+              {copy.eyebrow}
+            </p>
+            <h1 className="mt-4 text-3xl leading-tight font-bold tracking-[-0.02em] text-zinc-900 sm:text-5xl dark:text-zinc-100">
+              {copy.title}
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-zinc-500 sm:text-lg sm:leading-8 dark:text-zinc-400">
+              {copy.description}
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href={`/${lang}/docs`}
-                className="inline-flex items-center rounded-lg border border-zinc-300 px-4 py-2.5 text-sm font-medium text-zinc-900 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-100 dark:hover:bg-zinc-900"
+                className="inline-flex items-center rounded-lg border border-zinc-300 px-5 py-2.5 text-sm font-medium text-zinc-900 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-100 dark:hover:bg-zinc-900"
               >
                 {copy.cta}
               </Link>
-              <p className="text-xs text-zinc-500 sm:text-sm dark:text-zinc-400">{copy.subline}</p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-3 md:grid-cols-1">
-              <article className="rounded-xl border border-zinc-200 px-4 py-3 dark:border-zinc-800">
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">{copy.stats.totalLabel}</p>
-                <p className="mt-1 text-2xl font-semibold text-zinc-900 dark:text-zinc-100">{copy.stats.totalValue}</p>
-              </article>
-              <article className="rounded-xl border border-zinc-200 px-4 py-3 dark:border-zinc-800">
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">{copy.stats.yearlyLabel}</p>
-                <p className="mt-1 text-2xl font-semibold text-zinc-900 dark:text-zinc-100">{copy.stats.yearlyValue}</p>
-              </article>
-              <article className="rounded-xl border border-zinc-200 px-4 py-3 dark:border-zinc-800">
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">{copy.stats.openSourceLabel}</p>
-                <p className="mt-1 text-2xl font-semibold text-zinc-900 dark:text-zinc-100">{copy.stats.openSourceValue}</p>
-              </article>
             </div>
           </div>
         </section>
