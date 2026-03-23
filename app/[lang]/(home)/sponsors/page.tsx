@@ -24,9 +24,10 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
         <PageHeader 
           title={copy.title} 
           description={copy.description}
+          cta={{ label: copy.cta, href: '#partner-brands' }}
         />
 
-        <section className="mt-8">
+        <section id="partner-brands" className="mt-8">
           <h2 className="text-sm font-semibold tracking-[0.08em] text-zinc-500 uppercase dark:text-zinc-400">{copy.sectionTitle}</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {sponsorItems.map((item) => (
