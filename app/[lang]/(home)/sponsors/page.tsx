@@ -5,6 +5,7 @@ import { isLocale, type AppLocale } from '@/lib/i18n';
 import { getSeoPage } from '@/lib/seo-content';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
+import { PageHeader } from '../_components/page-header';
 import { getSponsorItems, getSponsorsPageCopy } from '@/lib/sponsors';
 import { SITE_SECTION_MAIN_CLASS } from '@/lib/responsive-layout';
 
@@ -20,27 +21,10 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
   return (
     <>
       <main className={SITE_SECTION_MAIN_CLASS}>
-        <section className="rounded-2xl border border-zinc-200 px-5 py-12 sm:px-7 sm:py-16 dark:border-zinc-800 mb-12 text-center bg-zinc-50/50 dark:bg-zinc-900/50">
-          <div className="mx-auto max-w-[var(--fd-layout-width)]">
-            <p className="text-xs font-medium tracking-[0.16em] text-zinc-500 uppercase dark:text-zinc-400">
-              {copy.eyebrow}
-            </p>
-            <h1 className="mt-4 text-3xl leading-tight font-bold tracking-[-0.02em] text-zinc-900 sm:text-5xl dark:text-zinc-100">
-              {copy.title}
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-zinc-500 sm:text-lg sm:leading-8 dark:text-zinc-400">
-              {copy.description}
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link
-                href={`/${lang}/docs`}
-                className="inline-flex items-center rounded-lg border border-zinc-300 px-5 py-2.5 text-sm font-medium text-zinc-900 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-100 dark:hover:bg-zinc-900"
-              >
-                {copy.cta}
-              </Link>
-            </div>
-          </div>
-        </section>
+        <PageHeader 
+          title={copy.title} 
+          description={copy.description}
+        />
 
         <section className="mt-8">
           <h2 className="text-sm font-semibold tracking-[0.08em] text-zinc-500 uppercase dark:text-zinc-400">{copy.sectionTitle}</h2>
@@ -86,6 +70,8 @@ export async function generateMetadata({
   return {
     title: seo.title,
     description: seo.description,
+    keywords: seo.keywords,
+    robots: seo.robots,
     alternates: {
       canonical,
       languages: buildLocaleAlternates('/sponsors'),
@@ -95,11 +81,13 @@ export async function generateMetadata({
       url: canonical,
       title: seo.title,
       description: seo.description,
+      images: seo.ogImage ? [seo.ogImage] : undefined,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: seo.twitterCard ?? 'summary_large_image',
       title: seo.title,
       description: seo.description,
+      images: seo.twitterImage ? [seo.twitterImage] : undefined,
     },
   };
 }

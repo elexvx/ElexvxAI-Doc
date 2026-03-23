@@ -1,15 +1,7 @@
 copy:
-  eyebrow: Partners
   title: Partnership Program
   description: Thanks to every supporter for keeping documentation, components, and engineering practices freely accessible.
   cta: Partner With Us
-  subline: Join us in advancing the developer ecosystem.
-  stats:
-    totalLabel: Partners
-    yearlyLabel: New This Year
-    yearlyValue: "6"
-    openSourceLabel: Open-source Maintained Projects
-    openSourceValue: "6"
   sectionTitle: Partner Brands
 items:
   - name: Hongxiang Shangdao - Elexvx Inc

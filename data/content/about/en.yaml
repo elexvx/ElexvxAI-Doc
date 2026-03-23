@@ -30,14 +30,7 @@ whatWeDo:
     - title: Technology Integration and Innovation Transformation
       description: We drive the deep integration of AI with software systems, industrial scenarios, data platforms, intelligent monitoring, and related business systems, accelerating innovation transformation and real-world deployment.
 
-focusAreas:
-  title: Focus Areas
-  items:
-    - AI Application R&D
-    - Industry Digital Solutions
-    - Intelligent Systems & Platform Development
-    - Data-Driven Analytics & Decision Support
-    - Industrial Collaboration & Innovation Transformation
+valuesTitle: Our Values
 
 mission:
   title: Our Mission
@@ -58,18 +51,6 @@ coreValues:
       description: Promoting collaboration and resource synergy
     - title: Sustainable Development
       description: Emphasizing standards, responsibility, and long-term development
-
-organization:
-  title: Organization Information
-  items:
-    - label: Center Name
-      value: ElexvxAI Innovation Industry R&D Center
-    - label: English Name
-      value: ElexvxAI Lab
-    - label: Established
-      value: 2026-03-06
-    - label: Affiliated Company
-      value: Hongxiang Shangdao (Nanjing) Technology Development Co., Ltd.
 
 collaboration:
   title: Collaboration

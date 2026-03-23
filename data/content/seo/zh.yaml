@@ -1,17 +1,39 @@
 site:
   title: ElexvxAI Lab
   description: ElexvxAI Lab 官方网站，聚焦 AI 研究、工程实践与产业落地。
+  keywords:
+    - ElexvxAI
+    - 人工智能
+    - AI研发
+    - 产业数字化
+    - 创新中心
+  twitterCard: summary_large_image
+  icons:
+    icon: /favicon.svg
+    shortcut: /favicon.svg
+    apple: /favicon.svg
 
 pages:
   home:
     title: 以智能技术赋能数字化未来
     description: 欢迎访问 ElexvxAI Lab，了解我们的 AI 研究进展、工程能力与产业实践。
+    keywords:
+      - AI
+      - 数字化
+      - 创新研发
   blog:
     title: 博客
     description: ElexvxAI Lab 的最新动态、研究进展与工程实践。
+    keywords:
+      - AI博客
+      - 技术文章
+      - 工程实践
   sponsors:
     title: 同行计划
     description: 了解 ElexvxAI Lab 的合作伙伴与开源生态共建计划。
+    keywords:
+      - 合作伙伴
+      - 生态共建
   maintenance:
     title: 系统维护中
     description: ElexvxAI Lab 页面维护中，服务升级完成后将恢复访问。

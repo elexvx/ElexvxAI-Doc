@@ -5,6 +5,7 @@ import { isLocale, type AppLocale } from '@/lib/i18n';
 import { getSeoPage } from '@/lib/seo-content';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
+import { PageHeader } from '../_components/page-header';
 import { getAboutData } from '@/lib/about';
 import { SITE_SECTION_MAIN_CLASS } from '@/lib/responsive-layout';
 
@@ -37,6 +38,15 @@ const badgeColorMap: Record<string, string> = {
   orange: 'bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300 border-orange-200 dark:border-orange-500/30',
 };
 
+const aboutCardAccentClasses = [
+  'from-indigo-500/20 via-sky-400/15 to-cyan-300/20',
+  'from-blue-500/20 via-indigo-300/15 to-purple-300/15',
+  'from-emerald-500/25 via-teal-400/15 to-cyan-300/15',
+  'from-violet-500/25 via-fuchsia-400/15 to-indigo-300/20',
+  'from-orange-500/20 via-amber-300/15 to-rose-300/15',
+  'from-lime-500/20 via-emerald-300/15 to-teal-300/15',
+];
+
 export default async function AboutPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
@@ -47,26 +57,19 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
     <>
       <main className={SITE_SECTION_MAIN_CLASS}>
         {/* Header */}
-        <section className="rounded-2xl border border-zinc-200 px-5 py-12 sm:px-7 sm:py-16 dark:border-zinc-800 mb-12 text-center bg-zinc-50/50 dark:bg-zinc-900/50">
-          <div className="mx-auto max-w-[var(--fd-layout-width)]">
-            <h1 className="text-3xl leading-tight font-bold tracking-[-0.02em] text-zinc-900 sm:text-5xl dark:text-zinc-100">
-              {data.header.title}
-            </h1>
-            <p className="mx-auto mt-6 max-w-[var(--fd-layout-width)] text-base leading-7 text-zinc-500 sm:text-lg sm:leading-8 dark:text-zinc-400 whitespace-pre-line">
-              {data.header.subtitle}
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              {data.header.badges.map((badge, i) => (
-                <span 
-                  key={i} 
-                  className={`inline-flex items-center rounded-md border px-2.5 py-1 text-xs font-medium ${badgeColorMap[badge.color] || badgeColorMap.black}`}
-                >
-                  {badge.label}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
+        <PageHeader 
+          title={data.header.title} 
+          description={data.header.subtitle}
+        >
+          {data.header.badges.map((badge, i) => (
+            <span 
+              key={i} 
+              className={`inline-flex items-center rounded-md border px-2.5 py-1 text-xs font-medium ${badgeColorMap[badge.color] || badgeColorMap.black}`}
+            >
+              {badge.label}
+            </span>
+          ))}
+        </PageHeader>
 
         <div className="space-y-16">
           {/* About Us */}
@@ -75,57 +78,43 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               <FormattedContent text={data.about.content} />
             </section>
 
-            {/* Organization Info */}
-            <section className="rounded-xl border border-zinc-200 bg-zinc-50 p-6 dark:border-zinc-800 dark:bg-zinc-900/50">
-              <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-5">{data.organization.title}</h2>
-              <dl className="grid gap-4 sm:grid-cols-2 text-sm">
-                {data.organization.items.map((item, i) => (
-                  <div key={i} className="flex flex-col gap-1 border-b border-zinc-200 pb-4 sm:border-0 sm:pb-0 dark:border-zinc-800">
-                    <dt className="text-zinc-500 dark:text-zinc-400">{item.label}</dt>
-                    <dd className="font-medium text-zinc-900 dark:text-zinc-100 leading-relaxed">{item.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-
             {/* What We Do */}
             <section>
               <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{data.whatWeDo.title}</h2>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 {data.whatWeDo.items.map((item, i) => (
-                  <div key={i} className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/50">
-                    <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">{item.title}</h3>
-                    <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed whitespace-pre-line">{item.description}</p>
+                  <div key={i} className="group relative overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-4 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900">
+                    <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${aboutCardAccentClasses[i % aboutCardAccentClasses.length]} opacity-0 transition group-hover:opacity-100`} />
+                    <div className="relative">
+                      <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-5 text-zinc-500 dark:text-zinc-400 whitespace-pre-line">{item.description}</p>
+                    </div>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Focus Areas */}
-            <section className="rounded-xl border border-zinc-200 p-6 sm:p-8 dark:border-zinc-800">
-              <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{data.focusAreas.title}</h2>
-              <ul className="grid gap-4 sm:grid-cols-2">
-                {data.focusAreas.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                    <span className="mt-1.5 sm:mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
-                    <span className="leading-relaxed">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
             {/* Mission & Vision */}
-            <section className="grid gap-6 sm:grid-cols-2">
-              <div className="rounded-xl border border-blue-100 bg-blue-50/50 p-6 dark:border-blue-900/30 dark:bg-blue-900/10">
-                <h2 className="text-xl font-bold tracking-tight text-blue-900 dark:text-blue-100 mb-4">{data.mission.title}</h2>
-                <div className="text-blue-800/80 dark:text-blue-200/80 text-sm sm:text-base leading-relaxed whitespace-pre-line">
-                  {data.mission.content}
+            <section>
+              <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{data.valuesTitle}</h2>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="group relative overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-4 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/20 via-indigo-300/15 to-purple-300/15 opacity-0 transition group-hover:opacity-100" />
+                  <div className="relative">
+                    <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{data.mission.title}</h3>
+                    <div className="mt-2 text-sm leading-5 text-zinc-500 dark:text-zinc-400 whitespace-pre-line">
+                      {data.mission.content}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="rounded-xl border border-emerald-100 bg-emerald-50/50 p-6 dark:border-emerald-900/30 dark:bg-emerald-900/10">
-                <h2 className="text-xl font-bold tracking-tight text-emerald-900 dark:text-emerald-100 mb-4">{data.vision.title}</h2>
-                <div className="text-emerald-800/80 dark:text-emerald-200/80 text-sm sm:text-base leading-relaxed whitespace-pre-line">
-                  {data.vision.content}
+                <div className="group relative overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-4 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/25 via-teal-400/15 to-cyan-300/15 opacity-0 transition group-hover:opacity-100" />
+                  <div className="relative">
+                    <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{data.vision.title}</h3>
+                    <div className="mt-2 text-sm leading-5 text-zinc-500 dark:text-zinc-400 whitespace-pre-line">
+                      {data.vision.content}
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
@@ -133,15 +122,13 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             {/* Core Values */}
             <section>
               <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{data.coreValues.title}</h2>
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 {data.coreValues.items.map((item, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-800">
-                      <span className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">{i + 1}</span>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">{item.title}</h3>
-                      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed whitespace-pre-line">{item.description}</p>
+                  <div key={i} className="group relative overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-4 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900">
+                    <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${aboutCardAccentClasses[i % aboutCardAccentClasses.length]} opacity-0 transition group-hover:opacity-100`} />
+                    <div className="relative">
+                      <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-5 text-zinc-500 dark:text-zinc-400 whitespace-pre-line">{item.description}</p>
                     </div>
                   </div>
                 ))}
@@ -183,6 +170,8 @@ export async function generateMetadata({
   return {
     title: seo.title,
     description: seo.description,
+    keywords: seo.keywords,
+    robots: seo.robots,
     alternates: {
       canonical,
       languages: buildLocaleAlternates('/about'),
@@ -192,11 +181,13 @@ export async function generateMetadata({
       url: canonical,
       title: seo.title,
       description: seo.description,
+      images: seo.ogImage ? [seo.ogImage] : undefined,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: seo.twitterCard ?? 'summary_large_image',
       title: seo.title,
       description: seo.description,
+      images: seo.twitterImage ? [seo.twitterImage] : undefined,
     },
   };
 }

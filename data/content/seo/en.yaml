@@ -1,17 +1,39 @@
 site:
   title: ElexvxAI Lab
   description: Official site of ElexvxAI Lab focused on AI research, engineering, and real-world deployment.
+  keywords:
+    - ElexvxAI
+    - AI
+    - Artificial Intelligence
+    - Engineering
+    - Digital Transformation
+  twitterCard: summary_large_image
+  icons:
+    icon: /favicon.svg
+    shortcut: /favicon.svg
+    apple: /favicon.svg
 
 pages:
   home:
     title: Empower the Digital Future with Intelligent Technology
     description: Welcome to ElexvxAI Lab and explore our AI research progress, engineering capabilities, and industrial practices.
+    keywords:
+      - AI
+      - Innovation
+      - Digital Future
   blog:
     title: Blog
     description: Latest updates, research progress, and engineering practices from ElexvxAI Lab.
+    keywords:
+      - AI Blog
+      - Engineering
+      - Research
   sponsors:
     title: Partnership Program
     description: Discover ElexvxAI Lab partners and our open ecosystem collaboration program.
+    keywords:
+      - Partners
+      - Ecosystem
   maintenance:
     title: Maintenance In Progress
     description: ElexvxAI Lab page is under maintenance and will be back online after service upgrades.

@@ -35,6 +35,13 @@ export async function generateMetadata({
       template: `%s | ${siteSeo.title}`,
     },
     description: siteSeo.description,
+    keywords: siteSeo.keywords,
+    robots: siteSeo.robots,
+    icons: {
+      icon: siteSeo.icons.icon,
+      shortcut: siteSeo.icons.shortcut,
+      apple: siteSeo.icons.apple,
+    },
     alternates: {
       canonical: buildAbsoluteUrl(buildLocalePath(lang)),
       languages: buildLocaleAlternates(),
@@ -43,11 +50,13 @@ export async function generateMetadata({
       type: 'website',
       title: siteSeo.title,
       description: siteSeo.description,
+      images: siteSeo.ogImage ? [siteSeo.ogImage] : undefined,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: siteSeo.twitterCard ?? 'summary_large_image',
       title: siteSeo.title,
       description: siteSeo.description,
+      images: siteSeo.twitterImage ? [siteSeo.twitterImage] : undefined,
     },
     other: {
       'html-lang': getHtmlLang(lang),

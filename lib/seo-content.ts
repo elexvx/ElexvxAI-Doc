@@ -6,17 +6,34 @@ export type SeoPageKey = 'home' | 'blog' | 'sponsors' | 'maintenance' | 'docs' |
 export type SeoEntry = {
   title: string;
   description: string;
+  keywords?: string[];
+  twitterCard?: 'summary' | 'summary_large_image';
+  ogImage?: string;
+  twitterImage?: string;
+  robots?: string;
+};
+
+export type SeoSiteIcons = {
+  icon: string;
+  shortcut: string;
+  apple: string;
+};
+
+export type SeoSiteEntry = SeoEntry & {
+  icons: SeoSiteIcons;
 };
 
 type SeoContentYaml = {
-  site?: Partial<SeoEntry>;
+  site?: Partial<Omit<SeoSiteEntry, 'icons'>> & {
+    icons?: Partial<SeoSiteIcons>;
+  };
   pages?: Partial<Record<SeoPageKey, Partial<SeoEntry>>>;
 };
 
 const seoFallbacks: Record<
   AppLocale,
   {
-    site: SeoEntry;
+    site: SeoSiteEntry;
     pages: Record<SeoPageKey, SeoEntry>;
   }
 > = {
@@ -24,6 +41,13 @@ const seoFallbacks: Record<
     site: {
       title: 'ElexvxAI Lab',
       description: 'ElexvxAI Lab 官方网站，聚焦 AI 研究、工程实践与产业落地。',
+      keywords: ['ElexvxAI', 'AI', '人工智能', '技术研发', '产业应用'],
+      twitterCard: 'summary_large_image',
+      icons: {
+        icon: '/favicon.svg',
+        shortcut: '/favicon.svg',
+        apple: '/favicon.svg',
+      },
     },
     pages: {
       home: {
@@ -56,6 +80,13 @@ const seoFallbacks: Record<
     site: {
       title: 'ElexvxAI Lab',
       description: 'Official site of ElexvxAI Lab focused on AI research, engineering, and real-world deployment.',
+      keywords: ['ElexvxAI', 'AI', 'Artificial Intelligence', 'Engineering', 'Industry'],
+      twitterCard: 'summary_large_image',
+      icons: {
+        icon: '/favicon.svg',
+        shortcut: '/favicon.svg',
+        apple: '/favicon.svg',
+      },
     },
     pages: {
       home: {
@@ -90,10 +121,39 @@ const seoFallbacks: Record<
 function normalizeEntry(fallback: SeoEntry, value?: Partial<SeoEntry>): SeoEntry {
   const title = value?.title?.trim();
   const description = value?.description?.trim();
+  const keywords = value?.keywords?.map((item) => item.trim()).filter((item) => item.length > 0);
+  const twitterCard = value?.twitterCard ?? fallback.twitterCard;
+  const ogImage = value?.ogImage?.trim();
+  const twitterImage = value?.twitterImage?.trim();
+  const robots = value?.robots?.trim();
 
   return {
     title: title && title.length > 0 ? title : fallback.title,
     description: description && description.length > 0 ? description : fallback.description,
+    keywords: keywords && keywords.length > 0 ? keywords : fallback.keywords,
+    twitterCard,
+    ogImage: ogImage && ogImage.length > 0 ? ogImage : fallback.ogImage,
+    twitterImage: twitterImage && twitterImage.length > 0 ? twitterImage : fallback.twitterImage,
+    robots: robots && robots.length > 0 ? robots : fallback.robots,
+  };
+}
+
+function normalizeSiteEntry(
+  fallback: SeoSiteEntry,
+  value?: Partial<Omit<SeoSiteEntry, 'icons'>> & { icons?: Partial<SeoSiteIcons> },
+): SeoSiteEntry {
+  const base = normalizeEntry(fallback, value);
+  const icon = value?.icons?.icon?.trim();
+  const shortcut = value?.icons?.shortcut?.trim();
+  const apple = value?.icons?.apple?.trim();
+
+  return {
+    ...base,
+    icons: {
+      icon: icon && icon.length > 0 ? icon : fallback.icons.icon,
+      shortcut: shortcut && shortcut.length > 0 ? shortcut : fallback.icons.shortcut,
+      apple: apple && apple.length > 0 ? apple : fallback.icons.apple,
+    },
   };
 }
 
@@ -102,7 +162,7 @@ async function getSeoContent(locale: AppLocale) {
   const fallback = seoFallbacks[locale];
 
   return {
-    site: normalizeEntry(fallback.site, raw.site),
+    site: normalizeSiteEntry(fallback.site, raw.site),
     pages: {
       home: normalizeEntry(fallback.pages.home, raw.pages?.home),
       blog: normalizeEntry(fallback.pages.blog, raw.pages?.blog),
@@ -114,7 +174,7 @@ async function getSeoContent(locale: AppLocale) {
   };
 }
 
-export async function getSeoSite(locale: AppLocale): Promise<SeoEntry> {
+export async function getSeoSite(locale: AppLocale): Promise<SeoSiteEntry> {
   const content = await getSeoContent(locale);
   return content.site;
 }

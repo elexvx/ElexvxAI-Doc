@@ -4,12 +4,10 @@ header:
   badges:
     - label: AI Innovation
       color: blue
-    - label: "专注：产业应用"
+    - label: "产业应用"
       color: black
-    - label: "成立：2026-03-06"
+    - label: "2026-03-06"
       color: emerald
-    - label: "机构：ElexvxAI Lab"
-      color: orange
 
 about:
   title: 关于我们
@@ -30,14 +28,7 @@ whatWeDo:
     - title: 技术融合与创新转化
       description: 推动人工智能与软件系统、工业场景、数据平台、智能监测及相关业务体系深度融合，加快成果转化与应用落地。
 
-focusAreas:
-  title: 重点方向
-  items:
-    - AI 应用研发
-    - 行业数字化解决方案
-    - 智能系统与平台开发
-    - 数据驱动分析与决策支持
-    - 产业协同创新与成果转化
+valuesTitle: 我们的价值观
 
 mission:
   title: 我们的使命
@@ -58,18 +49,6 @@ coreValues:
       description: 推动合作共建与资源共享
     - title: 稳健发展
       description: 坚持规范、责任与长期主义
-
-organization:
-  title: 组织信息
-  items:
-    - label: 中心名称
-      value: ElexvxAI创新产业研发中心
-    - label: 英文名称
-      value: ElexvxAI Lab
-    - label: 成立时间
-      value: 2026-03-06
-    - label: 设立单位
-      value: 宏翔商道（南京）科技发展有限公司
 
 collaboration:
   title: 合作共建

@@ -11,11 +11,6 @@ export type AboutItem = {
   description: string;
 };
 
-export type OrganizationItem = {
-  label: string;
-  value: string;
-};
-
 export type AboutData = {
   header: {
     title: string;
@@ -30,10 +25,7 @@ export type AboutData = {
     title: string;
     items: AboutItem[];
   };
-  focusAreas: {
-    title: string;
-    items: string[];
-  };
+  valuesTitle: string;
   mission: {
     title: string;
     content: string;
@@ -45,10 +37,6 @@ export type AboutData = {
   coreValues: {
     title: string;
     items: AboutItem[];
-  };
-  organization: {
-    title: string;
-    items: OrganizationItem[];
   };
   collaboration: {
     title: string;

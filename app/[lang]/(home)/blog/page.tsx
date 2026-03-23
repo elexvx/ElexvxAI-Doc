@@ -67,6 +67,8 @@ export async function generateMetadata({
   return {
     title: seo.title,
     description: seo.description,
+    keywords: seo.keywords,
+    robots: seo.robots,
     alternates: {
       canonical,
       languages: buildLocaleAlternates('/blog'),
@@ -76,11 +78,13 @@ export async function generateMetadata({
       url: canonical,
       title: seo.title,
       description: seo.description,
+      images: seo.ogImage ? [seo.ogImage] : undefined,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: seo.twitterCard ?? 'summary_large_image',
       title: seo.title,
       description: seo.description,
+      images: seo.twitterImage ? [seo.twitterImage] : undefined,
     },
   };
 }
