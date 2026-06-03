@@ -12,4 +12,4 @@ export const SITE_SECTION_MAIN_CLASS = `${SITE_CONTAINER_CLASS} pb-10 pt-6 md:pb
 
 export const SITE_BLOG_MAIN_CLASS = `${SITE_CONTAINER_CLASS} pb-10 pt-8 md:pb-12 md:pt-12`;
 
-export const DOCS_PAGE_MAX_WIDTH_CLASS = 'max-w-[980px] 2xl:max-w-[1180px] [@media(min-width:2100px)]:max-w-[1320px]';
+export const DOCS_PAGE_MAX_WIDTH_CLASS = 'max-w-[680px] lg:max-w-[720px] 2xl:max-w-[960px] [@media(min-width:2100px)]:max-w-[1120px]';

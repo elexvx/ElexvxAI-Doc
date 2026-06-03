@@ -99,7 +99,7 @@ export default async function Layout({
         themeSwitch={{ enabled: false }}
         links={mobileOnlyLinks}
         containerProps={{
-          className: cn(SITE_LAYOUT_WIDTH_CLASS, 'mx-auto w-full max-w-[var(--fd-layout-width)] px-4'),
+          className: cn(SITE_LAYOUT_WIDTH_CLASS, 'w-full'),
         }}
         sidebar={{
           footer: (
