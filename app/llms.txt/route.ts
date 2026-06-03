@@ -1,5 +1,5 @@
 import { i18n, isLocale } from '@/lib/i18n';
-import { source } from '@/lib/source';
+import { getSourcePages } from '@/lib/source';
 
 export const runtime = 'nodejs';
 export const revalidate = false;
@@ -15,7 +15,7 @@ export async function GET(req: Request) {
   lines.push(locale === 'zh' ? '# 文档' : '# Documentation');
   lines.push('');
 
-  for (const page of source.getPages(locale)) {
+  for (const page of getSourcePages(locale)) {
     lines.push(`- [${page.data.title}](${page.url}): ${page.data.description}`);
   }
 

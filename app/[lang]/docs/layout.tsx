@@ -1,4 +1,4 @@
-import { source } from '@/lib/source';
+import { getSourcePageTree, getSourcePages } from '@/lib/source';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { LinkItemType } from 'fumadocs-ui/layouts/shared';
 import { buttonVariants } from 'fumadocs-ui/components/ui/button';
@@ -14,12 +14,36 @@ import { NavLanguageToggle } from '@/components/nav/nav-language-toggle';
 import { SidebarThemeToggle } from '@/components/nav/sidebar-theme-toggle';
 import { cn } from '@/lib/cn';
 import { SITE_LAYOUT_WIDTH_CLASS } from '@/lib/responsive-layout';
+import type { TagItem } from 'fumadocs-ui/contexts/search';
+
+const docsTagsCache = new Map<AppLocale, TagItem[]>();
 
 function normalizeTagName(tag: string) {
   return tag
     .split(/[-_\s]+/)
     .map((part) => (part.length > 0 ? part[0].toUpperCase() + part.slice(1) : part))
     .join(' ');
+}
+
+function getDocsTags(locale: AppLocale): TagItem[] {
+  let cached = docsTagsCache.get(locale);
+  if (!cached) {
+    cached = Array.from(
+      new Set(
+        getSourcePages(locale)
+          .flatMap((page) => page.data.tags ?? [])
+          .filter((tag): tag is string => typeof tag === 'string' && tag.length > 0),
+      ),
+    )
+      .sort((a, b) => a.localeCompare(b))
+      .map((tag) => ({
+        value: tag,
+        name: normalizeTagName(tag),
+      }));
+    docsTagsCache.set(locale, cached);
+  }
+
+  return cached;
 }
 
 export default async function Layout({
@@ -64,30 +88,18 @@ export default async function Layout({
         ]
       : [];
   const uiText = await getI18nUIText(locale);
-  const tags = Array.from(
-    new Set(
-      source
-        .getPages(locale)
-        .flatMap((page) => page.data.tags ?? [])
-        .filter((tag): tag is string => typeof tag === 'string' && tag.length > 0),
-    ),
-  )
-    .sort((a, b) => a.localeCompare(b))
-    .map((tag) => ({
-      value: tag,
-      name: normalizeTagName(tag),
-    }));
+  const tags = getDocsTags(locale);
 
   return (
     <SiteRootProvider locale={locale} uiText={uiText} tags={tags}>
       <DocsLayout
-        tree={source.getPageTree(locale)}
+        tree={getSourcePageTree(locale)}
         {...baseOptions(locale)}
         i18n={false}
         themeSwitch={{ enabled: false }}
         links={mobileOnlyLinks}
         containerProps={{
-          className: SITE_LAYOUT_WIDTH_CLASS,
+          className: cn(SITE_LAYOUT_WIDTH_CLASS, 'mx-auto w-full max-w-[var(--fd-layout-width)] px-4'),
         }}
         sidebar={{
           footer: (

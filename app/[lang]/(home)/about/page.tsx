@@ -1,10 +1,10 @@
-import React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { isLocale, type AppLocale } from '@/lib/i18n';
 import { getSeoPage } from '@/lib/seo-content';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
+import { GradientCard } from '@/components/gradient-card';
 import { PageHeader } from '../_components/page-header';
 import { getAboutData } from '@/lib/about';
 import { SITE_SECTION_MAIN_CLASS } from '@/lib/responsive-layout';
@@ -83,13 +83,13 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{data.whatWeDo.title}</h2>
               <div className="grid gap-3 sm:grid-cols-2">
                 {data.whatWeDo.items.map((item, i) => (
-                  <div key={i} className="group relative overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-4 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900">
-                    <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${aboutCardAccentClasses[i % aboutCardAccentClasses.length]} opacity-0 transition group-hover:opacity-100`} />
-                    <div className="relative">
-                      <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{item.title}</h3>
-                      <p className="mt-2 text-sm leading-5 text-zinc-500 dark:text-zinc-400 whitespace-pre-line">{item.description}</p>
-                    </div>
-                  </div>
+                  <GradientCard
+                    key={i}
+                    accent={aboutCardAccentClasses[i % aboutCardAccentClasses.length]}
+                    className="min-h-[220px] sm:min-h-[240px]"
+                    title={item.title}
+                    description={<span className="whitespace-pre-line">{item.description}</span>}
+                  />
                 ))}
               </div>
             </section>
@@ -98,24 +98,18 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             <section>
               <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{data.valuesTitle}</h2>
               <div className="grid gap-3 sm:grid-cols-2">
-                <div className="group relative overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-4 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900">
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/20 via-indigo-300/15 to-purple-300/15 opacity-0 transition group-hover:opacity-100" />
-                  <div className="relative">
-                    <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{data.mission.title}</h3>
-                    <div className="mt-2 text-sm leading-5 text-zinc-500 dark:text-zinc-400 whitespace-pre-line">
-                      {data.mission.content}
-                    </div>
-                  </div>
-                </div>
-                <div className="group relative overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-4 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900">
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/25 via-teal-400/15 to-cyan-300/15 opacity-0 transition group-hover:opacity-100" />
-                  <div className="relative">
-                    <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{data.vision.title}</h3>
-                    <div className="mt-2 text-sm leading-5 text-zinc-500 dark:text-zinc-400 whitespace-pre-line">
-                      {data.vision.content}
-                    </div>
-                  </div>
-                </div>
+                <GradientCard
+                  accent="from-blue-500/20 via-indigo-300/15 to-purple-300/15"
+                  className="min-h-[220px]"
+                  title={data.mission.title}
+                  description={<span className="whitespace-pre-line">{data.mission.content}</span>}
+                />
+                <GradientCard
+                  accent="from-emerald-500/25 via-teal-400/15 to-cyan-300/15"
+                  className="min-h-[220px]"
+                  title={data.vision.title}
+                  description={<span className="whitespace-pre-line">{data.vision.content}</span>}
+                />
               </div>
             </section>
 
@@ -124,13 +118,13 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{data.coreValues.title}</h2>
               <div className="grid gap-3 sm:grid-cols-2">
                 {data.coreValues.items.map((item, i) => (
-                  <div key={i} className="group relative overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-4 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900">
-                    <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${aboutCardAccentClasses[i % aboutCardAccentClasses.length]} opacity-0 transition group-hover:opacity-100`} />
-                    <div className="relative">
-                      <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{item.title}</h3>
-                      <p className="mt-2 text-sm leading-5 text-zinc-500 dark:text-zinc-400 whitespace-pre-line">{item.description}</p>
-                    </div>
-                  </div>
+                  <GradientCard
+                    key={i}
+                    accent={aboutCardAccentClasses[i % aboutCardAccentClasses.length]}
+                    className="min-h-[220px] sm:min-h-[240px]"
+                    title={item.title}
+                    description={<span className="whitespace-pre-line">{item.description}</span>}
+                  />
                 ))}
               </div>
             </section>

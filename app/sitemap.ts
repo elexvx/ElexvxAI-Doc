@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { i18n } from '@/lib/i18n';
 import { getAllPosts } from '@/lib/blog';
-import { source } from '@/lib/source';
+import { getSourcePages } from '@/lib/source';
 import { buildAbsoluteUrl, buildLocalePath } from '@/lib/site';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -41,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     });
 
-    for (const page of source.getPages(locale)) {
+    for (const page of getSourcePages(locale)) {
       pages.push({
         url: buildAbsoluteUrl(page.url),
         lastModified: now,
@@ -58,7 +58,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.6,
       });
     }
-
   }
 
   return pages;

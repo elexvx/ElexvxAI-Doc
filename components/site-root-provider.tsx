@@ -1,13 +1,21 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import type { TagItem } from 'fumadocs-ui/contexts/search';
-import { DocsSearchDialog } from '@/components/search/docs-search-dialog';
 import { i18n, isLocale, type AppLocale } from '@/lib/i18n';
 import type { I18nUIText } from '@/lib/i18n-ui';
 import { localeDisplayNames } from '@/lib/locale-labels';
+
+const DocsSearchDialog = dynamic(
+  () => import('@/components/search/docs-search-dialog').then((module) => module.DocsSearchDialog),
+  {
+    ssr: false,
+    loading: () => null,
+  },
+);
 
 function replaceLocale(pathname: string, nextLocale: string) {
   const segments = pathname.split('/');

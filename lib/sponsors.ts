@@ -5,6 +5,8 @@ export type SponsorsPageCopy = {
   title: string;
   description: string;
   cta: string;
+  ctaHref: string;
+  ctaExternal?: boolean;
   sectionTitle: string;
 };
 
@@ -17,7 +19,10 @@ export type SponsorItem = {
 };
 
 type SponsorsYaml = {
-  copy: SponsorsPageCopy;
+  copy: Omit<SponsorsPageCopy, 'ctaHref' | 'ctaExternal'> & {
+    ctaHref?: string;
+    ctaExternal?: boolean;
+  };
   items: SponsorItem[];
 };
 
@@ -30,7 +35,11 @@ async function readSponsorsYaml(locale: AppLocale): Promise<SponsorsData> {
   const parsed = await readLocaleYaml<SponsorsYaml>('sponsors', locale);
 
   return {
-    copy: parsed.copy,
+    copy: {
+      ...parsed.copy,
+      ctaHref: parsed.copy.ctaHref ?? '#partner-brands',
+      ctaExternal: parsed.copy.ctaExternal ?? false,
+    },
     items: parsed.items,
   };
 }

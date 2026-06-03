@@ -1,10 +1,10 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { isLocale, type AppLocale } from '@/lib/i18n';
 import { getSeoPage } from '@/lib/seo-content';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
+import { GradientCard } from '@/components/gradient-card';
 import { PageHeader } from '../_components/page-header';
 import { getSponsorItems, getSponsorsPageCopy } from '@/lib/sponsors';
 import { SITE_SECTION_MAIN_CLASS } from '@/lib/responsive-layout';
@@ -17,6 +17,13 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
     getSponsorsPageCopy(locale),
     getSponsorItems(locale),
   ]);
+  const cta = copy.ctaHref.trim()
+    ? {
+        label: copy.cta,
+        href: copy.ctaHref,
+        external: copy.ctaExternal,
+      }
+    : undefined;
 
   return (
     <>
@@ -24,31 +31,27 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
         <PageHeader 
           title={copy.title} 
           description={copy.description}
-          cta={{ label: copy.cta, href: '#partner-brands' }}
+          cta={cta}
         />
 
         <section id="partner-brands" className="mt-8">
           <h2 className="text-sm font-semibold tracking-[0.08em] text-zinc-500 uppercase dark:text-zinc-400">{copy.sectionTitle}</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {sponsorItems.map((item) => (
-              <a
+              <GradientCard
                 key={item.name}
                 href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-4 transition hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900"
-              >
-                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${item.accent} opacity-0 transition group-hover:opacity-100`} />
-                <div className="relative">
+                external
+                accent={item.accent}
+                className="min-h-[220px]"
+                badge={
                   <span className="inline-flex rounded-full border border-zinc-300/80 px-2.5 py-1 text-[11px] text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">
                     {item.category}
                   </span>
-                  <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-zinc-900 dark:text-zinc-100">{item.name}</h3>
-                  <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 text-zinc-500 dark:text-zinc-400">
-                    {item.description}
-                  </p>
-                </div>
-              </a>
+                }
+                title={item.name}
+                description={<span className="block line-clamp-2 min-h-10">{item.description}</span>}
+              />
             ))}
           </div>
         </section>

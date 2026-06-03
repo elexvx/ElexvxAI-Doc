@@ -1,13 +1,15 @@
 site:
   title: ElexvxAI Lab
-  description: Official site of ElexvxAI Lab focused on AI research, engineering, and real-world deployment.
+  description: Official website of ElexvxAI Lab, focused on AI research, enterprise digitalization, scaffolding systems, and industrial deployment.
   keywords:
     - ElexvxAI
-    - AI
+    - AI Research
     - Artificial Intelligence
-    - Engineering
-    - Digital Transformation
+    - Enterprise Digitalization
+    - Scaffolding System
+    - Industrial Deployment
   twitterCard: summary_large_image
+  robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   icons:
     icon: /favicon.svg
     shortcut: /favicon.svg
@@ -15,31 +17,65 @@ site:
 
 pages:
   home:
-    title: Empower the Digital Future with Intelligent Technology
-    description: Welcome to ElexvxAI Lab and explore our AI research progress, engineering capabilities, and industrial practices.
+    title: AI Research and Enterprise Digitalization
+    description: Visit ElexvxAI Lab's innovation R&D center to explore AI algorithm research, enterprise scaffolding systems, engineering practices, and industrial deployment.
     keywords:
-      - AI
-      - Innovation
-      - Digital Future
+      - AI Research
+      - Enterprise Digitalization
+      - Scaffolding System
+      - Industrial Deployment
+    ogImage: /en/og/site/home
+    twitterImage: /en/og/site/home
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   blog:
-    title: Blog
-    description: Latest updates, research progress, and engineering practices from ElexvxAI Lab.
+    title: AI Research Blog and Engineering Practices
+    description: Browse ElexvxAI Lab for the latest updates, research progress, technical articles, and engineering practices.
     keywords:
       - AI Blog
       - Engineering
       - Research
+      - Technical Articles
+    ogImage: /en/og/site/blog
+    twitterImage: /en/og/site/blog
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   sponsors:
-    title: Partnership Program
-    description: Discover ElexvxAI Lab partners and our open ecosystem collaboration program.
+    title: Partners and Ecosystem Co-creation
+    description: Discover ElexvxAI Lab partners, strategic co-creation, and developer ecosystem programs.
     keywords:
       - Partners
       - Ecosystem
+      - Developer Program
+    ogImage: /en/og/site/sponsors
+    twitterImage: /en/og/site/sponsors
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   maintenance:
-    title: Maintenance In Progress
-    description: ElexvxAI Lab page is under maintenance and will be back online after service upgrades.
+    title: Under Maintenance
+    description: This page is being upgraded and will restore access to AI research, docs, and collaboration content soon.
+    keywords:
+      - Maintenance
+      - Upgrade Notice
+    ogImage: /en/og/site/maintenance
+    twitterImage: /en/og/site/maintenance
+    robots: noindex,nofollow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   docs:
-    title: Documentation
-    description: Browse ElexvxAI Lab documentation for product capabilities and technical guidance.
+    title: Technical Docs and Scaffolding System
+    description: Browse ElexvxAI Lab docs for the enterprise scaffolding system, permission management, configuration, storage, and verification capabilities.
+    keywords:
+      - Technical Docs
+      - Scaffolding System
+      - Permission Management
+      - Configuration
+      - Storage
+      - Verification
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   about:
-    title: About Us
-    description: Learn about ElexvxAI Lab's mission, vision, and the team driving AI innovation.
+    title: About ElexvxAI Innovation R&D Center
+    description: Learn about ElexvxAI Lab's founding context, AI R&D direction, industry applications, and collaboration vision.
+    keywords:
+      - About Us
+      - AI Innovation Center
+      - Industry Applications
+      - Digital Transformation
+    ogImage: /en/og/site/about
+    twitterImage: /en/og/site/about
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1

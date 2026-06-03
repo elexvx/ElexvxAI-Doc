@@ -64,7 +64,7 @@ export async function HomeFooter({ lang }: { lang: AppLocale }) {
       </div>
 
       <div className={containerClassName}>
-        <FooterWordmark text="ElexvxAILab" />
+        <FooterWordmark text="ElexvxAI Lab" />
       </div>
 
       <div className={`${containerClassName} py-6 sm:py-7 md:py-8`}>

@@ -1,5 +1,5 @@
 import { BlogIndexClient } from '@/components/blog/blog-index-client';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPosts, getBlogCategories } from '@/lib/blog';
 import { isLocale, type AppLocale } from '@/lib/i18n';
 import { getSeoPage } from '@/lib/seo-content';
 import type { Metadata } from 'next';
@@ -32,8 +32,7 @@ export default async function BlogPage({
   const locale = lang as AppLocale;
   const copy = blogPageCopy[locale];
 
-  const allPosts = await getAllPosts();
-  const categories = [...new Set(allPosts.flatMap((post) => post.categories))].sort((a, b) => a.localeCompare(b));
+  const [allPosts, categories] = await Promise.all([getAllPosts(), getBlogCategories()]);
 
   return (
     <>

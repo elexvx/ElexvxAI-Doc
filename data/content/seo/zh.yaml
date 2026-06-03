@@ -1,13 +1,15 @@
 site:
   title: ElexvxAI Lab
-  description: ElexvxAI Lab 官方网站，聚焦 AI 研究、工程实践与产业落地。
+  description: ElexvxAI Lab 官方网站，聚焦 AI 研究、企业数字化、脚手架系统与产业落地。
   keywords:
     - ElexvxAI
+    - AI研究
     - 人工智能
-    - AI研发
-    - 产业数字化
-    - 创新中心
+    - 企业数字化
+    - 脚手架系统
+    - 产业落地
   twitterCard: summary_large_image
+  robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   icons:
     icon: /favicon.svg
     shortcut: /favicon.svg
@@ -15,31 +17,65 @@ site:
 
 pages:
   home:
-    title: 以智能技术赋能数字化未来
-    description: 欢迎访问 ElexvxAI Lab，了解我们的 AI 研究进展、工程能力与产业实践。
+    title: AI研究与企业数字化
+    description: 访问 ElexvxAI Lab 创新产业研发中心，了解 AI 算法研究、企业后台脚手架系统、工程实践与产业落地。
     keywords:
-      - AI
-      - 数字化
-      - 创新研发
+      - AI研究
+      - 企业数字化
+      - 脚手架系统
+      - 产业落地
+    ogImage: /zh/og/site/home
+    twitterImage: /zh/og/site/home
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   blog:
-    title: 博客
-    description: ElexvxAI Lab 的最新动态、研究进展与工程实践。
+    title: AI研究博客与工程实践
+    description: 浏览 ElexvxAI Lab 的最新动态、研发进展、技术文章与工程实践。
     keywords:
       - AI博客
       - 技术文章
       - 工程实践
+      - 研发进展
+    ogImage: /zh/og/site/blog
+    twitterImage: /zh/og/site/blog
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   sponsors:
-    title: 同行计划
-    description: 了解 ElexvxAI Lab 的合作伙伴与开源生态共建计划。
+    title: 合作伙伴与生态共建
+    description: 了解 ElexvxAI Lab 的合作伙伴、战略共建与开发者生态计划。
     keywords:
       - 合作伙伴
       - 生态共建
+      - 开发者计划
+    ogImage: /zh/og/site/sponsors
+    twitterImage: /zh/og/site/sponsors
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   maintenance:
     title: 系统维护中
-    description: ElexvxAI Lab 页面维护中，服务升级完成后将恢复访问。
+    description: 页面正在维护升级，稍后将恢复 AI 研究、文档与合作内容访问。
+    keywords:
+      - 系统维护
+      - 升级公告
+    ogImage: /zh/og/site/maintenance
+    twitterImage: /zh/og/site/maintenance
+    robots: noindex,nofollow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   docs:
-    title: 技术文档
-    description: 浏览 ElexvxAI Lab 文档，查看产品能力与技术说明。
+    title: 技术文档与脚手架系统
+    description: 查看 ElexvxAI Lab 文档，了解企业后台脚手架系统、权限管理、系统配置、存储与验证能力。
+    keywords:
+      - 技术文档
+      - 脚手架系统
+      - 权限管理
+      - 系统配置
+      - 存储
+      - 验证
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
   about:
-    title: 关于我们
-    description: 了解 ElexvxAI Lab 的愿景、使命与驱动 AI 创新的团队。
+    title: 关于 ElexvxAI 创新产业研发中心
+    description: 认识 ElexvxAI Lab 的成立背景、AI 研发方向、产业应用场景与合作愿景。
+    keywords:
+      - 关于我们
+      - AI研发中心
+      - 产业应用
+      - 数字化转型
+    ogImage: /zh/og/site/about
+    twitterImage: /zh/og/site/about
+    robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1

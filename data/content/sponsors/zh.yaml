@@ -2,16 +2,23 @@ copy:
   title: 同行计划
   description: 与我们一起推动开发者生态建设。
   cta: 加入计划
+  ctaHref: '#partner-brands'
   sectionTitle: 合作品牌
 
 items:
-  - name: 宏翔商道 - Elexvx Inc
-    category: 主要投资方、发起方
+  - name: Elexvx Capital Inc
+    category: 投资方
+    description: 科罗拉多州注册的合法资本公司，专注于投资科技创新企业。
+    href: https://colorado-corp.com/co/elexvx-capital-inc
+    accent: from-cyan-500/20 via-sky-300/15 to-blue-300/15
+
+  - name: 宏翔商道（南京）科技发展有限公司
+    category: 发起方
     description: 2025年科技型中小企业，AAA级信用，专注于 AI 产品与服务。
     href: https://www.elexvx.com/
     accent: from-indigo-500/20 via-sky-400/15 to-cyan-300/20
 
-  - name: 桐谷霁屿 - Jadeisle
+  - name: 桐谷霁屿（南京）科技发展有限公司
     category: 战略合作伙伴
     description: 科研型企业，专注于 AI 产品与服务。
     href: https://www.tongujiyu.cn/
@@ -41,11 +48,6 @@ items:
     href: https://aiqicha.baidu.com/company_detail_63793913715120
     accent: from-lime-500/20 via-emerald-300/15 to-teal-300/15
 
-  # - name: OpenPart
-  #   category: 开源社区
-  #   description: 持续赞助文档基础设施与开发者活动。
-  #   href: https://www.elexvx.com/
-  #   accent: from-cyan-500/20 via-sky-300/15 to-blue-300/15
   # - name: ZenBrowser
   #   category: 浏览器生态
   #   description: 围绕开发者效率打造更快、更轻的浏览器体验。

@@ -30,6 +30,18 @@ type SeoContentYaml = {
   pages?: Partial<Record<SeoPageKey, Partial<SeoEntry>>>;
 };
 
+const seoContentCache = new Map<AppLocale, Promise<{
+  site: SeoSiteEntry;
+  pages: Record<SeoPageKey, SeoEntry>;
+}>>();
+
+const siteRobots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
+const maintenanceRobots = 'noindex,nofollow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
+
+function buildPageImagePath(locale: AppLocale, page: SeoPageKey) {
+  return `/og/site/${locale}/${page}`;
+}
+
 const seoFallbacks: Record<
   AppLocale,
   {
@@ -40,9 +52,10 @@ const seoFallbacks: Record<
   zh: {
     site: {
       title: 'ElexvxAI Lab',
-      description: 'ElexvxAI Lab 官方网站，聚焦 AI 研究、工程实践与产业落地。',
-      keywords: ['ElexvxAI', 'AI', '人工智能', '技术研发', '产业应用'],
+      description: 'ElexvxAI Lab 官方网站，聚焦 AI 研究、企业数字化、脚手架系统与产业落地。',
+      keywords: ['ElexvxAI', 'AI研究', '人工智能', '企业数字化', '脚手架系统', '产业落地'],
       twitterCard: 'summary_large_image',
+      robots: siteRobots,
       icons: {
         icon: '/favicon.svg',
         shortcut: '/favicon.svg',
@@ -51,37 +64,65 @@ const seoFallbacks: Record<
     },
     pages: {
       home: {
-        title: '以智能技术赋能数字化未来',
-        description: '欢迎访问 ElexvxAI Lab，了解我们的 AI 研究进展、工程能力与产业实践。',
+        title: 'AI研究与企业数字化',
+        description: '访问 ElexvxAI Lab 创新产业研发中心，了解 AI 算法研究、企业后台脚手架系统、工程实践与产业落地。',
+        keywords: ['AI研究', '企业数字化', '脚手架系统', '产业落地'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('zh', 'home'),
+        twitterImage: buildPageImagePath('zh', 'home'),
+        robots: siteRobots,
       },
       blog: {
-        title: '博客',
-        description: 'ElexvxAI Lab 的最新动态、研究进展与工程实践。',
+        title: 'AI研究博客与工程实践',
+        description: '浏览 ElexvxAI Lab 的最新动态、研发进展、技术文章与工程实践。',
+        keywords: ['AI博客', '技术文章', '工程实践', '研发进展'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('zh', 'blog'),
+        twitterImage: buildPageImagePath('zh', 'blog'),
+        robots: siteRobots,
       },
       sponsors: {
-        title: '同行计划',
-        description: '了解 ElexvxAI Lab 的合作伙伴与开源生态共建计划。',
+        title: '合作伙伴与生态共建',
+        description: '了解 ElexvxAI Lab 的合作伙伴、战略共建与开发者生态计划。',
+        keywords: ['合作伙伴', '生态共建', '开发者计划'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('zh', 'sponsors'),
+        twitterImage: buildPageImagePath('zh', 'sponsors'),
+        robots: siteRobots,
       },
       maintenance: {
         title: '系统维护中',
-        description: 'ElexvxAI Lab 页面维护中，服务升级完成后将恢复访问。',
+        description: '页面正在维护升级，稍后将恢复 AI 研究、文档与合作内容访问。',
+        keywords: ['系统维护', '升级公告'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('zh', 'maintenance'),
+        twitterImage: buildPageImagePath('zh', 'maintenance'),
+        robots: maintenanceRobots,
       },
       docs: {
-        title: '技术文档',
-        description: '浏览 ElexvxAI Lab 文档，查看产品能力与技术说明。',
+        title: '技术文档与脚手架系统',
+        description: '查看 ElexvxAI Lab 文档，了解企业后台脚手架系统、权限管理、系统配置、存储与验证能力。',
+        keywords: ['技术文档', '脚手架系统', '权限管理', '系统配置', '存储', '验证'],
+        robots: siteRobots,
       },
       about: {
         title: '关于我们',
-        description: '了解 ElexvxAI Lab 的愿景、使命与驱动 AI 创新的团队。',
+        description: '认识 ElexvxAI Lab 的成立背景、AI 研发方向、产业应用场景与合作愿景。',
+        keywords: ['关于我们', 'AI研发中心', '产业应用', '数字化转型'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('zh', 'about'),
+        twitterImage: buildPageImagePath('zh', 'about'),
+        robots: siteRobots,
       },
     },
   },
   en: {
     site: {
       title: 'ElexvxAI Lab',
-      description: 'Official site of ElexvxAI Lab focused on AI research, engineering, and real-world deployment.',
-      keywords: ['ElexvxAI', 'AI', 'Artificial Intelligence', 'Engineering', 'Industry'],
+      description: 'Official website of ElexvxAI Lab, focused on AI research, enterprise digitalization, scaffolding systems, and industrial deployment.',
+      keywords: ['ElexvxAI', 'AI Research', 'Artificial Intelligence', 'Enterprise Digitalization', 'Scaffolding System', 'Industrial Deployment'],
       twitterCard: 'summary_large_image',
+      robots: siteRobots,
       icons: {
         icon: '/favicon.svg',
         shortcut: '/favicon.svg',
@@ -90,29 +131,56 @@ const seoFallbacks: Record<
     },
     pages: {
       home: {
-        title: 'Empower the Digital Future with Intelligent Technology',
+        title: 'AI Research and Enterprise Digitalization',
         description:
-          'Welcome to ElexvxAI Lab and explore our AI research progress, engineering capabilities, and industrial practices.',
+          "Visit ElexvxAI Lab's innovation R&D center to explore AI algorithm research, enterprise scaffolding systems, engineering practices, and industrial deployment.",
+        keywords: ['AI Research', 'Enterprise Digitalization', 'Scaffolding System', 'Industrial Deployment'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('en', 'home'),
+        twitterImage: buildPageImagePath('en', 'home'),
+        robots: siteRobots,
       },
       blog: {
-        title: 'Blog',
-        description: 'Latest updates, research progress, and engineering practices from ElexvxAI Lab.',
+        title: 'AI Research Blog and Engineering Practices',
+        description: 'Browse ElexvxAI Lab for the latest updates, research progress, technical articles, and engineering practices.',
+        keywords: ['AI Blog', 'Engineering', 'Research', 'Technical Articles'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('en', 'blog'),
+        twitterImage: buildPageImagePath('en', 'blog'),
+        robots: siteRobots,
       },
       sponsors: {
-        title: 'Partnership Program',
-        description: 'Discover ElexvxAI Lab partners and our open ecosystem collaboration program.',
+        title: 'Partners and Ecosystem Co-creation',
+        description: 'Discover ElexvxAI Lab partners, strategic co-creation, and developer ecosystem programs.',
+        keywords: ['Partners', 'Ecosystem', 'Developer Program'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('en', 'sponsors'),
+        twitterImage: buildPageImagePath('en', 'sponsors'),
+        robots: siteRobots,
       },
       maintenance: {
-        title: 'Maintenance In Progress',
-        description: 'ElexvxAI Lab page is under maintenance and will be back online after service upgrades.',
+        title: 'Under Maintenance',
+        description: 'This page is being upgraded and will restore access to AI research, docs, and collaboration content soon.',
+        keywords: ['Maintenance', 'Upgrade Notice'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('en', 'maintenance'),
+        twitterImage: buildPageImagePath('en', 'maintenance'),
+        robots: maintenanceRobots,
       },
       docs: {
-        title: 'Documentation',
-        description: 'Browse ElexvxAI Lab documentation for product capabilities and technical guidance.',
+        title: 'Technical Docs and Scaffolding System',
+        description: 'Browse ElexvxAI Lab docs for the enterprise scaffolding system, permission management, configuration, storage, and verification capabilities.',
+        keywords: ['Technical Docs', 'Scaffolding System', 'Permission Management', 'Configuration', 'Storage', 'Verification'],
+        robots: siteRobots,
       },
       about: {
         title: 'About Us',
-        description: "Learn about ElexvxAI Lab's mission, vision, and the team driving AI innovation.",
+        description: "Learn about ElexvxAI Lab's founding context, AI R&D direction, industry applications, and collaboration vision.",
+        keywords: ['About Us', 'AI Innovation Center', 'Industry Applications', 'Digital Transformation'],
+        twitterCard: 'summary_large_image',
+        ogImage: buildPageImagePath('en', 'about'),
+        twitterImage: buildPageImagePath('en', 'about'),
+        robots: siteRobots,
       },
     },
   },
@@ -158,20 +226,31 @@ function normalizeSiteEntry(
 }
 
 async function getSeoContent(locale: AppLocale) {
-  const raw = await readLocaleYaml<SeoContentYaml>('seo', locale);
-  const fallback = seoFallbacks[locale];
+  const cached = seoContentCache.get(locale);
+  if (cached) return cached;
 
-  return {
-    site: normalizeSiteEntry(fallback.site, raw.site),
-    pages: {
-      home: normalizeEntry(fallback.pages.home, raw.pages?.home),
-      blog: normalizeEntry(fallback.pages.blog, raw.pages?.blog),
-      sponsors: normalizeEntry(fallback.pages.sponsors, raw.pages?.sponsors),
-      maintenance: normalizeEntry(fallback.pages.maintenance, raw.pages?.maintenance),
-      docs: normalizeEntry(fallback.pages.docs, raw.pages?.docs),
-      about: normalizeEntry(fallback.pages.about, raw.pages?.about),
-    },
-  };
+  const promise = (async () => {
+    const raw = await readLocaleYaml<SeoContentYaml>('seo', locale);
+    const fallback = seoFallbacks[locale];
+
+    return {
+      site: normalizeSiteEntry(fallback.site, raw.site),
+      pages: {
+        home: normalizeEntry(fallback.pages.home, raw.pages?.home),
+        blog: normalizeEntry(fallback.pages.blog, raw.pages?.blog),
+        sponsors: normalizeEntry(fallback.pages.sponsors, raw.pages?.sponsors),
+        maintenance: normalizeEntry(fallback.pages.maintenance, raw.pages?.maintenance),
+        docs: normalizeEntry(fallback.pages.docs, raw.pages?.docs),
+        about: normalizeEntry(fallback.pages.about, raw.pages?.about),
+      },
+    };
+  })().catch((error) => {
+    seoContentCache.delete(locale);
+    throw error;
+  });
+
+  seoContentCache.set(locale, promise);
+  return promise;
 }
 
 export async function getSeoSite(locale: AppLocale): Promise<SeoSiteEntry> {

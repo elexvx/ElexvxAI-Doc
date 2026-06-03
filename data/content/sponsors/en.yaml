@@ -2,10 +2,18 @@ copy:
   title: Partnership Program
   description: Thanks to every supporter for keeping documentation, components, and engineering practices freely accessible.
   cta: Partner With Us
+  ctaHref: '#partner-brands'
   sectionTitle: Partner Brands
+
 items:
+  - name: Elexvx Capital Inc
+    category: Investor
+    description: A legally registered capital company founded in Colorado, focused on investing in innovative technology enterprises.
+    href: https://colorado-corp.com/co/elexvx-capital-inc
+    accent: from-cyan-500/20 via-sky-300/15 to-blue-300/15
+
   - name: Hongxiang Shangdao - Elexvx Inc
-    category: Primary Investor, Initiator
+    category: Initiator
     description: A technology-oriented SME recognized in 2025 with AAA credit rating, focused on AI products and services.
     href: https://www.elexvx.com/
     accent: from-indigo-500/20 via-sky-400/15 to-cyan-300/20

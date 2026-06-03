@@ -1,5 +1,5 @@
 import { type InferPageType } from 'fumadocs-core/source';
-import { source } from '@/lib/source';
+import { source, getSourcePages } from '@/lib/source';
 
 export async function getLLMText(page: InferPageType<typeof source>) {
   const processed = await page.data.getText('processed');
@@ -12,14 +12,14 @@ const llmFullTextCache = new Map<string, Promise<string>>();
 
 export async function getLLMFullText(locale?: string) {
   if (!useLLMTextCache) {
-    const scanned = await Promise.all(source.getPages(locale).map(getLLMText));
+    const scanned = await Promise.all(getSourcePages(locale).map(getLLMText));
     return scanned.join('\n\n');
   }
 
   const cacheKey = locale ?? '__default__';
   let cached = llmFullTextCache.get(cacheKey);
   if (!cached) {
-    cached = Promise.all(source.getPages(locale).map(getLLMText))
+    cached = Promise.all(getSourcePages(locale).map(getLLMText))
       .then((scanned) => scanned.join('\n\n'))
       .catch((error) => {
         llmFullTextCache.delete(cacheKey);
