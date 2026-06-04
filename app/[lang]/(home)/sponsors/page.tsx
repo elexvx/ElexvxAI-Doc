@@ -43,14 +43,15 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
                 href={item.href}
                 external
                 accent={item.accent}
-                className="min-h-[220px]"
+                minimal
+                className="min-h-[132px] sm:min-h-[144px] px-4 py-4"
                 badge={
-                  <span className="inline-flex rounded-full border border-zinc-300/80 px-2.5 py-1 text-[11px] text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">
+                  <span className="inline-flex rounded-full border border-zinc-200 px-2 py-0.5 text-[11px] text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
                     {item.category}
                   </span>
                 }
                 title={item.name}
-                description={<span className="block line-clamp-2 min-h-10">{item.description}</span>}
+                description={<span className="block leading-5 line-clamp-2">{item.description}</span>}
               />
             ))}
           </div>
