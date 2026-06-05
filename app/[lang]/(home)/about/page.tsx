@@ -86,9 +86,10 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                   <GradientCard
                     key={i}
                     accent={aboutCardAccentClasses[i % aboutCardAccentClasses.length]}
-                    className="min-h-[220px] sm:min-h-[240px]"
+                    minimal
+                    className="min-h-[132px] sm:min-h-[144px] px-4 py-4"
                     title={item.title}
-                    description={<span className="whitespace-pre-line">{item.description}</span>}
+                    description={<span className="block leading-5 line-clamp-2 whitespace-pre-line">{item.description}</span>}
                   />
                 ))}
               </div>
@@ -100,15 +101,17 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               <div className="grid gap-3 sm:grid-cols-2">
                 <GradientCard
                   accent="from-blue-500/20 via-indigo-300/15 to-purple-300/15"
-                  className="min-h-[220px]"
+                  minimal
+                  className="min-h-[132px] sm:min-h-[144px] px-4 py-4"
                   title={data.mission.title}
-                  description={<span className="whitespace-pre-line">{data.mission.content}</span>}
+                  description={<span className="block leading-5 line-clamp-2 whitespace-pre-line">{data.mission.content}</span>}
                 />
                 <GradientCard
                   accent="from-emerald-500/25 via-teal-400/15 to-cyan-300/15"
-                  className="min-h-[220px]"
+                  minimal
+                  className="min-h-[132px] sm:min-h-[144px] px-4 py-4"
                   title={data.vision.title}
-                  description={<span className="whitespace-pre-line">{data.vision.content}</span>}
+                  description={<span className="block leading-5 line-clamp-2 whitespace-pre-line">{data.vision.content}</span>}
                 />
               </div>
             </section>
@@ -121,9 +124,10 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                   <GradientCard
                     key={i}
                     accent={aboutCardAccentClasses[i % aboutCardAccentClasses.length]}
-                    className="min-h-[220px] sm:min-h-[240px]"
+                    minimal
+                    className="min-h-[132px] sm:min-h-[144px] px-4 py-4"
                     title={item.title}
-                    description={<span className="whitespace-pre-line">{item.description}</span>}
+                    description={<span className="block leading-5 line-clamp-2 whitespace-pre-line">{item.description}</span>}
                   />
                 ))}
               </div>
