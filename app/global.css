@@ -21,7 +21,7 @@
       --fd-docs-height: 100dvh;
       --fd-header-height: 0px;
       --fd-toc-popover-height: 0px;
-      --fd-sidebar-width: 236px;
+      --fd-sidebar-width: clamp(208px, 28vw, 236px);
       --fd-toc-width: 0px;
     }
 
@@ -53,6 +53,12 @@
 
     #nd-sidebar > div:last-child {
       padding: 0.5rem 0.75rem 0.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #nd-docs-layout {
+      --fd-sidebar-width: 236px;
     }
   }
 }

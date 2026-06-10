@@ -1,4 +1,5 @@
 import { defineCollections, defineConfig, defineDocs } from 'fumadocs-mdx/config';
+import { remarkMdxMermaid } from 'fumadocs-core/mdx-plugins/remark-mdx-mermaid';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { z } from 'zod';
 
@@ -41,6 +42,6 @@ export const blog = defineCollections({
 
 export default defineConfig({
   mdxOptions: {
-    // MDX options
+    remarkPlugins: [remarkMdxMermaid],
   },
 });

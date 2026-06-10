@@ -1,0 +1,8 @@
+{
+  "title": "Deployment",
+  "pages": [
+    "docker-deployment",
+    "onepanel-deployment",
+    "operations-runbook"
+  ]
+}

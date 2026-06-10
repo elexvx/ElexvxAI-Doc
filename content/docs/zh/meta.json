@@ -1,0 +1,10 @@
+{
+  "title": "Legendary Invention",
+  "root": true,
+  "pagesIndex": "index",
+  "pages": [
+    "quick-start",
+    "architecture",
+    "deployment"
+  ]
+}

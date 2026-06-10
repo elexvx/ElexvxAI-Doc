@@ -1,0 +1,13 @@
+{
+  "title": "架构设计",
+  "pages": [
+    "system-overview",
+    "backend-modules",
+    "backend-infrastructure",
+    "frontend-architecture",
+    "api-contracts",
+    "data-and-permissions",
+    "service-ownership",
+    "events-and-outbox"
+  ]
+}

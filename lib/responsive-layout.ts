@@ -1,6 +1,6 @@
 export const SITE_LAYOUT_MAX_WIDTH = 1880;
 
-export const SITE_LAYOUT_WIDTH_CLASS = '[--fd-layout-width:min(1880px,92vw)]';
+export const SITE_LAYOUT_WIDTH_CLASS = '[--fd-layout-width:min(1880px,96vw)] lg:[--fd-layout-width:min(1880px,92vw)]';
 
 export const SITE_CONTAINER_CLASS = 'mx-auto w-full max-w-[var(--fd-layout-width)] px-4';
 
@@ -12,4 +12,4 @@ export const SITE_SECTION_MAIN_CLASS = `${SITE_CONTAINER_CLASS} pb-10 pt-6 md:pb
 
 export const SITE_BLOG_MAIN_CLASS = `${SITE_CONTAINER_CLASS} pb-10 pt-8 md:pb-12 md:pt-12`;
 
-export const DOCS_PAGE_MAX_WIDTH_CLASS = 'max-w-[680px] lg:max-w-[720px] 2xl:max-w-[960px] [@media(min-width:2100px)]:max-w-[1120px]';
+export const DOCS_PAGE_MAX_WIDTH_CLASS = 'max-w-[680px] md:max-w-[min(100%,640px)] lg:max-w-[720px] 2xl:max-w-[960px] [@media(min-width:2100px)]:max-w-[1120px]';
